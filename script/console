@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+SINATRA_ROOT = File.expand_path('..', File.dirname(__FILE__))
+
+irb = (RUBY_PLATFORM =~ /(:?mswin|mingw)/) ? 'irb.bat' : 'irb'
+
+exec("#{irb} --readline -I #{SINATRA_ROOT} -r irb/completion --prompt-mode simple -r myapp")

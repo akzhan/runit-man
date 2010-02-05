@@ -1,0 +1,22 @@
+<table>
+    <caption>Сервисы</caption>
+    <thead>
+        <tr>
+            <th>PID</th>
+            <th>Название</th>
+            <th>Состояние</th>
+            <th>Действия</th>
+            <th>Лог</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td colspan="5">
+                Обновлено <%= h(Time.now.utc) %>
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        <%= partial(:service_info, :collection => service_infos) %>
+    </tbody>
+</table>

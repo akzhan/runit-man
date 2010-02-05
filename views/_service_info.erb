@@ -1,0 +1,24 @@
+<tr class="<%= even_or_odd ? 'even' : 'odd' %>">
+  <td><%= h(service_info.pid) %></td>
+  <th scope="row"><%= h(service_info.name) %></th>
+  <td><%= h(service_info.stat) %></td>
+  <td>
+    <% if service_info.active? %>
+        <% if service_info.run? %>
+            <%= service_action service_info.name, :restart, 'Перезапустить' %>
+            <%= service_action service_info.name, :down, 'Остановить' %>
+        <% else %>
+            <%= service_action service_info.name, :up, 'Запустить' %>
+        <% end %>
+    <% else %>
+        &mdash;
+    <% end %>
+  </td>
+  <td>
+    <% if service_info.logged? %>
+        <a target="_blank" rel="nofollow" href="/<%= h(service_info.name) %>/log#footer"><%= h(service_info.log_file_location) %></a>
+    <% else %>
+        Отсутствует
+    <% end %>
+  </td>
+</tr>

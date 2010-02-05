@@ -1,0 +1,9 @@
+<% content_for :content do %>
+    Последние 100 строк лога для сервиса <strong><%= h(name) %></strong>
+    <pre><%= h(text) %></pre>
+<% end %>
+<% content_for :footer do %>
+    <p>
+        Лог обновлён <%= Time.now.utc %>. <a href="javascript:;" rel="nofollow" onclick="window.location.reload()">Обновить страницу</a>
+    </p>
+<% end %>
