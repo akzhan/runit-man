@@ -2,6 +2,16 @@
 {
     var REFRESH_SERVICES_TIMEOUT = 5000;
 
+    $('#error').ajaxError(function(e, req, options, error)
+    {
+        $('#url').text(settings.url);
+        $(this).show();
+    });
+    $('#error').ajaxSuccess(function()
+    {
+        $(this).hide();
+    });
+
     var refreshServices = function()
     {
         if (refreshServices.timer != null)

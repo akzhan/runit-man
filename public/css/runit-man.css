@@ -1,4 +1,9 @@
 form.service-action
 {
-    display: inline;
+  display: inline;
 }
+#container{margin:0 auto;border-top:0;width:900px;border-top:0;}
+.content{position:relative;padding: 16px 0;color:#c0baba;font-size:1.27em;line-height:1.7}
+.content:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.content{display:inline-block;}
+/* \*/ * html .content{height:1%;}.content{display:block;}/* */

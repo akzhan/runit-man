@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'rubygems'
 require 'sinatra'
 require 'erb-to-erubis'
@@ -27,6 +29,7 @@ end
 
 get '/' do
   @scripts = [ 'jquery-1.4.1.min' ]
+  @title = host_name
   erb :index
 end
 
@@ -38,6 +41,7 @@ get '/:name/log' do |name|
   srv = ServiceInfo[name]
   return not_found if srv.nil? || !srv.logged?
   @scripts = []
+  @title = "Лог #{name} на #{host_name}"
   erb :log, :locals => {
     :name => name,
     :text => `tail -n 100 #{srv.log_file_location}`

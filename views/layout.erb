@@ -1,13 +1,13 @@
 <html>
   <head>
-    <title><%= h(host_name) %> - Runit web management tool</title>
+    <title><%= h(@title) %> - Runit web management tool</title>
     <link href="/css/tripoli.simple.css" type="text/css" rel="stylesheet" />
     <link href="/css/tripoli.visual.css" type="text/css" rel="stylesheet" />
-    <link href="/css/tripoli.layout.css" type="text/css" rel="stylesheet" />
+    <link href="/css/tripoli.type.css" type="text/css" rel="stylesheet" />
     <!--[if IE]><link href="/css/tripoli.simple.ie.css" type="text/css" rel="stylesheet" /><![endif]-->
     <link href="/css/runit-man.css" type="text/css" rel="stylesheet" />
   </head>
-  <body class="l1">
+  <body>
     <div id="container">
       <div id="header">
         <div class="content">
@@ -15,18 +15,9 @@
         </div>
       </div>
 
-      <div id="primary">
-        <div class="content">
-          <% yield_content :content %>
-        </div>
+      <div class="content">
+        <% yield_content :content %>
       </div>
-
-      <div id="secondary">
-        <div class="content">
-        </div>
-      </div>
-
-      <div id="tertiary"><div class="content"></div></div>
 
       <div id="footer">
         <div class="content">
