@@ -1,0 +1,34 @@
+runit:
+  label: runit - управляющий web-интерфейс
+  title: "%1 - %2"
+  header: "%1: %2"
+  error: Ошибка обращения к ресурсу
+  loading: "Идёт загрузка&hellip;"
+  footer: "Состояние сервисов обновляется автоматически каждые %1 секунд."
+  services:
+    table:
+      caption: Сервисы
+      headers:
+        pid: PID
+        name: Название
+        stat: Состояние
+        actions: Действия
+        log_file: Лог
+      values:
+        log_hint: Отрыть последние 100 строк лога сервиса %1 в новом окне
+        log_absent: Отсутствует
+      footer: Обновлено %1
+      subst:
+        inactive: <span class="inactive">неактивен</span>
+        down: <span class="down">остановлен</span>
+        run: <span class="run">работает</span>
+        got: получен
+      actions:
+        start: Запустить
+        stop: Остановить
+        restart: Перезапустить
+    log:
+      title: "Последние 100 строк лога сервиса %1 - %2"
+      header: "Последние 100 строк лога сервиса <strong>%1</strong>: %2"
+      updated: "Страница обновлена %1"
+      reload: Обновить страницу

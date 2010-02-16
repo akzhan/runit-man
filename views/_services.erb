@@ -1,19 +1,17 @@
 <table>
-    <caption>Сервисы</caption>
+    <caption><%= h(t.runit.services.table.caption) %></caption>
     <thead>
         <tr>
-            <th>PID</th>
-            <th>Название</th>
-            <th>Состояние</th>
-            <th>Действия</th>
-            <th>Лог</th>
+            <th><%= h(t.runit.services.table.headers.pid) %></th>
+            <th><%= h(t.runit.services.table.headers.name) %></th>
+            <th><%= h(t.runit.services.table.headers.stat) %></th>
+            <th><%= h(t.runit.services.table.headers.actions) %></th>
+            <th><%= h(t.runit.services.table.headers.log_file) %></th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <td colspan="5">
-                Обновлено <%= h(Time.now.utc) %>
-            </td>
+            <td colspan="5"><%= t.runit.services.table.footer(h(Time.now.utc)) %></td>
         </tr>
     </tfoot>
     <tbody>

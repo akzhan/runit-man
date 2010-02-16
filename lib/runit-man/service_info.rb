@@ -1,4 +1,4 @@
-require 'log_location_cache'
+require 'runit-man/log_location_cache'
 
 class ServiceInfo
   ALL_SERVICES_FOLDER = '/etc/sv'.freeze
@@ -85,7 +85,7 @@ private
 
   def send_signal!(signal)
     return unless supervise?
-    File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.puts signal.to_s }
+    File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.print signal.to_s }
   end
 
   class << self

@@ -2,37 +2,41 @@
 {
     var REFRESH_SERVICES_TIMEOUT = 5000;
 
-    $('#error').ajaxError(function(e, req, options, error)
-    {
-        $('#url').text(settings.url);
-        $(this).show();
-    });
-    $('#error').ajaxSuccess(function()
-    {
-        $(this).hide();
+    $.ajaxSetup({
+        error: function(e, req, options, error)
+        {
+            $('#url').text(settings.url);
+            $('#error').show();
+        }
     });
 
     var refreshServices = function()
     {
-        if (refreshServices.timer != null)
-        {
-            clearTimeout(refreshServices.timer);
-            refreshServices.timer = null;
-        }
+        refreshServices.timer = null;
         $.ajax({
             url: '/services',
+            cache: false,
+            error: function()
+            {
+                $('#url').text('/services');
+                $('#error').show();
+            },
             success: function(html)
             {
+                $('#error').hide();
                 $('#services').html(html);
             },
             complete: function()
             {
-                refreshServices.timer = null;
-                setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
+                if (refreshServices.timer != null)
+                {
+                    clearTimeout(refreshServices.timer);
+                    refreshServices.timer = null;
+                }
+                refreshServices.timer = setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
             }
         });
     };
-    refreshServices.timer = null;
 
     $('form.service-action').live('submit', function()
     {

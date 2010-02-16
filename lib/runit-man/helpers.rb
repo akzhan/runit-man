@@ -1,10 +1,12 @@
-require 'service_info'
-require 'partials'
 require 'socket'
+require 'runit-man/service_info'
+require 'runit-man/partials'
+require 'sinatra/content_for'
 
 module Helpers
   include Rack::Utils
   include Sinatra::Partials
+  include Sinatra::ContentFor
   alias_method :h, :escape_html
 
   attr_accessor :even_or_odd_state
@@ -31,5 +33,15 @@ module Helpers
   def even_or_odd
     self.even_or_odd_state = !even_or_odd_state
     even_or_odd_state
+  end
+
+  def stat_subst(s)
+    s.split(/\s/).map do |s|
+      if s =~ /(\w+)/ && t.runit.services.table.subst[$1].translated?
+        s.sub(/\w+/, t.runit.services.table.subst[$1].to_s)
+      else
+        s
+      end
+    end.join(' ')
   end
 end

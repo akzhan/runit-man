@@ -1,0 +1,33 @@
+runit:
+  label: runit web management tool
+  title: "%1 - %2"
+  header: "%1: %2"
+  error: Error encountered while accessing resource
+  loading: "Please wait while loading&hellip;"
+  footer: "State of services updated automatically every %1 seconds."
+  services:
+    table:
+      caption: Services
+      headers:
+        pid: PID
+        name: Name
+        stat: Status
+        actions: Actions
+        log_file: Log file
+      values:
+        log_hint: Open tail 100 lines of %1 service log in new window
+        log_absent: Absent
+      footer: Updated at %1
+      subst:
+        inactive: <span class="inactive">inactive</span>
+        down: <span class="down">down<span>
+        run: <span class="run">run<span>
+      actions:
+        start: Start
+        stop: Stop
+        restart: Restart
+    log:
+      title: "Tail 100 lines of service %1 log - %2"
+      header: "Tail 100 lines of service <strong>%1</strong> log: %2"
+      updated: "Page updated at %1"
+      reload: Reload

@@ -1,9 +1,9 @@
 <% content_for :content do %>
-    Последние 100 строк лога для сервиса <strong><%= h(name) %></strong>
+    <%= t.runit.services.log.header(h(name), h(host_name)) %>
     <pre><%= h(text) %></pre>
 <% end %>
 <% content_for :footer do %>
     <p>
-        Лог обновлён <%= Time.now.utc %>. <a href="javascript:;" rel="nofollow" onclick="window.location.reload()">Обновить страницу</a>
+        <%= t.runit.services.log.updated(Time.now.utc) %> <a href="javascript:;" rel="nofollow" onclick="window.location.reload()"><%= t.runit.services.log.reload %></a>
     </p>
 <% end %>

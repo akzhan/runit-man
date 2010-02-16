@@ -1,11 +1,14 @@
 <% content_for :content do %>
+    <div id="error" class="error">
+        <%= h(t.runit.error('<span id="url"></span>')) %>.
+    </div>
     <div id="services">
-        Идёт загрузка&hellip;
+        <%= t.runit.loading %>
     </div>
 <% end %>
 <% content_for :footer do %>
     <p>
-        Состояние сервисов обновляется автоматически каждые <span id="service-refresh-interval">?</span> секунд.
+        <%= t.runit.footer('<span id="service-refresh-interval">?</span>') %>
     </p>
 <% end %>
 <% @scripts << 'runit-man' %>
