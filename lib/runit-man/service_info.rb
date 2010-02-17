@@ -12,10 +12,8 @@ class ServiceInfo
   end
 
   def stat
-    return 'inactive' unless supervise?
-    r = 'indeterminate'
-    File.open(File.join(supervise_folder, 'stat'), 'r') { |f| r = f.gets }
-    r
+    r = data_from_file(File.join(supervise_folder, 'stat'))
+    r ? r : 'inactive'
   end
 
   def active?
@@ -53,23 +51,11 @@ class ServiceInfo
   end
 
   def pid
-    r = nil
-    if supervise?
-      File.open(File.join(supervise_folder, 'pid'), 'r') { |f| r = f.gets }
-    end
-    r = r.chomp unless r.nil?
-    r = nil if r == ''
-    r
+    data_from_file(File.join(supervise_folder, 'pid'))
   end
 
   def log_pid
-    r = nil
-    if logged?
-      File.open(File.join(log_supervise_folder, 'pid'), 'r') { |f| r = f.gets }
-    end
-    r = r.chomp unless r.nil?
-    r = nil if r == ''
-    r
+    data_from_file(File.join(log_supervise_folder, 'pid'))
   end
 
   def log_file_location
@@ -101,6 +87,13 @@ private
 
   def supervise?
     File.directory?(supervise_folder)
+  end
+
+  def data_from_file(file_name)
+    return nil unless File.readable?(file_name)
+    r = IO.read(file_name)
+    r = r.chomp unless r.nil?
+    r.empty? ? nil : r
   end
 
   def send_signal!(signal)

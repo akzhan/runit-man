@@ -1,0 +1,3 @@
+#!/bin/sh
+exec 2>&1
+exec runit-man.rb<% if server.kind_of?(String) %> -s "<%= server %>"<% end %><% if bind %> -b <%= bind %><% end %> -p <%= port %> -a "<%= active_services_directory %>" -f "<%= all_services_directory %>"

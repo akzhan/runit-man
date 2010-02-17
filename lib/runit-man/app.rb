@@ -1,6 +1,4 @@
-#!/usr/bin/env ruby
-# encoding: utf-8
-
+require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'
 require 'runit-man/erb-to-erubis'
@@ -80,6 +78,7 @@ class RunitMan < Sinatra::Base
 
   class << self
     def register_as_runit_service
+      create_run_script
       return if File.symlink?(File.join(RunitMan.all_services_directory, 'runit-man'))
       do_cmd("ln -sf #{File.join(GEM_FOLDER, 'sv')} #{File.join(RunitMan.all_services_directory, 'runit-man')}")
       do_cmd("ln -sf #{File.join(RunitMan.all_services_directory, 'runit-man')} #{File.join(RunitMan.active_services_directory, 'runit-man')}")
@@ -88,6 +87,20 @@ class RunitMan < Sinatra::Base
   private
     def do_cmd(command)
       system(command) or raise "Cannot execute #{command}"
+    end
+
+    def create_run_script
+      script_name = File.join(GEM_FOLDER, 'sv', 'run')
+      File.open(script_name, 'w') do |f|
+        f.print Erubis::Eruby.new(IO.read(script_name + '.erb')).result(
+          :all_services_directory    => RunitMan.all_services_directory,
+          :active_services_directory => RunitMan.active_services_directory,
+          :port                      => RunitMan.port,
+          :bind                      => RunitMan.respond_to?(:bind) ? RunitMan.bind : nil,
+          :server                    => RunitMan.server
+        )
+      end
+      File.chmod(0755, script_name)
     end
   end
 end
