@@ -61,11 +61,17 @@ class RunitMan < Sinatra::Base
     }
   end
 
+  def log_action(name, text)
+    addr = request.env.include?('X_REAL_IP') ? request.env['X_REAL_IP'] : request.env['REMOTE_ADDR']
+    puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
+  end
+
   post '/:name/:action' do |name, action|
     srv = ServiceInfo[name]
     action = "#{action}!".to_sym
     return not_found if srv.nil? || !srv.respond_to?(action)
     srv.send(action)
+    log_action(name, action)
     ''
   end
 end

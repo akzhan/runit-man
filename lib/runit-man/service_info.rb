@@ -32,23 +32,19 @@ class ServiceInfo
 
   def up!
     send_signal! :u
-    puts "service #{name} up!"
   end
 
   def down!
     send_signal! :d
-    puts "service #{name} down!"
   end
 
   def switch_down!
     down!
     File.unlink(active_service_folder)
-    puts "service #{name} deactivated!"
   end
 
   def switch_up!
     File.symlink(inactive_service_folder, active_service_folder)
-    puts "service #{name} activated!"
   end
 
   def restart!
