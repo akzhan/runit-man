@@ -10,9 +10,13 @@
       <% else %>
         <%= service_action service_info.name, :up, t.runit.services.table.actions.start %>
       <% end %>
-      <%= service_action service_info.name, :switch_down, t.runit.services.table.actions.switch_down %>
+      <% if service_info.switchable? %>
+        <%= service_action service_info.name, :switch_down, t.runit.services.table.actions.switch_down %>
+      <% end %>
     <% else %>
-      <%= service_action service_info.name, :switch_up, t.runit.services.table.actions.switch_up %>
+      <% if service_info.switchable? %>
+        <%= service_action service_info.name, :switch_up, t.runit.services.table.actions.switch_up %>
+      <% end %>
     <% end %>
   </td>
   <td>
