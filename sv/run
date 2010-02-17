@@ -1,0 +1,3 @@
+#!/bin/sh
+exec 2>&1
+exec runit-man.rb -p 4567 -a "/etc/service" -f "/etc/sv"
