@@ -8,6 +8,8 @@ require 'runit-man/helpers'
 
 R18n::Filters.on :variables
 
+GEM_FOLDER = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
+
 CONTENT_TYPES = {
   :html => 'text/html',
   :css  => 'text/css',
@@ -22,7 +24,7 @@ class RunitMan < Sinatra::Base
   set :logging,      true
   set :dump_errors,  true
   set :raise_errors, false
-  set :root,         File.expand_path(File.join('..', '..'), File.dirname(__FILE__))
+  set :root,         GEM_FOLDER
 
   register Sinatra::R18n
 
@@ -62,7 +64,8 @@ class RunitMan < Sinatra::Base
   end
 
   def log_action(name, text)
-    addr = request.env.include?('X_REAL_IP') ? request.env['X_REAL_IP'] : request.env['REMOTE_ADDR']
+    env  = request.env
+    addr = env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
     puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
   end
 
@@ -73,5 +76,18 @@ class RunitMan < Sinatra::Base
     srv.send(action)
     log_action(name, action)
     ''
+  end
+
+  class << self
+    def register_as_runit_service
+      return if File.symlink?(File.join(RunitMan.all_services_directory, 'runit-man'))
+      do_cmd("ln -sf #{File.join(GEM_FOLDER, 'sv')} #{File.join(RunitMan.all_services_directory, 'runit-man')}")
+      do_cmd("ln -sf #{File.join(RunitMan.all_services_directory, 'runit-man')} #{File.join(RunitMan.active_services_directory, 'runit-man')}")
+    end
+
+  private
+    def do_cmd(command)
+      system(command) or raise "Cannot execute #{command}"
+    end
   end
 end

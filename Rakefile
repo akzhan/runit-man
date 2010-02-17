@@ -1,15 +1,14 @@
 require 'rubygems'
 require 'rake/gempackagetask'
 
-# CLEAN.include('pkg')
-
 spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
   s.summary = "Runit web management tool."
   s.name = 'runit-man'
   s.author = 'Akzhan Abdulin'
   s.email = 'akzhan.abdulin@gmail.com'
-  s.version = "1.2"
+  s.homepage = 'http://github.com/akzhan/runit-man'
+  s.version = "1.3"
   s.requirements << 'none'
   s.require_path = 'lib'
   s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].to_a
@@ -22,9 +21,7 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
   s.add_development_dependency 'rack-test'
-  s.description = <<EOF
-runit-man is simple web frontend for runit.
-EOF
+  s.description = File.open(File.join(File.dirname(__FILE__), 'README')).read
 end
 
 task :default => [:package]
