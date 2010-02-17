@@ -4,21 +4,22 @@
   <td><%= stat_subst(service_info.stat) %></td>
   <td>
     <% if service_info.active? %>
-        <% if service_info.run? %>
-            <%= service_action service_info.name, :restart, t.runit.services.table.actions.restart %>
-            <%= service_action service_info.name, :down, t.runit.services.table.actions.stop %>
-        <% else %>
-            <%= service_action service_info.name, :up, t.runit.services.table.actions.start %>
-        <% end %>
+      <% if service_info.run? %>
+        <%= service_action service_info.name, :restart, t.runit.services.table.actions.restart %>
+        <%= service_action service_info.name, :down, t.runit.services.table.actions.stop %>
+      <% else %>
+        <%= service_action service_info.name, :up, t.runit.services.table.actions.start %>
+      <% end %>
+      <%= service_action service_info.name, :switch_down, t.runit.services.table.actions.switch_down %>
     <% else %>
-        &mdash;
+      <%= service_action service_info.name, :switch_up, t.runit.services.table.actions.switch_up %>
     <% end %>
   </td>
   <td>
     <% if service_info.logged? %>
-        <a title="<%= h(t.runit.services.table.values.log_hint(service_info.name)) %>" target="_blank" rel="nofollow" href="/<%= h(service_info.name) %>/log#footer"><%= h(service_info.log_file_location) %></a>
+      <a title="<%= h(t.runit.services.table.values.log_hint(service_info.name)) %>" target="_blank" rel="nofollow" href="/<%= h(service_info.name) %>/log#footer"><%= h(service_info.log_file_location) %></a>
     <% else %>
-        <%= t.runit.services.table.values.log_absent %>
+      <%= t.runit.services.table.values.log_absent %>
     <% end %>
   </td>
 </tr>

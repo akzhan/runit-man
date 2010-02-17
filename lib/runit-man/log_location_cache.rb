@@ -5,10 +5,10 @@ class LogLocationCache
     clear
   end
 
-  def [](log_run_folder, pid)
+  def [](pid)
     pid = pid.to_i
     unless pids.include?(pid)
-      set_pid_log_location(pid, get_pid_location(log_run_folder, pid))
+      set_pid_log_location(pid, get_pid_location(pid))
     end
     pids[pid][:value]
   end
@@ -38,15 +38,15 @@ private
     self
   end
 
-  def get_pid_location(log_run_folder, lpid)
-    folder = log_folder(log_run_folder, lpid)
+  def get_pid_location(lpid)
+    folder = log_folder(lpid)
     return nil if folder.nil?
     File.join(folder, 'current')
   end
 
   def log_command(lpid)
     return nil if lpid.nil?
-    ps_output = `ps -o args -p #{lpid}`.split("\n")
+    ps_output = `ps -o args -p #{lpid} 2>&1`.split("\n")
     ps_output.shift
     cmd = ps_output.first
     cmd = cmd.chomp unless cmd.nil?
@@ -54,14 +54,12 @@ private
     cmd
   end
 
-  def log_folder(log_run_folder, lpid)
+  def log_folder(lpid)
     cmd = log_command(lpid)
     return nil if cmd.nil?
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
     return nil if args.shift != 'svlogd'
-    folder = args.shift
-    return nil if folder.nil?
-    File.expand_path(folder, log_run_folder)
+    args.shift
   end
 
   def set_pid_log_location(pid, log_location)

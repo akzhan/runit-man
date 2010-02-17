@@ -10,6 +10,7 @@
         }
     });
 
+    var needRefreshServices;
     var refreshServices = function()
     {
         refreshServices.timer = null;
@@ -28,26 +29,38 @@
             },
             complete: function()
             {
-                if (refreshServices.timer != null)
-                {
-                    clearTimeout(refreshServices.timer);
-                    refreshServices.timer = null;
-                }
-                refreshServices.timer = setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
+                needRefreshServices(false);
             }
         });
+    };
+
+    needRefreshServices = function(now)
+    {
+        if (refreshServices.timer != null)
+        {
+            clearTimeout(refreshServices.timer);
+            refreshServices.timer = null;
+        }
+        if (now)
+        {
+            refreshServices();
+        }
+        else
+        {
+            refreshServices.timer = setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
+        }
     };
 
     $('form.service-action').live('submit', function()
     {
         $.post($(this).attr('action'), function(data)
         {
-            refreshServices();
+            needRefreshServices(true);
         });
         return false;
     });
 
     $('#service-refresh-interval').text(REFRESH_SERVICES_TIMEOUT / 1000);
 
-    refreshServices();
+    needRefreshServices(true);
 })(jQuery);

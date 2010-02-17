@@ -1,15 +1,12 @@
 require 'runit-man/log_location_cache'
 
 class ServiceInfo
-  ALL_SERVICES_FOLDER = '/etc/sv'.freeze
-  ACTIVE_SERVICES_FOLDER = '/etc/service'.freeze
-
   attr_reader :name
 
   def initialize(a_name)
     @name = a_name
   end
-1
+
   def logged?
     File.directory?(log_supervise_folder)
   end
@@ -22,7 +19,11 @@ class ServiceInfo
   end
 
   def active?
-    supervise?
+    File.directory?(active_service_folder) || File.symlink?(active_service_folder)
+  end
+
+  def switchable?
+    File.symlink?(active_service_folder) || File.directory?(inactive_service_folder)
   end
 
   def run?
@@ -31,10 +32,23 @@ class ServiceInfo
 
   def up!
     send_signal! :u
+    puts "service #{name} up!"
   end
 
   def down!
     send_signal! :d
+    puts "service #{name} down!"
+  end
+
+  def switch_down!
+    down!
+    File.unlink(active_service_folder)
+    puts "service #{name} deactivated!"
+  end
+
+  def switch_up!
+    File.symlink(inactive_service_folder, active_service_folder)
+    puts "service #{name} activated!"
   end
 
   def restart!
@@ -63,16 +77,26 @@ class ServiceInfo
   end
 
   def log_file_location
-    self.class.log_location_cache[log_run_folder, log_pid]
+    rel_path = self.class.log_location_cache[log_pid]
+    return nil if rel_path.nil?
+    File.expand_path(rel_path, log_run_folder)
   end
 
 private
+  def inactive_service_folder
+    File.join(RunitMan.all_services_directory, name)
+  end
+
+  def active_service_folder
+    File.join(RunitMan.active_services_directory, name)
+  end
+
   def supervise_folder
-    File.join('', 'etc', 'service', name, 'supervise')
+    File.join(active_service_folder, 'supervise')
   end
 
   def log_run_folder
-    File.join('', 'etc', 'service', name, 'log')
+    File.join(active_service_folder, 'log')
   end
 
   def log_supervise_folder
@@ -112,18 +136,18 @@ private
     end
 
     def active_service_names
-      return [] unless File.directory?(ACTIVE_SERVICES_FOLDER)
-      Dir.entries(ACTIVE_SERVICES_FOLDER).reject do |name|
-        full_name = File.join(ACTIVE_SERVICES_FOLDER, name)
+      return [] unless File.directory?(RunitMan.active_services_directory)
+      Dir.entries(RunitMan.active_services_directory).reject do |name|
+        full_name = File.join(RunitMan.active_services_directory, name)
         itself_or_parent?(name) || (!File.symlink?(full_name) && !File.directory?(full_name))
       end
     end
 
     def inactive_service_names
-      return [] unless File.directory?(ALL_SERVICES_FOLDER)
+      return [] unless File.directory?(RunitMan.all_services_directory)
       actives = active_service_names
-      Dir.entries(ALL_SERVICES_FOLDER).reject do |name|
-        full_name = File.join(ALL_SERVICES_FOLDER, name)
+      Dir.entries(RunitMan.all_services_directory).reject do |name|
+        full_name = File.join(RunitMan.all_services_directory, name)
         itself_or_parent?(name) || !File.directory?(full_name) || actives.include?(name)
       end
     end
@@ -132,10 +156,5 @@ private
       (active_service_names + inactive_service_names)
     end
 
-    def runsvdir_pid
-      pid = `pgrep -x runsvdir`.split("\n").first
-      pid = pid.chomp unless pid.nil?
-      pid
-    end
   end
 end

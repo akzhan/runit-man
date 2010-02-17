@@ -23,10 +23,13 @@ runit:
         down: <span class="down">остановлен</span>
         run: <span class="run">работает</span>
         got: получен
+        want: ожидается
       actions:
         start: Запустить
         stop: Остановить
         restart: Перезапустить
+        switch_down: Выключить
+        switch_up: Включить
     log:
       title: "Последние 100 строк лога сервиса %1 - %2"
       header: "Последние 100 строк лога сервиса <strong>%1</strong>: %2"

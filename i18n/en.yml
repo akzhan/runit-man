@@ -26,6 +26,8 @@ runit:
         start: Start
         stop: Stop
         restart: Restart
+        switch_down: Deactivate
+        switch_up: Activate
     log:
       title: "Tail 100 lines of service %1 log - %2"
       header: "Tail 100 lines of service <strong>%1</strong> log: %2"
