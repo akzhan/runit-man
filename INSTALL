@@ -1,4 +1,4 @@
-You need ruby 1.8.7 or above and rubygems installed.
+You need ruby 1.8.6 or above and rubygems installed.
 
 Use following command to install runit-man:
   gem install runit-man
