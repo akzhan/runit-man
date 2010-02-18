@@ -11,7 +11,7 @@ spec = Gem::Specification.new do |s|
   s.version = "1.4.2"
   s.requirements << 'none'
   s.require_path = 'lib'
-  s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].to_a
+  s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
   s.executables << 'runit-man'
   s.add_dependency 'erubis'
   s.add_dependency 'sinatra'
