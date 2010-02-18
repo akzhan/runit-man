@@ -1,0 +1,18 @@
+Take a look at runit-man.rb script options:
+
+ -p - Port to listen (4567 by default)
+ -b - IP Address to bind (0.0.0.0 by default)
+ -a - Directory of activated services (/etc/service by default)
+ -f - Directory of all known services (/etc/sv by default)
+ -r - Register runit-man as runit service (as defined by other options)
+
+Usually you need thin or mongrel gem to run runit-man fine.
+  gem install thin
+
+Any localization can be done by editing of ./i18n/*.yml locale files.
+
+runit home page: http://smarden.org/runit/
+runit-man home page: http://github.com/akzhan/runit-man
+
+Yours sincerely,
+  Akzhan.
