@@ -1,4 +1,4 @@
-Version 1.4.4
+Version 1.4.5
 -------------
  * Fix error when ran on machine when it's name cannot be resolved by DNS.
  * /services.json added to provide automation API. 

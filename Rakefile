@@ -8,11 +8,12 @@ spec = Gem::Specification.new do |s|
   s.author = 'Akzhan Abdulin'
   s.email = 'akzhan.abdulin@gmail.com'
   s.homepage = 'http://github.com/akzhan/runit-man'
-  s.version = "1.4.4"
+  s.version = "1.4.5"
   s.requirements << 'none'
   s.require_path = 'lib'
   s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
   s.executables << 'runit-man'
+  s.add_dependency 'json'
   s.add_dependency 'erubis'
   s.add_dependency 'sinatra'
   s.add_dependency 'sinatra-content-for'
