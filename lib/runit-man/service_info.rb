@@ -7,6 +7,14 @@ class ServiceInfo
     @name = a_name
   end
 
+  def to_json
+    data = {}
+    [ :name, :stat, :active?, :logged?, :switchable?, :run?, :pid, :log_pid, :log_file_location ].each do |sym|
+      data[sym] = send(sym)
+    end
+    data.to_json
+  end
+
   def logged?
     File.directory?(log_supervise_folder)
   end
@@ -25,7 +33,7 @@ class ServiceInfo
   end
 
   def run?
-    stat =~ /\brun\b/
+    !!(stat =~ /\brun\b/)
   end
 
   def up!

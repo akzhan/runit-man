@@ -1,3 +1,4 @@
+require 'json'
 require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'
@@ -48,6 +49,10 @@ class RunitMan < Sinatra::Base
 
   get '/services' do
     partial :services
+  end
+
+  get '/services.json' do
+    service_infos.to_json
   end
 
   get '/:name/log' do |name|
