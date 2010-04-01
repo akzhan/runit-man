@@ -1,5 +1,8 @@
 <% content_for :content do %>
-    <%= t.runit.services.log.header(h(name), h(host_name)) %>
+    <%= t.runit.services.log.header(h(name), h(host_name), h(count), h(log_location)) %>
+    <p>
+       <%= t.runit.services.log.counts([100, 250, 500, 1000, 5000].map { |n| log_link(name, :count => n, :title => n) }.join(' ')) %>
+    </p>
     <pre><%= h(text) %></pre>
 <% end %>
 <% content_for :footer do %>

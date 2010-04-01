@@ -5,10 +5,9 @@ require 'sinatra/r18n'
 require 'runit-man/erb-to-erubis'
 require 'runit-man/helpers'
 
-R18n::Filters.on :variables
-
-GEM_FOLDER = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
-
+MIN_TAIL      = 100
+MAX_TAIL      = 10000
+GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
 CONTENT_TYPES = {
   :html => 'text/html',
   :css  => 'text/css',
@@ -16,6 +15,7 @@ CONTENT_TYPES = {
   :json => 'application/json'
 }.freeze
 
+R18n::Filters.on :variables
 
 class RunitMan < Sinatra::Base
   set :environment,  :production
@@ -55,14 +55,19 @@ class RunitMan < Sinatra::Base
     service_infos.to_json
   end
 
-  get '/:name/log' do |name|
-    srv = ServiceInfo[name]
+  get %r[/([^/]+)/log(?:/(\d+))?] do |name, count|
+    count = count.to_i
+    count = MIN_TAIL if count < MIN_TAIL
+    count = MAX_TAIL if count > MAX_TAIL
+    srv   = ServiceInfo[name]
     return not_found if srv.nil? || !srv.logged?
     @scripts = []
-    @title = t.runit.services.log.title(h(name), h(host_name))
+    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(srv.log_file_location))
     erb :log, :locals => {
-      :name => name,
-      :text => `tail -n 100 #{srv.log_file_location}`
+      :name         => name,
+      :count        => count,
+      :log_location => srv.log_file_location,
+      :text         => `tail -n #{count} #{srv.log_file_location}`
     }
   end
 

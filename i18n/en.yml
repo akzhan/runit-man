@@ -29,7 +29,8 @@ runit:
         switch_down: Deactivate
         switch_up: Activate
     log:
-      title: "Tail 100 lines of service %1 log - %2"
-      header: "Tail 100 lines of service <strong>%1</strong> log: %2"
+      title: "Tail %3 lines of service %1 log - %2"
+      header: "Tail %3 lines of service <strong>%1</strong> log: %2 (<code>%4</code>)"
+      counts: "Show %1 lines of log"
       updated: "Page updated at %1"
       reload: Reload
