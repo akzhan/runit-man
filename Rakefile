@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
   s.add_development_dependency 'rack-test'
-  s.description = File.open(File.join(File.dirname(__FILE__), 'README')).read
+  s.description = File.open(File.join(File.dirname(__FILE__), 'README.textile')).read
 end
 
 task :default => [:package]
