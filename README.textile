@@ -9,21 +9,21 @@ h2. REST API
 h3. Get state
 
 You can read current state of services in "JSON format":http://www.json.org/ using
-bq. pre. GET /services.json
+@GET /services.json@
 
 h3. Management
 
 You can manage your services using
-bq. pre. POST /_service name_/_command_
+@POST /service name/command@
 
 Supported commands: up, down, restart, switch_up (activates service), switch_down (deactivates service).
 
 h3. Read logs
 
 You can read tail of service log using
-bq. pre. GET /_service name_/log/_count of lines_.txt
+@GET /service name/log/count_of_lines.txt@
 
 Note that to use this feature You must do logging using 
-bq. pre. svlogd _options_ _log_directory_location_
+@svlogd options log_directory_location@
 
 
