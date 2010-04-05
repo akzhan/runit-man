@@ -1,0 +1,29 @@
+h2. DESCRIPTION
+
+Simple "runit":http://smarden.org/runit/ web management tool with i18n.
+
+Server will run by runit-man script. Take a note that runit-man must have privileges like runsvdir ones.
+
+h2. REST API
+
+h3. Get state
+
+You can read current state of services in "JSON format":http://www.json.org/ using
+bc. GET /services.json
+
+h3. Management
+
+You can manage your services using
+bc. POST /<service name>/<command>
+
+Supported commands: up, down, restart, switch_up (activates service), switch_down (deactivates service).
+
+h3. Read logs
+
+You can read tail of service log using
+bc. GET /<service name>/log/<count of lines>.txt
+
+Note that to use this feature You must do logging using 
+bc. svlogd <options> <log_directory_location>
+
+
