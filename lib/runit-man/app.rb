@@ -10,6 +10,7 @@ MAX_TAIL      = 10000
 GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
 CONTENT_TYPES = {
   :html => 'text/html',
+  :txt  => 'text/plain',
   :css  => 'text/css',
   :js   => 'application/x-javascript',
   :json => 'application/json'
@@ -55,20 +56,32 @@ class RunitMan < Sinatra::Base
     service_infos.to_json
   end
 
-  get %r[/([^/]+)/log(?:/(\d+))?] do |name, count|
+  def log_of_service(name, count)
     count = count.to_i
     count = MIN_TAIL if count < MIN_TAIL
     count = MAX_TAIL if count > MAX_TAIL
     srv   = ServiceInfo[name]
-    return not_found if srv.nil? || !srv.logged?
-    @scripts = []
-    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(srv.log_file_location))
-    erb :log, :locals => {
+    return nil if srv.nil? || !srv.logged?
+    {
       :name         => name,
       :count        => count,
       :log_location => srv.log_file_location,
       :text         => `tail -n #{count} #{srv.log_file_location}`
     }
+  end
+
+  get %r[/([^/]+)/log(?:/(\d+))?] do |name, count|
+    data = log_of_service(name, count)
+    return not_found if data.nil?
+    @scripts = []
+    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(srv.log_file_location))
+    erb :log, :locals => data
+  end
+
+  get %r[/([^/]+)/log\.txt(?:/(\d+))?] do |name, count|
+    data = log_of_service(name, count)
+    return not_found if data.nil?
+    data[:text]
   end
 
   def log_action(name, text)
