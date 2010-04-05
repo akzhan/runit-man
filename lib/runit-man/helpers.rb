@@ -39,9 +39,10 @@ module Helpers
     title = options[:title].to_s || count
     blank = options[:blank] || false
     hint  = options[:hint].to_s  || ''
+    raw   = options[:raw] || false
     hint  = " title=\"#{h(hint)}\"" unless hint.empty?
     blank = blank ? ' target="_blank"' : ''
-    "<a#{hint}#{blank} href=\"/#{h(name)}/log#{ (count != 100) ? "/#{count}" : '' }#footer\">#{h(title)}</a>"
+    "<a#{hint}#{blank} href=\"/#{h(name)}/log#{ (count != 100) ? "/#{count}" : '' }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
   end
 
   def even_or_odd

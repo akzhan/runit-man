@@ -34,3 +34,4 @@ runit:
       counts: "Show %1 lines of log"
       updated: "Page updated at %1"
       reload: Reload
+      raw: Raw

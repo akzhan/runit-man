@@ -33,12 +33,9 @@ class RunitMan < Sinatra::Base
   end
 
   before do
-    base_content_type = case request.env['REQUEST_URI']
-      when /\.css$/  then :css
-      when /\.js$/   then :js
-      when /\.json$/ then :json
-      else                :html
-    end
+    base_content_type = CONTENT_TYPES.keys.detect do |t|
+      request.env['REQUEST_URI'] =~ /\.#{Regexp.escape(t.to_s)}$/
+    end || :html
     content_type CONTENT_TYPES[base_content_type], :charset => 'utf-8'
   end
 
@@ -70,15 +67,15 @@ class RunitMan < Sinatra::Base
     }
   end
 
-  get %r[/([^/]+)/log(?:/(\d+))?] do |name, count|
+  get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
     @scripts = []
-    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(srv.log_file_location))
+    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(data[:log_location]))
     erb :log, :locals => data
   end
 
-  get %r[/([^/]+)/log\.txt(?:/(\d+))?] do |name, count|
+  get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
     data[:text]
