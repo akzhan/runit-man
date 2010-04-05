@@ -37,11 +37,11 @@ class ServiceInfo
   end
 
   def up!
-    send_signal! :u
+    send_signal :u
   end
 
   def down!
-    send_signal! :d
+    send_signal :d
   end
 
   def switch_down!
@@ -70,6 +70,11 @@ class ServiceInfo
     rel_path = self.class.log_location_cache[log_pid]
     return nil if rel_path.nil?
     File.expand_path(rel_path, log_run_folder)
+  end
+
+  def send_signal(signal)
+    return unless supervise?
+    File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.print signal.to_s }
   end
 
 private
@@ -102,11 +107,6 @@ private
     r = IO.read(file_name)
     r = r.chomp unless r.nil?
     r.empty? ? nil : r
-  end
-
-  def send_signal!(signal)
-    return unless supervise?
-    File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.print signal.to_s }
   end
 
   class << self

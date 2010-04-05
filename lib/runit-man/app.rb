@@ -87,6 +87,14 @@ class RunitMan < Sinatra::Base
     puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
   end
 
+  post '/:name/signal/:signal' do |name, signal|
+    srv = ServiceInfo[name]
+    return not_found if srv.nil?
+    srv.send_signal(signal)
+    log_action(name, "send signal \"#{signal}\"")
+    ''
+  end
+
   post '/:name/:action' do |name, action|
     srv = ServiceInfo[name]
     action = "#{action}!".to_sym

@@ -18,6 +18,9 @@ You can manage your services using
 
 Supported commands: up, down, restart, switch_up (activates service), switch_down (deactivates service).
 
+You can also send any signal to service using
+@POST /service name/signal/<signal>@
+
 h3. Read logs
 
 You can read tail of service log using
