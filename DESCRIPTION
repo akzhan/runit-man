@@ -1,0 +1,5 @@
+Simple runit (http://smarden.org/runit/) web management tool with i18n.
+
+Server will run by runit-man script.
+
+More information available at http://github.com/akzhan/runit-man

@@ -8,7 +8,7 @@ spec = Gem::Specification.new do |s|
   s.author = 'Akzhan Abdulin'
   s.email = 'akzhan.abdulin@gmail.com'
   s.homepage = 'http://github.com/akzhan/runit-man'
-  s.version = "1.4.8"
+  s.version = "1.4.9"
   s.requirements << 'none'
   s.require_path = 'lib'
   s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rr'
   s.add_development_dependency 'rack-test'
-  s.description = File.open(File.join(File.dirname(__FILE__), 'README.textile')).read
+  s.description = File.open(File.join(File.dirname(__FILE__), 'DESCRIPTION')).read
 end
 
 task :default => [:package]
