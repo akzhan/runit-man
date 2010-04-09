@@ -1,0 +1,10 @@
+<% content_for :content do %>
+    <%= t.runit.view_file.header(h(name), h(host_name)) %> | <a href="/view.txt?file=<% h(name) %>"><%= t.runit.view_file.raw %></a>
+
+    <pre><%= h(text) %></pre>
+<% end %>
+<% content_for :footer do %>
+    <p>
+        <%= t.runit.view_file.updated(Time.now.utc) %> <a href="javascript:;" rel="nofollow" onclick="window.location.reload()"><%= t.view_file.reload %></a>
+    </p>
+<% end %>
