@@ -1,5 +1,5 @@
 <% content_for :content do %>
-    <%= t.runit.view_file.header(h(name), h(host_name)) %> | <a href="/view.txt?file=<% h(name) %>"><%= t.runit.view_file.raw %></a>
+    <%= t.runit.view_file.header(h(name), h(host_name)) %> | <a href="/view.txt?file=<%= h(name) %>"><%= t.runit.view_file.raw %></a>
 
     <pre><%= h(text) %></pre>
 <% end %>

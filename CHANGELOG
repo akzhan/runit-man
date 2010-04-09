@@ -1,3 +1,6 @@
+Version 1.5.3
+ * Fix link to view file as text/plain.
+
 Version 1.5.2
 -------------
  * Fix reregistration as runit service.
