@@ -18,3 +18,8 @@
         <%= partial(:service_info, :collection => service_infos) %>
     </tbody>
 </table>
+<ul>
+<% files_to_view.each do |f| %>
+  <li><a target="_blank" href="/view?file=<%= h(f) %>"><%= h(f) %></a></li>
+<% end %>
+</ul>

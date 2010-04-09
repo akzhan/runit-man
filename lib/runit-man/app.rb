@@ -81,6 +81,29 @@ class RunitMan < Sinatra::Base
     data[:text]
   end
 
+  get '/view' do
+    if !request.GET.has_key?('file')
+      return not_found
+    end
+    f = request.GET['file']
+    return not_found unless files_to_view.include?(f)
+    @scripts = []
+    @title = t.runit.view_file.title(h(f), h(host_name))
+    erb :view_file, :locals => {
+      :name  => f,
+      :text  => IO.read(f)
+    }
+  end
+
+  get '/view.txt' do
+    if !request.GET.has_key?('file')
+      return not_found
+    end
+    f = request.GET['file']
+    return not_found unless files_to_view.include?(f)
+    IO.read(f)
+  end
+
   def log_action(name, text)
     env  = request.env
     addr = env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
@@ -110,6 +133,14 @@ class RunitMan < Sinatra::Base
       return if File.symlink?(File.join(RunitMan.all_services_directory, 'runit-man'))
       do_cmd("ln -sf #{File.join(GEM_FOLDER, 'sv')} #{File.join(RunitMan.all_services_directory, 'runit-man')}")
       do_cmd("ln -sf #{File.join(RunitMan.all_services_directory, 'runit-man')} #{File.join(RunitMan.active_services_directory, 'runit-man')}")
+    end
+
+    def enable_view_of(file_location)
+      files_to_view << File.expand_path(file_location, '/')
+    end
+
+    def files_to_view
+      @files_to_view ||= []
     end
 
   private

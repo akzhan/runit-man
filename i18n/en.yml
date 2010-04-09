@@ -35,3 +35,10 @@ runit:
       updated: "Page updated at %1"
       reload: Reload
       raw: Raw
+  view_file:
+    raw: Raw
+    title: 'File %1 on %2'
+    header: 'View %1 file on %2'
+    updated: "Page updated at %1"
+    reload: Reload
+

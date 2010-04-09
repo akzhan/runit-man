@@ -26,6 +26,14 @@ module Helpers
     ServiceInfo.all
   end
 
+  def files_to_view
+    RunitMan.files_to_view.map do |f|
+      File.symlink?(f) ? File.expand_path(File.readlink(f), File.dirname(f)) : f
+    end.select do |f|
+      File.readable?(f)
+    end.uniq.sort
+  end
+
   def service_action(name, action, label)
     partial :service_action, :locals => {
       :name   => name,
