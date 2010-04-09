@@ -1,3 +1,6 @@
+Version 1.5.4
+ * More correct way to register itself as runit service.
+
 Version 1.5.3
  * Fix link to view file as text/plain.
 
