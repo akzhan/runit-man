@@ -20,7 +20,7 @@ class ServiceInfo
   end
 
   def stat
-    r = data_from_file(File.join(supervise_folder, 'stat'))
+    r = ServiceInfo.data_from_file(File.join(supervise_folder, 'stat'))
     r ? r : 'inactive'
   end
 
@@ -59,11 +59,11 @@ class ServiceInfo
   end
 
   def pid
-    data_from_file(File.join(supervise_folder, 'pid'))
+    ServiceInfo.data_from_file(File.join(supervise_folder, 'pid'))
   end
 
   def log_pid
-    data_from_file(File.join(log_supervise_folder, 'pid'))
+    ServiceInfo.data_from_file(File.join(log_supervise_folder, 'pid'))
   end
 
   def log_file_location
@@ -102,13 +102,6 @@ private
     File.directory?(supervise_folder)
   end
 
-  def data_from_file(file_name)
-    return nil unless File.readable?(file_name)
-    r = IO.read(file_name)
-    r = r.chomp unless r.nil?
-    r.empty? ? nil : r
-  end
-
   class << self
     def all
       all_service_names.sort.map do |name|
@@ -125,6 +118,13 @@ private
         @log_location_cache = LogLocationCache.new
       end
       @log_location_cache
+    end
+
+    def data_from_file(file_name)
+      return nil unless File.readable?(file_name)
+      data = IO.read(file_name)
+      data.chomp! unless data.nil?
+      data.empty? ? nil : data
     end
 
   private
