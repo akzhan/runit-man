@@ -1,6 +1,10 @@
+Version 1.5.2
+-------------
+ * Fix reregistration as runit service.
+
 Version 1.5.1
 -------------
- * Fix registration.
+ * Fix registration as runit service.
 
 Version 1.5.0
 -------------

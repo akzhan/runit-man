@@ -130,9 +130,16 @@ class RunitMan < Sinatra::Base
   class << self
     def register_as_runit_service
       create_run_script
-      return if File.symlink?(File.join(RunitMan.all_services_directory, 'runit-man'))
-      do_cmd("ln -sf #{File.join(GEM_FOLDER, 'sv')} #{File.join(RunitMan.all_services_directory, 'runit-man')}")
-      do_cmd("ln -sf #{File.join(RunitMan.all_services_directory, 'runit-man')} #{File.join(RunitMan.active_services_directory, 'runit-man')}")
+      all_r_dir    = File.join(RunitMan.all_services_directory, 'runit-man')
+      active_r_dir = File.join(RunitMan.active_services_directory, 'runit-man')
+      my_dir       = File.join(GEM_FOLDER, 'sv')
+      if File.symlink?(all_r_dir)
+        File.unlink(all_r_dir)
+      end
+      File.symlink(my_dir, all_r_dir)
+      unless File.symlink?(active_r_dir)
+        File.symlink(all_r_dir, active_r_dir)
+      end
     end
 
     def enable_view_of(file_location)
@@ -144,10 +151,6 @@ class RunitMan < Sinatra::Base
     end
 
   private
-    def do_cmd(command)
-      system(command) or raise "Cannot execute #{command}"
-    end
-
     def create_run_script
       script_name = File.join(GEM_FOLDER, 'sv', 'run')
       File.open(script_name, 'w') do |f|
