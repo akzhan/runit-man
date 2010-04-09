@@ -1,3 +1,4 @@
+require 'ftools'
 require 'json'
 require 'erubis'
 require 'sinatra/base'
@@ -129,14 +130,18 @@ class RunitMan < Sinatra::Base
 
   class << self
     def register_as_runit_service
-      create_run_script
       all_r_dir    = File.join(RunitMan.all_services_directory, 'runit-man')
       active_r_dir = File.join(RunitMan.active_services_directory, 'runit-man')
       my_dir       = File.join(GEM_FOLDER, 'sv')
+      log_dir      = File.join(all_r_dir, 'log')
       if File.symlink?(all_r_dir)
         File.unlink(all_r_dir)
       end
-      File.symlink(my_dir, all_r_dir)
+      unless File.directory?(all_r_dir)
+        File.makedirs(log_dir)
+        File.copy(File.join(my_dir, 'log', 'run'), File.join(log_dir, 'run'))
+      end
+      create_run_script(all_r_dir)
       unless File.symlink?(active_r_dir)
         File.symlink(all_r_dir, active_r_dir)
       end
@@ -151,10 +156,11 @@ class RunitMan < Sinatra::Base
     end
 
   private
-    def create_run_script
-      script_name = File.join(GEM_FOLDER, 'sv', 'run')
-      File.open(script_name, 'w') do |f|
-        f.print Erubis::Eruby.new(IO.read(script_name + '.erb')).result(
+    def create_run_script(dir)
+      script_name   = File.join(dir, 'run')
+      template_name = File.join(GEM_FOLDER, 'sv', 'run.erb')
+      File.open(script_name, 'w') do |handle|
+        handle.print Erubis::Eruby.new(IO.read(template_name)).result(
           :all_services_directory    => RunitMan.all_services_directory,
           :active_services_directory => RunitMan.active_services_directory,
           :port                      => RunitMan.port,
