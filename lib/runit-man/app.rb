@@ -87,7 +87,7 @@ class RunitMan < Sinatra::Base
       return nil
     end
     file_path = request.GET['file']
-    return nil unless files_to_view.include?(file_path)
+    return nil unless all_files_to_view.include?(file_path)
     {
        :name => file_path,
        :text => IO.read(file_path)
