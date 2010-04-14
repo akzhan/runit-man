@@ -82,27 +82,34 @@ class RunitMan < Sinatra::Base
     data[:text]
   end
 
-  get '/view' do
+  def data_of_file_view(request)
     if !request.GET.has_key?('file')
-      return not_found
+      return nil
     end
-    f = request.GET['file']
-    return not_found unless all_files_to_view.include?(f)
-    @scripts = []
-    @title = t.runit.view_file.title(h(f), h(host_name))
-    erb :view_file, :locals => {
-      :name  => f,
-      :text  => IO.read(f)
+    file_path = request.GET['file']
+    return nil unless files_to_view.include?(file_path)
+    {
+       :name => file_path,
+       :text => IO.read(file_path)
     }
   end
 
-  get '/view.txt' do
-    if !request.GET.has_key?('file')
+  get '/view' do
+    data = data_of_file_view(request)
+    if data.nil?
       return not_found
     end
-    f = request.GET['file']
-    return not_found unless files_to_view.include?(f)
-    IO.read(f)
+    @scripts = []
+    @title = t.runit.view_file.title(h(data[:name]), h(host_name))
+    erb :view_file, :locals => data 
+  end
+
+  get '/view.txt' do
+    data = data_of_file_view(request)
+    if data.nil?
+      return not_found
+    end
+    data[:text]
   end
 
   def log_action(name, text)
@@ -112,18 +119,18 @@ class RunitMan < Sinatra::Base
   end
 
   post '/:name/signal/:signal' do |name, signal|
-    srv = ServiceInfo[name]
-    return not_found if srv.nil?
-    srv.send_signal(signal)
+    service = ServiceInfo[name]
+    return not_found if service.nil?
+    service.send_signal(signal)
     log_action(name, "send signal \"#{signal}\"")
     ''
   end
 
   post '/:name/:action' do |name, action|
-    srv = ServiceInfo[name]
+    service = ServiceInfo[name]
     action = "#{action}!".to_sym
-    return not_found if srv.nil? || !srv.respond_to?(action)
-    srv.send(action)
+    return not_found if service.nil? || !service.respond_to?(action)
+    service.send(action)
     log_action(name, action)
     ''
   end
@@ -159,8 +166,8 @@ class RunitMan < Sinatra::Base
     def create_run_script(dir)
       script_name   = File.join(dir, 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'run.erb')
-      File.open(script_name, 'w') do |handle|
-        handle.print Erubis::Eruby.new(IO.read(template_name)).result(
+      File.open(script_name, 'w') do |script_source|
+        script_source.print Erubis::Eruby.new(IO.read(template_name)).result(
           :all_services_directory    => RunitMan.all_services_directory,
           :active_services_directory => RunitMan.active_services_directory,
           :port                      => RunitMan.port,
