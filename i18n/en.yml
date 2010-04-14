@@ -17,10 +17,13 @@ runit:
       values:
         log_hint: Open tail 100 lines of %1 service log in new window
         log_absent: Absent
+        files_to_view: Files
+        urls_to_views: Urls
       footer: Updated at %1
       subst:
         inactive: <span class="inactive">inactive</span>
         down: <span class="down">down<span>
+        finish: <span class="down">finish<span>
         run: <span class="run">run<span>
       actions:
         start: Start

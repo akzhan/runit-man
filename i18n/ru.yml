@@ -17,10 +17,13 @@ runit:
       values:
         log_hint: Отрыть последние 100 строк лога сервиса %1 в новом окне
         log_absent: Отсутствует
+        files_to_view: Файлы
+        urls_to_view: Ссылки
       footer: Обновлено %1
       subst:
         inactive: <span class="inactive">неактивен</span>
         down: <span class="down">остановлен</span>
+        finish: <span class="down">останавливается</span>
         run: <span class="run">работает</span>
         got: получен
         want: ожидается
