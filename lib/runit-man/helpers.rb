@@ -34,6 +34,12 @@ module Helpers
     end.uniq.sort
   end
 
+  def all_files_to_view
+    (files_to_view + service_infos.map do |service|
+      service.files_to_view
+    end.flatten).uniq.sort
+  end
+
   def service_action(name, action, label)
     partial :service_action, :locals => {
       :name   => name,

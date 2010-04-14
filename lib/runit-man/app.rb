@@ -87,7 +87,7 @@ class RunitMan < Sinatra::Base
       return not_found
     end
     f = request.GET['file']
-    return not_found unless files_to_view.include?(f)
+    return not_found unless all_files_to_view.include?(f)
     @scripts = []
     @title = t.runit.view_file.title(h(f), h(host_name))
     erb :view_file, :locals => {

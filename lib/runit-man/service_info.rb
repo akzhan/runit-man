@@ -77,6 +77,31 @@ class ServiceInfo
     File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.print signal.to_s }
   end
 
+  def files_to_view
+    return [] unless File.directory?(files_to_view_folder)
+    Dir.entries(files_to_view_folder).select do |name|
+      File.symlink?(File.join(files_to_view_folder, name))
+    end.map do |name|
+      File.expand_path(
+        File.readlink(File.join(files_to_view_folder, name)),
+        files_to_view_folder
+      )
+    end.select do |file_path|
+      File.file?(file_path)
+    end 
+  end
+
+  def urls_to_view
+    return [] unless File.directory?(urls_to_view_folder)
+    Dir.entries(urls_to_view_folder).select do |name|
+      name =~ /\.url$/ && File.file?(File.join(urls_to_view_folder, name))
+    end.map do |name|
+      ServiceInfo.data_from_file(File.join(urls_to_view_folder, name))
+    end.select do |url|
+      !url.nil?
+    end
+  end
+
 private
   def inactive_service_folder
     File.join(RunitMan.all_services_directory, name)
@@ -84,6 +109,14 @@ private
 
   def active_service_folder
     File.join(RunitMan.active_services_directory, name)
+  end
+
+  def files_to_view_folder
+    File.join(active_service_folder, 'runit-man', 'files-to-view')
+  end
+
+  def urls_to_view_folder
+    File.join(active_service_folder, 'runit-man', 'urls-to-view')
   end
 
   def supervise_folder
