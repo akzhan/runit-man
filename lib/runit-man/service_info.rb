@@ -7,12 +7,12 @@ class ServiceInfo
     @name = a_name
   end
 
-  def to_json
+  def to_json(*a)
     data = {}
     [ :name, :stat, :active?, :logged?, :switchable?, :run?, :pid, :log_pid, :log_file_location ].each do |sym|
       data[sym] = send(sym)
     end
-    data.to_json
+    data.to_json(*a)
   end
 
   def logged?
