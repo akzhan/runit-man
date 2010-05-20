@@ -1,3 +1,10 @@
+Version 1.6.4
+ * Fix for new versions of json gem.
+
+Versions 1.6.0 up to 1.6.3
+ * Ability to view files and urls associated with service.
+ * Small fixes. 
+
 Version 1.5.4
  * More correct way to register itself as runit service.
 
