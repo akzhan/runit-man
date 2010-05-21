@@ -4,11 +4,11 @@ need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_vi
 <tr class="<%= even_or_odd ? 'even' : 'odd' %>">
   <td<%= need_second_row ? ' rowspan="2"' : '' %>><%= h(service_info.pid) %></td>
   <th scope="row"><%= h(service_info.name) %></th>
-  <td><%= '%5.2d' % service_info.uptime) %></td>
+  <td><%= service_info.uptime ? ('%.2f' % service_info.uptime) : '' %></td>
   <td><%= stat_subst(service_info.stat) %></td>
   <td>
     <% if service_info.active? %>
-      <% if service_info.run? %>
+      <% unless service_info.down? %>
         <%= service_action service_info.name, :restart, t.runit.services.table.actions.restart %>
         <%= service_action service_info.name, :down, t.runit.services.table.actions.stop %>
       <% else %>

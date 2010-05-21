@@ -1,3 +1,8 @@
+Versions 1.7.0 up to 1.7.2
+ * Uptime and pid now retrieved from daemontools-compatible status.
+ * Files are cached.
+ * Uptime is shown.
+
 Version 1.6.4
  * Fix for new versions of json gem.
 
