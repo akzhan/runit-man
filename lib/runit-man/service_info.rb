@@ -1,18 +1,32 @@
 require 'runit-man/log_location_cache'
+require 'runit-man/service_status'
 
 class ServiceInfo
   attr_reader :name
 
   def initialize(a_name)
-    @name  = a_name
-    @data  = ''
-    @files = {}
+    @name   = a_name
+    @files  = {}
+
+    @status = ServiceStatus.new(data_from_file(File.join(supervise_folder, 'status')))
+    @log_status = ServiceStatus.new(data_from_file(File.join(log_supervise_folder, 'status')))
   end
 
   def to_json(*a)
     data = {}
-    [ :name, :stat, :active?, :logged?, :switchable?, :run?, :pid, :log_pid, :log_file_location, :finish?, :down?, :started_at, :uptime ].each do |sym|
+    [
+      :name, :stat, :active?, :logged?, :switchable?,
+      :log_file_location, :log_pid 
+    ].each do |sym|
       data[sym] = send(sym)
+    end
+
+    [
+      :run?, :pid, :finish?, :down?,
+      :want_up?, :want_down?, :got_term?,
+      :started_at, :uptime
+    ].each do |sym|
+      data[sym] = @status.send(sym)
     end
     data.to_json(*a)
   end
@@ -35,15 +49,11 @@ class ServiceInfo
   end
 
   def down?
-    status_byte == 0
+    @status.down?
   end
 
   def run?
-    status_byte == 1
-  end
-
-  def finish?
-    status_byte == 2
+    @status.run?
   end
 
   def up!
@@ -69,25 +79,15 @@ class ServiceInfo
   end
 
   def pid
-    return nil if down?
-    st = raw_status
-    st.unpack('xxxxxxxxxxxxV').first
-  end
-
-  def started_at
-    st = raw_status
-    return nil unless st
-    vals = st.unpack('NN')
-    Time.at((vals[0] << 32) + vals[1] - 4611686018427387914)
+    @status.pid
   end
 
   def uptime
-    return nil if down?
-    Time.now - started_at
+    @status.uptime
   end
 
   def log_pid
-    data_from_file(File.join(log_supervise_folder, 'pid'))
+    @log_status.pid
   end
 
   def log_file_location
@@ -98,7 +98,9 @@ class ServiceInfo
 
   def send_signal(signal)
     return unless supervise?
-    File.open(File.join(supervise_folder, 'control'), 'w') { |f| f.print signal.to_s }
+    File.open(File.join(supervise_folder, 'control'), 'w') do |f| 
+      f.print signal.to_s
+    end
   end
 
   def files_to_view
@@ -159,22 +161,6 @@ private
     File.directory?(supervise_folder)
   end
 
-  def raw_status
-    # status in daemontools supervise format
-    # look at runit's sv.c for details
-    if @data == ''
-      data = data_from_file(File.join(supervise_folder, 'status'))
-      @data = !data.nil? && data.length == 20 ? data : nil
-    end
-    @data
-  end
-
-  def status_byte
-    st = raw_status
-    return 0 unless st
-    st.unpack('xxxxxxxxxxxxxxxxxxxC').first
-  end
-
   def data_from_file(file_name)
     return @files[file_name] if @files.include?(file_name)
     @files[file_name] = self.class.real_data_from_file(file_name)
@@ -233,3 +219,4 @@ private
 
   end
 end
+
