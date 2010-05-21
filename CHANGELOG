@@ -1,4 +1,4 @@
-Versions 1.7.0 up to 1.7.2
+Versions 1.7.0 up to 1.7.3
  * Uptime and pid now retrieved from daemontools-compatible status.
  * Files are cached.
  * Uptime is shown.
