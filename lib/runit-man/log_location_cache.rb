@@ -47,11 +47,9 @@ private
   def log_command(lpid)
     return nil if lpid.nil?
     ps_output = `ps -o args -p #{lpid} 2>&1`.split("\n")
-    ps_output.shift
-    cmd = ps_output.first
-    cmd = cmd.chomp unless cmd.nil?
-    cmd = nil if cmd == ''
-    cmd
+    return nil if ps_output.length < 2
+    cmd = ps_output[1].chomp
+    cmd != '' ? cmd : nil
   end
 
   def log_folder(lpid)
@@ -59,7 +57,7 @@ private
     return nil if cmd.nil?
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
     return nil if args.shift !~ /svlogd/
-    args.shift
+    args.first
   end
 
   def set_pid_log_location(pid, log_location)
