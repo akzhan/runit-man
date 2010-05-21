@@ -41,7 +41,7 @@ class RunitMan < Sinatra::Base
   end
 
   get '/' do
-    @scripts = [ 'jquery-1.4.1.min' ]
+    @scripts = [ 'jquery-1.4.2.min' ]
     @title = host_name
     erb :index
   end

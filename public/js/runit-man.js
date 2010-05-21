@@ -51,7 +51,7 @@
         }
     };
 
-    $('form.service-action').live('submit', function()
+    $('#services').delegate('form.service-action', 'submit', function()
     {
         $.post($(this).attr('action'), function(data)
         {
