@@ -11,6 +11,7 @@ runit:
       headers:
         pid: PID
         name: Название
+        uptime: "Время исполнения (сек.)"
         stat: Состояние
         actions: Действия
         log_file: Лог

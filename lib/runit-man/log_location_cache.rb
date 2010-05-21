@@ -58,7 +58,7 @@ private
     cmd = log_command(lpid)
     return nil if cmd.nil?
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
-    return nil if args.shift != 'svlogd'
+    return nil if args.shift !~ /svlogd/
     args.shift
   end
 

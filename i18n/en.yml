@@ -11,6 +11,7 @@ runit:
       headers:
         pid: PID
         name: Name
+        uptime: Uptime (s)
         stat: Status
         actions: Actions
         log_file: Log file

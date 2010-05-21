@@ -4,12 +4,14 @@ class ServiceInfo
   attr_reader :name
 
   def initialize(a_name)
-    @name = a_name
+    @name  = a_name
+    @data  = ''
+    @files = {}
   end
 
   def to_json(*a)
     data = {}
-    [ :name, :stat, :active?, :logged?, :switchable?, :run?, :pid, :log_pid, :log_file_location ].each do |sym|
+    [ :name, :stat, :active?, :logged?, :switchable?, :run?, :pid, :log_pid, :log_file_location, :finish?, :down?, :started_at, :uptime ].each do |sym|
       data[sym] = send(sym)
     end
     data.to_json(*a)
@@ -20,7 +22,7 @@ class ServiceInfo
   end
 
   def stat
-    r = ServiceInfo.data_from_file(File.join(supervise_folder, 'stat'))
+    r = data_from_file(File.join(supervise_folder, 'stat'))
     r ? r : 'inactive'
   end
 
@@ -32,8 +34,16 @@ class ServiceInfo
     File.symlink?(active_service_folder) || File.directory?(inactive_service_folder)
   end
 
+  def down?
+    status_byte == 0
+  end
+
   def run?
-    !!(stat =~ /\brun\b/)
+    status_byte == 1
+  end
+
+  def finish?
+    status_byte == 2
   end
 
   def up!
@@ -59,11 +69,25 @@ class ServiceInfo
   end
 
   def pid
-    ServiceInfo.data_from_file(File.join(supervise_folder, 'pid'))
+    return nil if down?
+    st = raw_status
+    st.unpack('xxxxxxxxxxxxV').first
+  end
+
+  def started_at
+    st = raw_status
+    return nil unless st
+    vals = st.unpack('NN')
+    Time.at((vals[0] << 32) + vals[1] - 4611686018427387914)
+  end
+
+  def uptime
+    return nil if down?
+    Time.now - started_at
   end
 
   def log_pid
-    ServiceInfo.data_from_file(File.join(log_supervise_folder, 'pid'))
+    data_from_file(File.join(log_supervise_folder, 'pid'))
   end
 
   def log_file_location
@@ -96,7 +120,7 @@ class ServiceInfo
     Dir.entries(urls_to_view_folder).select do |name|
       name =~ /\.url$/ && File.file?(File.join(urls_to_view_folder, name))
     end.map do |name|
-      ServiceInfo.data_from_file(File.join(urls_to_view_folder, name))
+      data_from_file(File.join(urls_to_view_folder, name))
     end.select do |url|
       !url.nil?
     end
@@ -135,6 +159,27 @@ private
     File.directory?(supervise_folder)
   end
 
+  def raw_status
+    # status in daemontools supervise format
+    # look at runit's sv.c for details
+    if @data == ''
+      data = data_from_file(File.join(supervise_folder, 'status'))
+      @data = !data.nil? && data.length == 20 ? data : nil
+    end
+    @data
+  end
+
+  def status_byte
+    st = raw_status
+    return 0 unless st
+    st.unpack('xxxxxxxxxxxxxxxxxxxC').first
+  end
+
+  def data_from_file(file_name)
+    return @files[file_name] if @files.include?(file_name)
+    @files[file_name] = self.class.real_data_from_file(file_name)
+  end
+
   class << self
     def all
       all_service_names.sort.map do |name|
@@ -153,7 +198,7 @@ private
       @log_location_cache
     end
 
-    def data_from_file(file_name)
+    def real_data_from_file(file_name)
       return nil unless File.readable?(file_name)
       data = IO.read(file_name)
       data.chomp! unless data.nil?
