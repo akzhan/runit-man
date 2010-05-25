@@ -98,7 +98,7 @@ class ServiceInfo
 
   def send_signal(signal)
     return unless supervise?
-    File.open(File.join(supervise_folder, 'control'), 'w') do |f| 
+    File.open(File.join(supervise_folder, 'control'), 'w') do |f|
       f.print signal.to_s
     end
   end
