@@ -60,6 +60,8 @@
         return false;
     });
 
+	
+
     $('#service-refresh-interval').text(REFRESH_SERVICES_TIMEOUT / 1000);
 
     needRefreshServices(true);
