@@ -48,6 +48,14 @@ module Helpers
     }
   end
 
+  def service_signal(name, signal, label)
+    partial :service_signal, :locals => {
+      :name   => name,
+      :signal => signal,
+      :label  => label
+    }
+  end
+
   def log_link(name, options = {})
     count = (options[:count] || 100).to_i
     title = options[:title].to_s || count

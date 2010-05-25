@@ -34,6 +34,19 @@ runit:
         restart: Перезапустить
         switch_down: Выключить
         switch_up: Включить
+      signals:
+        t: TERM
+        k: KILL
+        i: INT
+        1: USR1
+        2: USR2
+        a: ALARM
+        q: QUIT
+        x: EXIT
+        p: PAUSE
+        c: CONT
+        h: HUP
+        o: ONCE
     log:
       title: "Последние %3 строк лога сервиса %1 - %2"
       header: "Последние %3 строк лога сервиса <strong>%1</strong>: %2 (<code>%4</code>)"

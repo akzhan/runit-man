@@ -91,7 +91,7 @@ class ServiceInfo
   end
 
   def log_file_location
-    rel_path = self.class.log_location_cache[log_pid]
+    rel_path = ServiceInfo.log_location_cache[log_pid]
     return nil if rel_path.nil?
     File.expand_path(rel_path, log_run_folder)
   end
@@ -128,6 +128,13 @@ class ServiceInfo
     end
   end
 
+  def allowed_signals
+    return [] unless File.directory?(allowed_signals_folder)
+    Dir.entries(allowed_signals_folder).reject do |name|
+      ServiceInfo.itself_or_parent?(name)
+    end
+  end
+
 private
   def inactive_service_folder
     File.join(RunitMan.all_services_directory, name)
@@ -143,6 +150,10 @@ private
 
   def urls_to_view_folder
     File.join(active_service_folder, 'runit-man', 'urls-to-view')
+  end
+
+  def allowed_signals_folder
+    File.join(active_service_folder, 'runit-man', 'allowed-signals')
   end
 
   def supervise_folder
@@ -163,7 +174,7 @@ private
 
   def data_from_file(file_name)
     return @files[file_name] if @files.include?(file_name)
-    @files[file_name] = self.class.real_data_from_file(file_name)
+    @files[file_name] = ServiceInfo.real_data_from_file(file_name)
   end
 
   class << self
@@ -191,11 +202,11 @@ private
       data.empty? ? nil : data
     end
 
-  private
     def itself_or_parent?(name)
       name == '.' || name == '..'
     end
 
+  private
     def active_service_names
       return [] unless File.directory?(RunitMan.active_services_directory)
       Dir.entries(RunitMan.active_services_directory).reject do |name|

@@ -51,7 +51,7 @@
         }
     };
 
-    $('#services').delegate('form.service-action', 'submit', function()
+    $('#services').delegate('form.service-action,form.service-signal', 'submit', function()
     {
         $.post($(this).attr('action'), function(data)
         {
@@ -59,8 +59,6 @@
         });
         return false;
     });
-
-	
 
     $('#service-refresh-interval').text(REFRESH_SERVICES_TIMEOUT / 1000);
 

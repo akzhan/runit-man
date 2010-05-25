@@ -32,6 +32,19 @@ runit:
         restart: Restart
         switch_down: Deactivate
         switch_up: Activate
+      signals:
+        t: TERM
+        k: KILL
+        i: INT
+        1: USR1
+        2: USR2
+        a: ALARM
+        q: QUIT
+        x: EXIT
+        p: PAUSE
+        c: CONT
+        h: HUP
+        o: ONCE
     log:
       title: "Tail %3 lines of service %1 log - %2"
       header: "Tail %3 lines of service <strong>%1</strong> log: %2 (<code>%4</code>)"

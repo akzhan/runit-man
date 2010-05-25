@@ -1,3 +1,7 @@
+Version 1.8.0
+ * Allow to send custom signal through Web interface
+   if these specified in SV/runit-man/allowed-signals folder.
+
 Versions 1.7.0 up to 1.7.4
  * Uptime and pid now retrieved from daemontools-compatible status.
  * Files are cached.

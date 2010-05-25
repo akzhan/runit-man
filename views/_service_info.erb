@@ -11,6 +11,9 @@ need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_vi
       <% unless service_info.down? %>
         <%= service_action service_info.name, :restart, t.runit.services.table.actions.restart %>
         <%= service_action service_info.name, :down, t.runit.services.table.actions.stop %>
+        <% service_info.allowed_signals.each do |signal| %>
+          <%= service_signal service_info.name, signal, t.runit.services.table.signals[signal] %>
+        <% end %>
       <% else %>
         <%= service_action service_info.name, :up, t.runit.services.table.actions.start %>
       <% end %>
