@@ -31,7 +31,7 @@ need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_vi
     <% end %>
   </td>
 </tr>
-<% if need_second_row %><tr><td colspan="4">
+<% if need_second_row %><tr><td colspan="5">
 <% unless service_info.files_to_view.empty? %>
   <%= h(t.runit.services.table.values.files_to_view) %>:
   <% service_info.files_to_view.each do |f| %>
