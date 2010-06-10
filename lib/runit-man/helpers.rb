@@ -40,11 +40,12 @@ module Helpers
     end.flatten).uniq.sort
   end
 
-  def service_action(name, action, label)
+  def service_action(name, action, label, enabled = true)
     partial :service_action, :locals => {
-      :name   => name,
-      :action => action,
-      :label  => label
+      :name    => name,
+      :action  => action,
+      :label   => label,
+      :enabled => enabled
     }
   end
 
