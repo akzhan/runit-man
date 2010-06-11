@@ -101,6 +101,7 @@ class RunitMan < Sinatra::Base
     end
     @scripts = []
     @title = t.runit.view_file.title(h(data[:name]), h(host_name))
+    content_type CONTENT_TYPES[:html], :charset => 'utf-8'
     erb :view_file, :locals => data 
   end
 
@@ -109,6 +110,7 @@ class RunitMan < Sinatra::Base
     if data.nil?
       return not_found
     end
+    content_type CONTENT_TYPES[:txt], :charset => 'utf-8'
     data[:text]
   end
 
