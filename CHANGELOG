@@ -1,3 +1,6 @@
+Version 1.8.4
+ * Now status of services read from status file instead of both status and stat.
+
 Version 1.8.3
  * Fix view of files that have extension like '.json', '.html' etc.
 

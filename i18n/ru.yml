@@ -26,6 +26,7 @@ runit:
         down: <span class="down">остановлен</span>
         finish: <span class="down">останавливается</span>
         run: <span class="run">работает</span>
+        up: <span class="run">поднятие</span>
         got: получен
         want: ожидается
       actions:

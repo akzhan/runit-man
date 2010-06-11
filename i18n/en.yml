@@ -26,6 +26,7 @@ runit:
         down: <span class="down">down<span>
         finish: <span class="down">finish<span>
         run: <span class="run">run<span>
+        up: <span class="run">up<span>
       actions:
         start: Start
         stop: Stop

@@ -36,8 +36,7 @@ class ServiceInfo
   end
 
   def stat
-    r = data_from_file(File.join(supervise_folder, 'stat'))
-    r ? r : 'inactive'
+    @status.inactive? ? 'inactive' : @status.to_s
   end
 
   def active?
@@ -227,7 +226,6 @@ private
     def all_service_names
       (active_service_names + inactive_service_names)
     end
-
   end
 end
 

@@ -1,21 +1,31 @@
 class ServiceStatus
+  STATUS_SIZE = 20
+  # state
+  S_DOWN      = 0
+  S_RUN       = 1
+  S_FINISH    = 2
+
   def initialize(data)
     # status in daemontools supervise format
     # look at runit's sv.c for details
-    data = !data.nil? && data.length == 20 ? data : nil
+    data = (!data.nil? && data.length == STATUS_SIZE) ? data : nil
     @raw = data.nil? ? nil : data.unpack('NNxxxxVxa1CC')
   end
 
+  def inactive?
+    @raw.nil?
+  end
+
   def down?
-    status_byte == 0
+    status_byte == S_DOWN
   end
 
   def run?
-    status_byte == 1
+    status_byte == S_RUN
   end
 
   def finish?
-    status_byte == 2
+    status_byte == S_FINISH
   end
 
   def pid
@@ -43,10 +53,26 @@ class ServiceStatus
     pid && @raw[4] != 0
   end
 
+  def to_s
+    # try to mimics stat behaviour to minimize readings
+    result = status_string
+    result += ', got TERM' if got_term?
+    result += ', want down' if want_down?
+    result += ', want up' if want_up?
+    result 
+  end
+
 private
   def status_byte
     @status_byte ||= @raw ? @raw[5] : 0
   end
 
+  def status_string
+    case status_byte
+      when S_DOWN then 'down'
+      when S_RUN then 'run'
+      when S_FINISH then 'finish'
+    end
+  end
 end
 
