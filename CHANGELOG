@@ -1,3 +1,9 @@
+Version 1.8.3
+ * Fix view of files that have extension like '.json', '.html' etc.
+
+Versions 1.8.1 up to 1.8.2
+ * Minor visual improvements.
+
 Version 1.8.0
  * Allow to send custom signal through Web interface
    if these specified in SV/runit-man/allowed-signals folder.
