@@ -36,7 +36,7 @@ class ServiceInfo
   end
 
   def stat
-    @status.inactive? ? 'inactive' : @status.to_s
+    @status.to_s
   end
 
   def active?

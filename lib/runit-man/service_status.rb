@@ -54,6 +54,7 @@ class ServiceStatus
   end
 
   def to_s
+    return 'inactive' if inactive?
     # try to mimics stat behaviour to minimize readings
     result = status_string
     result += ', got TERM' if got_term?
