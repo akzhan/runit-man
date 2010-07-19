@@ -1,3 +1,4 @@
+require 'base64'
 require 'ftools'
 require 'json'
 require 'erubis'
@@ -160,8 +161,24 @@ class RunitMan < Sinatra::Base
       files_to_view << File.expand_path(file_location, '/')
     end
 
+    def add_user(name, password)
+      allowed_users[name] = password
+    end
+
     def files_to_view
       @files_to_view ||= []
+    end
+
+    def allowed_users
+      @allowed_users ||= {}
+    end
+
+    def prepare_to_run
+      unless allowed_users.empty?
+        use Rack::Auth::Basic do |username, password|
+          allowed_users.include?(username) && allowed_users[username] == password
+        end
+      end
     end
 
   private
