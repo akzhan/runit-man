@@ -175,7 +175,7 @@ class RunitMan < Sinatra::Base
 
     def prepare_to_run
       unless allowed_users.empty?
-        use Rack::Auth::Basic do |username, password|
+        use Rack::Auth::Basic, 'runit-man' do |username, password|
           allowed_users.include?(username) && allowed_users[username] == password
         end
       end
