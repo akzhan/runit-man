@@ -191,7 +191,8 @@ class RunitMan < Sinatra::Base
           :port                      => RunitMan.port,
           :bind                      => RunitMan.respond_to?(:bind) ? RunitMan.bind : nil,
           :server                    => RunitMan.server,
-          :files_to_view             => RunitMan.files_to_view
+          :files_to_view             => RunitMan.files_to_view,
+          :auth                      => RunitMan.allowed_users
         )
       end
       File.chmod(0755, script_name)
