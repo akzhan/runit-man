@@ -1,0 +1,108 @@
+## Changes
+
+### Version 1.9.5
+* Support for Ruby 1.9.2.
+* Use native Erubis support of Sinatra.
+* Switch from sinatra-content-for gem to sinatra-content-for2 gem.
+
+### Version 1.9.4
+* Use RSpec 2.
+
+### Version 1.9.3
+* Upgrade jQuery from 1.4.2 to 1.4.4.
+* Switch from json gem to yajl-ruby gem.
+
+### Versions 1.9.0 up to 1.9.2
+* BasicAuth supported by -u user:password option (multiple occurences allowed).
+
+### Version 1.8.4
+* Now status of services read from status file instead of both status and stat.
+
+### Version 1.8.3
+* Fix view of files that have extension like '.json', '.html' etc.
+
+### Versions 1.8.1 up to 1.8.2
+* Minor visual improvements.
+
+### Version 1.8.0
+* Allow to send custom signal through Web interface
+  if these specified in SV/runit-man/allowed-signals folder.
+
+### Versions 1.7.0 up to 1.7.4
+* Uptime and pid now retrieved from daemontools-compatible status.
+* Files are cached.
+* Uptime is shown.
+
+### Version 1.6.4
+* Fix for new versions of json gem.
+
+### Versions 1.6.0 up to 1.6.3
+* Ability to view files and urls associated with service.
+* Small fixes. 
+
+### Version 1.5.4
+* More correct way to register itself as runit service.
+
+### Version 1.5.3
+* Fix link to view file as text/plain.
+
+### Version 1.5.2
+* Fix reregistration as runit service.
+
+### Version 1.5.1
+* Fix registration as runit service.
+
+### Version 1.5.0
+* We can view files in predefined locations (see command line options).
+
+### Version 1.4.9
+* More readable description for rubygems.
+
+### Version 1.4.8
+* runit-man now supports sending of any signals through API.
+
+### Version 1.4.7
+* runit-man now supports output of logs in raw text/plain format.
+
+### Version 1.4.6
+* runit-man now can show custom count of lines per log.
+
+### Version 1.4.5
+* Fix error when ran on machine when it's name cannot be resolved by DNS.
+* /services.json added to provide automation API. 
+
+### Version 1.4.3
+* Add dependency to nearest r18n library that run on ruby 1.8.6
+* Script renamed to runit-man without extension.
+
+### Version 1.4.1
+* Workaround for rubygems behavior (sometimes it doesn't update binaries).
+
+### Version 1.4
+* Automated registration with given options.
+
+### Version 1.3
+* Automated registration as runit service (-r option).
+
+### Version 1.2
+* First public release
+* Some wrong installed services cannot be switched because installed
+  as directories instead of symlinks.
+
+### Version 1.1
+* After sending of actions state was retrieved from server too often.
+* Performed actions now logged.
+* Services now can be activated and deactivated.
+* Refactoring of LogLocationCache.
+* Locations of runit folders now can be set through command line.
+
+### Version 1.0
+* Packaged into gem.
+* I18n (en and ru locales added).
+* Visual improvements.
+
+### Version 0.2
+* Visual improvements.
+
+### Version 0.1
+* First working release
