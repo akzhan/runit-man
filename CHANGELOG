@@ -1,3 +1,8 @@
+Version 1.9.5
+ * Support for ruby 1.9.2.
+ * Use native Erubis support of Sinatra.
+ * Switch from sinatra-content-for to sinatra-content-for2 gem.
+
 Version 1.9.4
  * Use RSpec 2
 
