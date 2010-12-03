@@ -15,7 +15,7 @@ spec = Gem::Specification.new do |s|
   s.executables << 'runit-man'
   s.add_dependency 'yajl-ruby'
   s.add_dependency 'erubis'
-  s.add_dependency 'sinatra >= 1.0'
+  s.add_dependency 'sinatra >= 1.1'
   s.add_dependency 'sinatra-content-for2'
   s.add_dependency 'sinatra-r18n', '>=0.4.2'
   s.add_development_dependency 'rspec-core'
