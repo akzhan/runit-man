@@ -18,7 +18,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency 'sinatra'
   s.add_dependency 'sinatra-content-for'
   s.add_dependency 'sinatra-r18n', '>=0.4.2'
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec-core'
+  s.add_development_dependency 'rspec-expectations'
   s.add_development_dependency 'rr'
   s.add_development_dependency 'rack-test'
   s.description = File.open(File.join(File.dirname(__FILE__), 'DESCRIPTION')).read
@@ -29,3 +30,21 @@ task :default => [:package]
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_tar = true
 end
+
+begin
+  require 'rspec/core/rake_task'
+
+  RSpec::Core::RakeTask.new do |t|
+    t.rspec_opts = ["-c", "-f progress"]
+  end
+
+  RSpec::Core::RakeTask.new(:rcov) do |t|
+    t.rcov = true
+    t.ruby_opts = '-w'
+    t.rspec_opts = ["-c", "-f progress"]
+    t.rcov_opts = %q[-Ilib --exclude "spec/*,gems/*"]
+  end
+rescue LoadError
+  $stderr.puts "RSpec not available. Install it with: gem install rspec-core rspec-expectations"
+end
+

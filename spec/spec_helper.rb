@@ -1,9 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'lib', 'runit-man', 'app')
 
 require 'rack/test'
-require 'spec'
-require 'spec/autorun'
-require 'spec/interop/test'
+require 'rspec'
 
 class RunitMan
   # set test environment
@@ -12,7 +10,7 @@ class RunitMan
   set :logging,      false
 end
 
-Spec::Runner.configure do |conf|
+RSpec.configure do |conf|
   conf.mock_with :rr
   conf.include   Rack::Test::Methods
 end
