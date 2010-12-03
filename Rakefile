@@ -8,7 +8,7 @@ spec = Gem::Specification.new do |s|
   s.author = 'Akzhan Abdulin'
   s.email = 'akzhan.abdulin@gmail.com'
   s.homepage = 'http://github.com/akzhan/runit-man'
-  s.version = "1.9.2"
+  s.version = "1.9.3"
   s.requirements << 'none'
   s.require_path = 'lib'
   s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
