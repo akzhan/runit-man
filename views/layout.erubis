@@ -16,12 +16,12 @@
       </div>
 
       <div class="content">
-        <% yield_content :content %>
+        <%= yield_content :content %>
       </div>
 
       <div id="footer">
         <div class="content">
-          <% yield_content :footer %>
+          <%= yield_content :footer %>
         </div>
       </div>
 

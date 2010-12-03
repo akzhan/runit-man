@@ -1,9 +1,8 @@
-require 'ftools'
+require 'fileutils'
 require 'yajl/json_gem'
 require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'
-require 'runit-man/erb-to-erubis'
 require 'runit-man/helpers'
 
 MIN_TAIL      = 100
@@ -43,7 +42,7 @@ class RunitMan < Sinatra::Base
   get '/' do
     @scripts = [ 'jquery-1.4.4.min' ]
     @title = host_name
-    erb :index
+    erubis :index
   end
 
   get '/services' do
@@ -73,7 +72,7 @@ class RunitMan < Sinatra::Base
     return not_found if data.nil?
     @scripts = []
     @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(data[:log_location]))
-    erb :log, :locals => data
+    erubis :log, :locals => data
   end
 
   get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
@@ -102,7 +101,7 @@ class RunitMan < Sinatra::Base
     @scripts = []
     @title = t.runit.view_file.title(h(data[:name]), h(host_name))
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
-    erb :view_file, :locals => data 
+    erubis :view_file, :locals => data 
   end
 
   get '/view.txt' do
@@ -147,8 +146,8 @@ class RunitMan < Sinatra::Base
         File.unlink(all_r_dir)
       end
       unless File.directory?(all_r_dir)
-        File.makedirs(log_dir)
-        File.copy(File.join(my_dir, 'log', 'run'), File.join(log_dir, 'run'))
+        FileUtils.mkdir_p(log_dir)
+        FileUtils.cp(File.join(my_dir, 'log', 'run'), File.join(log_dir, 'run'))
       end
       create_run_script(all_r_dir)
       unless File.symlink?(active_r_dir)

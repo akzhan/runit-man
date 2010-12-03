@@ -1,12 +1,12 @@
 require 'socket'
 require 'runit-man/service_info'
 require 'runit-man/partials'
-require 'sinatra/content_for'
+require 'sinatra/content_for2'
 
 module Helpers
   include Rack::Utils
   include Sinatra::Partials
-  include Sinatra::ContentFor
+  include Sinatra::ContentFor2
   alias_method :h, :escape_html
 
   attr_accessor :even_or_odd_state
