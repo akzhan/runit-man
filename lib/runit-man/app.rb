@@ -1,5 +1,5 @@
 require 'ftools'
-require 'json'
+require 'yajl/json_gem'
 require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'

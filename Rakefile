@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
   s.executables << 'runit-man'
-  s.add_dependency 'json'
+  s.add_dependency 'yajl-ruby'
   s.add_dependency 'erubis'
   s.add_dependency 'sinatra'
   s.add_dependency 'sinatra-content-for'
