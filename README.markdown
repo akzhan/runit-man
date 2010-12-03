@@ -1,10 +1,10 @@
-== Description
+## Description
 
 Simple [runit](http://smarden.org/runit/ "runit home page") web management tool with internationalization support.
 
 Server will run by **runit-man** script. Take a note that **runit-man** must have privileges like **runsvdir** ones.
 
-== Installation
+## Installation
 
 Usually You should install both **runit-man** and **thin** gems to run this tool fine.
 `gem install runit-man thin`
@@ -17,35 +17,35 @@ This command installs runit-man as runit service (using default folders */etc/sv
 
 Look at INSTALL for details.
 
-== Customization
+## Customization
 
 This tool can provide additional information or actions through it's Web page.
 
-=== View names and content of files that related to concrete service
+### View names and content of files that related to concrete service
 
 For each known runit service this tool looks for **./runit-man/files-to-view/** folder.
 Every symlink here will be shown as link to view target file content.
 
-=== Show links that related to concrete service
+### Show links that related to concrete service
 
 For each known runit service this tool looks for **./runit-man/urls-to-view/** folder.
 Every file ended with .url will be shown as link to view target location (location should be written as content of this file).
 
-=== Show buttons that send signals to concrete service
+### Show buttons that send signals to concrete service
 
 For each known runit service this tool looks for **./runit-man/allowed-signals/** folder.
 Each one-letter-named file declares that signal button should be shown in Web UI.
 
 Signal letters listed below in REST API section.
 
-== REST API
+## REST API
 
-=== Get state
+### Get state
 
 You can read current state of services in [JSON format](http://www.json.org/ "JSON home page") using
 `GET /services.json`
 
-=== Management
+### Management
 
 You can manage your services using
 `POST /<service name>/<command>`
@@ -70,7 +70,7 @@ Supported signals and their's meaning:
 * h: HUP
 * o: ONCE
 
-=== Read logs
+### Read logs
 
 You can read tail of service log using
 `GET /<service name>/log/<count of tailing lines>.txt`
