@@ -2,7 +2,7 @@
 
 Simple [runit](http://smarden.org/runit/ "runit home page") web management tool with internationalization support.
 
-Server will run by **runit-man** script. Take a note that **runit-man** must have privileges like **runsvdir** ones.
+Server will run by **runit-man** script. Take a note that **runit-man** must have privileges like **runsvdir** process ones.
 
 ## Installation
 
