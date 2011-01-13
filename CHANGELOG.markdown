@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 1.9.6
+* Home has been moved to https://github.com/Undev/runit-man.
+
 ### Version 1.9.5
 * Support for Ruby 1.9.2.
 * Use native Erubis support of Sinatra.
