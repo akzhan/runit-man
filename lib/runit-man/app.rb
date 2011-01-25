@@ -1,5 +1,5 @@
 require 'fileutils'
-require 'yajl/json_gem'
+require 'yajl'
 require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'
@@ -50,7 +50,7 @@ class RunitMan < Sinatra::Base
   end
 
   get '/services.json' do
-    service_infos.to_json
+    Yajl::Encoder.encode(service_infos)
   end
 
   def log_of_service(name, count)

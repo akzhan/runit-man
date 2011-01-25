@@ -12,7 +12,7 @@ class ServiceInfo
     @log_status = ServiceStatus.new(data_from_file(File.join(log_supervise_folder, 'status')))
   end
 
-  def to_json(*a)
+  def to_hash
     data = {}
     [
       :name, :stat, :active?, :logged?, :switchable?,
@@ -28,7 +28,11 @@ class ServiceInfo
     ].each do |sym|
       data[sym] = @status.send(sym)
     end
-    data.to_json(*a)
+    data
+  end
+
+  def to_json(*args)
+    Yajl::Encoder.encode(to_hash, *args)
   end
 
   def logged?
