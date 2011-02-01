@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 1.9.7
+
+* Useless json gem compatibility layer has been removed.
+
 ### Version 1.9.6
 * Home has been moved to https://github.com/Undev/runit-man.
 
