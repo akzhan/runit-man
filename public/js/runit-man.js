@@ -16,21 +16,18 @@
         refreshServices.timer = null;
         $.ajax({
             url: '/services',
-            cache: false,
-            error: function()
-            {
-                $('#url').text('/services');
-                $('#error').show();
-            },
-            success: function(html)
-            {
-                $('#error').hide();
-                $('#services').html(html);
-            },
-            complete: function()
-            {
-                needRefreshServices(false);
-            }
+            cache: false
+        }).error(function()
+        {
+            $('#url').text('/services');
+            $('#error').show();
+        }).success(function(html)
+        {
+            $('#error').hide();
+            $('#services').html(html);
+        }).complete(function()
+        {
+            needRefreshServices(false);
         });
     };
 
@@ -51,9 +48,10 @@
         }
     };
 
-    $('#services').delegate('form.service-action,form.service-signal', 'submit', function()
+    $('#services').delegate('form.service-action,form.service-signal', 'submit', function(e)
     {
-        $.post($(this).attr('action'), function(data)
+        e.preventDefault();
+        $.post($(this).attr('action')).complete(function()
         {
             needRefreshServices(true);
         });

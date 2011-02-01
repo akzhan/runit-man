@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 1.9.8
+
+* Upgrade jQuery to 1.5.0.
+
 ### Version 1.9.7
 
 * Useless json gem compatibility layer has been removed.
