@@ -55,6 +55,7 @@ runit:
       updated: "Страница обновлена %1"
       reload: Обновить страницу
       raw: Текст
+      downloads: Загрузка логов
   view_file:
     raw: Текст
     title: 'Файл %1 на %2'

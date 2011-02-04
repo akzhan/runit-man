@@ -19,11 +19,13 @@
         <%= yield_content :content %>
       </div>
 
+<% if content_for?(:footer) %>
       <div id="footer">
         <div class="content">
           <%= yield_content :footer %>
         </div>
       </div>
+<% end %>
 
     </div>
   <% @scripts.each do |name| %>

@@ -1,0 +1,18 @@
+<% content_for :content do %>
+<h2><%= h(name) %></h2>
+<h3><%= h(t.runit.services.log.downloads) %></h3>
+<table>
+  <caption><%= h(name + ': ' + t.runit.services.log.downloads) %></caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+     </tr>
+  </thead>
+  <tbody>
+  <% files.each do |f| %>
+    <tr>
+      <td><%= h(f[:name]) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+<% end %>

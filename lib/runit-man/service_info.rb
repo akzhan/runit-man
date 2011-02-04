@@ -2,6 +2,8 @@ require 'runit-man/log_location_cache'
 require 'runit-man/service_status'
 
 class ServiceInfo
+  SPECIAL_LOG_FILES = %w(lock config).freeze
+
   attr_reader :name
 
   def initialize(a_name)
@@ -97,6 +99,22 @@ class ServiceInfo
     rel_path = ServiceInfo.log_location_cache[log_pid]
     return nil if rel_path.nil?
     File.expand_path(rel_path, log_run_folder)
+  end
+
+  def log_files
+    r = []
+    dir_name = File.dirname(log_file_location)
+    Dir.foreach(dir_name) do |name|
+      next if ServiceInfo.itself_or_parent?(name)
+      next if SPECIAL_LOG_FILES.include?(name)
+      full_name = File.expand_path(name, dir_name)
+      r << {
+        :name => name,
+        :size => File.size(full_name),
+        :modified => File.mtime(full_name).to_i
+      }
+    end
+    r
   end
 
   def send_signal(signal)

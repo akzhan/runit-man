@@ -53,6 +53,7 @@ runit:
       updated: "Page updated at %1"
       reload: Reload
       raw: Raw
+      downloads: Log downloads
   view_file:
     raw: Raw
     title: 'File %1 on %2'

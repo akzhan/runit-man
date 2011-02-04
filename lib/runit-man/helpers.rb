@@ -68,6 +68,10 @@ module Helpers
     "<a#{hint}#{blank} href=\"/#{h(name)}/log#{ (count != 100) ? "/#{count}" : '' }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
   end
 
+  def log_downloads_link(name)
+    "<a target=\"_blank\" href=\"/#{h(name)}/log-downloads\/\">#{h(t.runit.services.log.downloads)}&hellip;</a>"
+  end
+
   def even_or_odd
     self.even_or_odd_state = !even_or_odd_state
     even_or_odd_state

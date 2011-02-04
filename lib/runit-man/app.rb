@@ -33,6 +33,7 @@ class RunitMan < Sinatra::Base
   end
 
   before do
+    @scripts = []
     base_content_type = CONTENT_TYPES.keys.detect do |t|
       request.env['REQUEST_URI'] =~ /\.#{Regexp.escape(t.to_s)}$/
     end || :html
@@ -70,10 +71,19 @@ class RunitMan < Sinatra::Base
   get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
-    @scripts = []
     @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(data[:log_location]))
     erubis :log, :locals => data
   end
+
+  get %r[^/([^/]+)/log\-downloads/?$] do |name|
+    srv = ServiceInfo[name]
+    return not_found if srv.nil? || !srv.logged?
+    erubis :log_downloads, :locals => {
+      :name  => name,
+      :files => srv.log_files
+    }
+  end
+
 
   get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
     data = log_of_service(name, count)
@@ -98,7 +108,6 @@ class RunitMan < Sinatra::Base
     if data.nil?
       return not_found
     end
-    @scripts = []
     @title = t.runit.view_file.title(h(data[:name]), h(host_name))
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
     erubis :view_file, :locals => data 
