@@ -1,15 +1,12 @@
 ## Changes
 
 ### Version 1.10.0
-
 * Ability to download log files of concrete service.
 
 ### Version 1.9.8
-
 * Upgrade jQuery to 1.5.0.
 
 ### Version 1.9.7
-
 * Useless json gem compatibility layer has been removed.
 
 ### Version 1.9.6
