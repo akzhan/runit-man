@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 1.10.0
+
+* Ability to download log files of concrete service.
+
 ### Version 1.9.8
 
 * Upgrade jQuery to 1.5.0.
