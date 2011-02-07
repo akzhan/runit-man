@@ -101,6 +101,11 @@ class ServiceInfo
     File.expand_path(rel_path, log_run_folder)
   end
 
+  def log_file_path(file_name)
+    dir_name = File.dirname(log_file_location)
+    File.expand_path(file_name, dir_name)
+  end
+
   def log_files
     r = []
     dir_name = File.dirname(log_file_location)

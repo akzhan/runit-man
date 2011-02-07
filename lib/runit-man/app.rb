@@ -84,6 +84,15 @@ class RunitMan < Sinatra::Base
     }
   end
 
+  get %r[^/([^/]+)/log\-download/(.+)$] do |name, file_name|
+    srv = ServiceInfo[name]
+    return not_found if srv.nil? || !srv.logged?
+    f = srv.log_files.detect { |f| f[:name] == file_name }
+    return not_found unless f
+    send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => "#{name}-#{file_name}.txt", :last_modified => f[:modified].httpdate)
+  end
+
+
 
   get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
     data = log_of_service(name, count)
