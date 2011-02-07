@@ -54,6 +54,14 @@ runit:
       reload: Reload
       raw: Raw
       downloads: Log downloads
+      download: Download
+      modified: Last modified
+      file_name: File name
+      file_size: File size
+      b: b
+      Kb: Kb
+      Mb: Mb
+      Gb: Gb
   view_file:
     raw: Raw
     title: 'File %1 on %2'

@@ -77,6 +77,28 @@ module Helpers
     even_or_odd_state
   end
 
+  KILOBYTE = 1024
+  MEGABYTE = 1024 * KILOBYTE
+  GIGABYTE =  1024 * MEGABYTE
+
+  def human_bytes(bytes)
+    sign = (bytes >= 0) ? '' : '-'
+    suffix = 'b'
+    bytes = bytes.abs.to_f
+    if bytes > GIGABYTE
+      bytes /= GIGABYTE
+      suffix = 'Gb'
+    elsif bytes > MEGABYTE
+      bytes /= MEGABYTE
+      suffix = 'Mb'
+    elsif bytes > KILOBYTE
+      bytes /= KILOBYTE
+      suffix = 'Kb'
+    end
+    bytes = ((bytes * 100 + 0.5).to_i.to_f / 100)
+    "#{sign}#{bytes}#{t.runit.services.log[suffix]}"
+  end
+
   def stat_subst(s)
     s.split(/\s/).map do |s|
       if s =~ /(\w+)/ && t.runit.services.table.subst[$1].translated?

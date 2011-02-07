@@ -111,8 +111,11 @@ class ServiceInfo
       r << {
         :name => name,
         :size => File.size(full_name),
-        :modified => File.mtime(full_name).to_i
+        :modified => File.mtime(full_name)
       }
+    end
+    if r.length >= 2
+      r.sort! { |a, b| a[:modified] <=> b[:modified] }
     end
     r
   end

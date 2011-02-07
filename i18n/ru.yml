@@ -56,6 +56,14 @@ runit:
       reload: Обновить страницу
       raw: Текст
       downloads: Загрузка логов
+      download: Скачать
+      modified: Последнее изменение
+      file_name: Имя файла
+      file_size: Размер файла
+      b: б
+      Kb: Кб
+      Mb: Мб
+      Gb: Гб
   view_file:
     raw: Текст
     title: 'Файл %1 на %2'
