@@ -4,21 +4,25 @@ require 'erubis'
 require 'sinatra/base'
 require 'sinatra/r18n'
 require 'runit-man/helpers'
+require 'runit-man/version'
 
-MIN_TAIL      = 100
-MAX_TAIL      = 10000
-GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
-CONTENT_TYPES = {
-  :html => 'text/html',
-  :txt  => 'text/plain',
-  :css  => 'text/css',
-  :js   => 'application/x-javascript',
-  :json => 'application/json'
-}.freeze
 
-R18n::Filters.on :variables
 
 class RunitMan < Sinatra::Base
+  VERSION       = RunitManVersion::VERSION
+  MIN_TAIL      = 100
+  MAX_TAIL      = 10000
+  GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
+  CONTENT_TYPES = {
+    :html => 'text/html',
+    :txt  => 'text/plain',
+    :css  => 'text/css',
+    :js   => 'application/x-javascript',
+    :json => 'application/json'
+  }.freeze
+
+  R18n::Filters.on :variables
+
   set :environment,  :production
   set :static,       true
   set :logging,      true
@@ -38,6 +42,10 @@ class RunitMan < Sinatra::Base
       request.env['REQUEST_URI'] =~ /\.#{Regexp.escape(t.to_s)}$/
     end || :html
     content_type CONTENT_TYPES[base_content_type], :charset => 'utf-8'
+    headers({
+      'X-Powered-By' => 'runit-man',
+      'X-Version' => RunitMan::VERSION
+    })
   end
 
   get '/' do

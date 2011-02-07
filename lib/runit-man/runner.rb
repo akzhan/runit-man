@@ -5,6 +5,8 @@ RunitMan.set :active_services_directory, '/etc/service'
 RunitMan.set :all_services_directory,    '/etc/sv'
 
 OptionParser.new { |op|
+  op.banner = 'Usage: runit-man <options>'
+  op.separator "Version: #{RunitMan::VERSION}"
   op.separator 'Server options:'
   op.on('-s server') { |val| RunitMan.set :server, val }
   op.on('-p port')   { |val| RunitMan.set :port, val.to_i }

@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 1.10.1
+* X-Powered-By and X-Version response headers added (to simplify management of installations).
+
 ### Version 1.10.0
 * Ability to download log files of concrete service.
 
