@@ -2,7 +2,7 @@ require 'runit-man/log_location_cache'
 require 'runit-man/service_status'
 
 class ServiceInfo
-  SPECIAL_LOG_FILES = %w(lock config).freeze
+  SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
 
   attr_reader :name
 
