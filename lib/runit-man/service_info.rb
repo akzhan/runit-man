@@ -4,6 +4,8 @@ require 'runit-man/service_status'
 class ServiceInfo
   SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
 
+  include R18n::Helpers
+
   attr_reader :name
 
   def initialize(a_name)
@@ -106,6 +108,11 @@ class ServiceInfo
     File.expand_path(file_name, dir_name)
   end
 
+  # Localizes time and replaces some localized characters with more file system friendly characters
+  def fl(time)
+    l(time).gsub(/[\:\s]/, '-').gsub(/[\\\/]/, '.')
+  end
+
   def log_files
     r = []
     dir_name = File.dirname(log_file_location)
@@ -113,10 +120,14 @@ class ServiceInfo
       next if ServiceInfo.itself_or_parent?(name)
       next if SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
+      stats = File.stat(full_name)
+      label = "#{self.name}-#{fl(stats.atime)}-#{fl(stats.mtime)}.log"
       r << {
-        :name => name,
-        :size => File.size(full_name),
-        :modified => File.mtime(full_name)
+        :name     => name,
+        :label    => label,
+        :size     => stats.size,
+        :created  => stats.ctime,
+        :modified => stats.mtime
       }
     end
     if r.length >= 2

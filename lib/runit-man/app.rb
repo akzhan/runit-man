@@ -97,7 +97,7 @@ class RunitMan < Sinatra::Base
     return not_found if srv.nil? || !srv.logged?
     f = srv.log_files.detect { |f| f[:name] == file_name }
     return not_found unless f
-    send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => "#{name}-#{file_name}.txt", :last_modified => f[:modified].httpdate)
+    send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
 

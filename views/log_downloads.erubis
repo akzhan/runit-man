@@ -15,7 +15,7 @@
   <% files.each do |f| %>
     <tr class="<%= even_or_odd ? 'even' : 'odd' %>">
       <td title="<%= h(l(f[:modified], :full)) %>"><%= h(l(f[:modified], :human)) %></td>
-      <td><%= h(f[:name]) %></td>
+      <td><%= h(f[:label]) %></td>
       <td title="<%= h(f[:size]) %>"><%= h(human_bytes(f[:size])) %></td>
       <td><a href="/<%= h(name) %>/log-download/<%= h(f[:name]) %>"><%= h(t.runit.services.log.download) %>&hellip;</a></td>
     </tr>
