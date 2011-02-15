@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 1.10.2
+* Log naming schema in Downloads section has been changed to be more friendly.
+* Special svlogd "state" and "newstate" files are skipped in Downloads section.
+* Minor fix for ruby 1.9.2 in Rakefile (was broken in 1.10.1).
+
 ### Version 1.10.1
 * X-Powered-By and X-Version response headers added (to simplify management of installations).
 
