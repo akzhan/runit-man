@@ -58,6 +58,7 @@ runit:
       modified: Last modified
       file_name: File name
       file_size: File size
+      about_utc: All times for log files are represented in UTC
       b: b
       Kb: Kb
       Mb: Mb

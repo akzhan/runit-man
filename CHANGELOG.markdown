@@ -1,7 +1,12 @@
 ## Changes
 
+### Version 1.10.3
+* All time information in "Log downloads" section now represented in UTC.
+* Downloaded file names for logs now include host name.
+* Minor update of visual appearance of "Log downloads" section.
+
 ### Version 1.10.2
-* Log naming schema in Downloads section has been changed to be more friendly.
+* Log naming schema in "Log downloads" section has been changed to be more friendly.
 * Special svlogd "state" and "newstate" files are skipped in Downloads section.
 * Minor fix for ruby 1.9.2 in Rakefile (was broken in 1.10.1).
 

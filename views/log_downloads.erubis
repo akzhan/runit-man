@@ -2,7 +2,6 @@
 <h2><%= h(name) %></h2>
 <h3><%= h(t.runit.services.log.downloads) %></h3>
 <table>
-  <caption><%= h(name + ': ' + t.runit.services.log.downloads) %></caption>
   <thead>
     <tr>
       <th><%= h(t.runit.services.log.modified) %></th>
@@ -11,6 +10,11 @@
       <th></th>
      </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <td colspan="4"><%= h(t.runit.services.log.about_utc) %></td>
+    </tr>
+  </tfoot>
   <tbody>
   <% files.each do |f| %>
     <tr class="<%= even_or_odd ? 'even' : 'odd' %>">

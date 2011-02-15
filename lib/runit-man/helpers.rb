@@ -1,6 +1,6 @@
-require 'socket'
 require 'runit-man/service_info'
 require 'runit-man/partials'
+require 'runit-man/utils'
 require 'sinatra/content_for2'
 
 module Helpers
@@ -12,16 +12,9 @@ module Helpers
   attr_accessor :even_or_odd_state
 
   def host_name
-    unless @host_name
-      begin
-        @host_name = Socket.gethostbyname(Socket.gethostname).first
-      rescue
-        @host_name = Socket.gethostname
-      end
-    end
-    @host_name
+    Utils.host_name
   end
-
+  
   def service_infos
     ServiceInfo.all
   end

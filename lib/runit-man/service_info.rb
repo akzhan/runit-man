@@ -1,5 +1,6 @@
 require 'runit-man/log_location_cache'
 require 'runit-man/service_status'
+require 'runit-man/utils'
 
 class ServiceInfo
   SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
@@ -121,13 +122,13 @@ class ServiceInfo
       next if SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
-      label = "#{self.name}-#{fl(stats.atime)}-#{fl(stats.mtime)}.log"
+      label = "#{Utils.host_name}-#{self.name}-#{fl(stats.atime.utc)}-#{fl(stats.mtime.utc)}.log"
       r << {
         :name     => name,
         :label    => label,
         :size     => stats.size,
-        :created  => stats.ctime,
-        :modified => stats.mtime
+        :created  => stats.ctime.utc,
+        :modified => stats.mtime.utc
       }
     end
     if r.length >= 2
