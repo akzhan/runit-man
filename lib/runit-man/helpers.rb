@@ -2,6 +2,7 @@ require 'runit-man/service_info'
 require 'runit-man/partials'
 require 'runit-man/utils'
 require 'sinatra/content_for2'
+require 'i18n'
 
 module Helpers
   include Rack::Utils
@@ -13,6 +14,11 @@ module Helpers
 
   def host_name
     Utils.host_name
+  end
+
+
+  def t(*args)
+    Utils.t(*args)
   end
   
   def service_infos
@@ -62,7 +68,7 @@ module Helpers
   end
 
   def log_downloads_link(name)
-    "<a target=\"_blank\" href=\"/#{h(name)}/log-downloads\/\">#{h(t.runit.services.log.downloads)}&hellip;</a>"
+    "<a target=\"_blank\" href=\"/#{h(name)}/log-downloads\/\">#{h(t('runit.services.log.downloads'))}&hellip;</a>"
   end
 
   def even_or_odd
@@ -89,13 +95,18 @@ module Helpers
       suffix = 'Kb'
     end
     bytes = ((bytes * 100 + 0.5).to_i.to_f / 100)
-    "#{sign}#{bytes}#{t.runit.services.log[suffix]}"
+    "#{sign}#{bytes}#{t("runit.services.log.#{suffix}")}"
   end
 
   def stat_subst(s)
     s.split(/\s/).map do |s|
-      if s =~ /(\w+)/ && t.runit.services.table.subst[$1].translated?
-        s.sub(/\w+/, t.runit.services.table.subst[$1].to_s)
+      if s =~ /(\w+)/
+        word = $1
+        if t("runit.services.table.subst.#{word}") !~ /translation missing/
+          s.sub(word, t("runit.services.table.subst.#{word}"))
+        else
+          s
+        end
       else
         s
       end

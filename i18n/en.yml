@@ -1,72 +1,73 @@
-runit:
-  label: runit web management tool
-  title: "%1 - %2"
-  header: "%1: %2"
-  error: Error encountered while accessing resource
-  loading: "Please wait while loading&hellip;"
-  footer: "State of services updated automatically every %1 seconds."
-  services:
-    table:
-      caption: Services
-      headers:
-        pid: PID
-        name: Name
-        uptime: Uptime (s)
-        stat: Status
-        actions: Actions
-        log_file: Log file
-      values:
-        log_hint: Open tail 100 lines of %1 service log in new window
-        log_absent: Absent
-        files_to_view: Files
-        urls_to_views: Urls
-      footer: Updated at %1
-      subst:
-        inactive: <span class="inactive">inactive</span>
-        down: <span class="down">down<span>
-        finish: <span class="down">finish<span>
-        run: <span class="run">run<span>
-        up: <span class="run">up<span>
-      actions:
-        start: Start
-        stop: Stop
-        restart: Restart
-        switch_down: Deactivate
-        switch_up: Activate
-      signals:
-        t: TERM
-        k: KILL
-        i: INT
-        1: USR1
-        2: USR2
-        a: ALARM
-        q: QUIT
-        x: EXIT
-        p: PAUSE
-        c: CONT
-        h: HUP
-        o: ONCE
-    log:
-      title: "Tail %3 lines of service %1 log - %2"
-      header: "Tail %3 lines of service <strong>%1</strong> log: %2 (<code>%4</code>)"
-      counts: "Show %1 lines of log"
-      updated: "Page updated at %1"
-      reload: Reload
+en:
+  runit:
+    label: runit web management tool
+    title: "%{p1} - %{p2}"
+    header: "%{p1}: %{p2}"
+    error: Error encountered while accessing resource
+    loading: "Please wait while loading&hellip;"
+    footer: "State of services updated automatically every %{sec} seconds."
+    services:
+      table:
+        caption: Services
+        headers:
+          pid: PID
+          name: Name
+          uptime: Uptime (s)
+          stat: Status
+          actions: Actions
+          log_file: Log file
+        values:
+          log_hint: Open tail 100 lines of %{name} service log in new window
+          log_absent: Absent
+          files_to_view: Files
+          urls_to_views: Urls
+        footer: Updated at %{time}
+        subst:
+          inactive: <span class="inactive">inactive</span>
+          down: <span class="down">down<span>
+          finish: <span class="down">finish<span>
+          run: <span class="run">run<span>
+          up: <span class="run">up<span>
+        actions:
+          start: Start
+          stop: Stop
+          restart: Restart
+          switch_down: Deactivate
+          switch_up: Activate
+        signals:
+          t: TERM
+          k: KILL
+          i: INT
+          1: USR1
+          2: USR2
+          a: ALARM
+          q: QUIT
+          x: EXIT
+          p: PAUSE
+          c: CONT
+          h: HUP
+          o: ONCE
+      log:
+        title: "Tail @{count} lines of service @{name} log - @{info}"
+        header: "Tail @{count} lines of service <strong>@{name}</strong> log: @{info} (<code>@{text}</code>)"
+        counts: "Show @{count} lines of log"
+        updated: "Page updated at @{time}"
+        reload: Reload
+        raw: Raw
+        downloads: Log downloads
+        download: Download
+        modified: Last modified
+        file_name: File name
+        file_size: File size
+        about_utc: All times for log files are represented in UTC.
+        b: b
+        Kb: Kb
+        Mb: Mb
+        Gb: Gb
+    view_file:
       raw: Raw
-      downloads: Log downloads
-      download: Download
-      modified: Last modified
-      file_name: File name
-      file_size: File size
-      about_utc: All times for log files are represented in UTC.
-      b: b
-      Kb: Kb
-      Mb: Mb
-      Gb: Gb
-  view_file:
-    raw: Raw
-    title: 'File %1 on %2'
-    header: 'View %1 file on %2'
-    updated: "Page updated at %1"
-    reload: Reload
+      title: 'File %{file} on %{host}'
+      header: 'View %{file} file on %{host}'
+      updated: "Page updated at %{time}"
+      reload: Reload
 

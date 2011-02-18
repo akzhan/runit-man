@@ -1,8 +1,8 @@
 require 'fileutils'
 require 'yajl'
 require 'erubis'
+require 'i18n'
 require 'sinatra/base'
-require 'sinatra/r18n'
 require 'runit-man/helpers'
 require 'runit-man/version'
 
@@ -21,8 +21,6 @@ class RunitMan < Sinatra::Base
     :json => 'application/json'
   }.freeze
 
-  R18n::Filters.on :variables
-
   set :environment,  :production
   set :static,       true
   set :logging,      true
@@ -30,10 +28,27 @@ class RunitMan < Sinatra::Base
   set :raise_errors, false
   set :root,         GEM_FOLDER
 
-  register Sinatra::R18n
-
   helpers do
     include Helpers
+  end
+
+  def self.i18n_location
+    File.join(GEM_FOLDER, 'i18n') 
+  end
+
+  def self.setup_i18n_files
+    files = []
+    Dir.glob("#{i18n_location}/*.yml") do |full_path|
+      next unless File.file?(full_path)
+      files << full_path
+    end
+    I18n.load_path = files
+    I18n.reload!
+    nil 
+  end
+
+  configure do
+    RunitMan.setup_i18n_files
   end
 
   before do
@@ -46,6 +61,38 @@ class RunitMan < Sinatra::Base
       'X-Powered-By' => 'runit-man',
       'X-Version' => RunitMan::VERSION
     })
+    parse_language(request.env['HTTP_ACCEPT_LANGUAGE'])
+  end
+
+
+  def setup_i18n(locales)
+    locales.each do |locale|
+      if I18n.available_locales.include?(locale)
+        I18n.locale = locale
+        break
+      end
+    end
+  end
+
+  def parse_language(header)
+    weighted_locales = []
+    if header
+      header.split(',').each do |s|
+        if s =~ /^(.+)\;q\=(\d(?:\.\d)?)$/
+          weighted_locales << { :locale => $1.to_sym, :weight => $2.to_f }
+        else
+          weighted_locales << { :locale => s.to_sym, :weight => 1.0 }
+        end
+      end
+    end
+    weighted_locales << { :locale => :en, :weight => 0.0 }
+    if weighted_locales.length >= 2
+      weighted_locales.sort! do |a, b|
+        b[:weight] <=> a[:weight]
+      end
+    end
+    locales = weighted_locales.map { |wl| wl[:locale] }
+    setup_i18n(locales)
   end
 
   get '/' do

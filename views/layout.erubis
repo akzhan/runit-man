@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title><%= h(t.runit.title(@title, t.runit.label)) %></title>
+    <title><%= h(t('runit.title', :p1 => @title, :p2 => t('runit.label'))) %></title>
     <link href="/css/tripoli.simple.css" type="text/css" rel="stylesheet" />
     <link href="/css/tripoli.visual.css" type="text/css" rel="stylesheet" />
     <link href="/css/tripoli.type.css" type="text/css" rel="stylesheet" />
@@ -11,7 +11,7 @@
     <div id="container">
       <div id="header">
         <div class="content">
-          <strong><%= h(t.runit.header(host_name, t.runit.label)) %></strong>
+          <strong><%= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label'))) %></strong>
         </div>
       </div>
 
