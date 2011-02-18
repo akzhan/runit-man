@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 1.11.0
+* Switched from sinatra-r18n gem to i18n gem due to various aperiodic translation problems.
+
 ### Version 1.10.3
 * All time information in "Log downloads" section now represented in UTC.
 * Downloaded file names for logs now include host name.
