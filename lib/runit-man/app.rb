@@ -126,7 +126,7 @@ class RunitMan < Sinatra::Base
   get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
-    @title = t.runit.services.log.title(h(name), h(host_name), h(count), h(data[:log_location]))
+    @title = t('runit.services.log.title', :name => h(name), :host => h(host_name), :count => h(count), :log_location => h(data[:log_location]))
     erubis :log, :locals => data
   end
 

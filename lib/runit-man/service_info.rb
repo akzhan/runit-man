@@ -116,7 +116,7 @@ class ServiceInfo
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
       label = "#{Utils.host_name}-#{self.name}-#{I18n.l(stats.atime.utc)}-#{I18n.l(stats.mtime.utc)}.log"
-      label = label.gsub(/[\:\s]/, '-').gsub(/[\\\/]/, '.')
+      label = label.gsub(/[\:\s\,]/, '-').gsub(/[\\\/]/, '.')
       r << {
         :name     => name,
         :label    => label,

@@ -50,8 +50,8 @@ ru:
           h: HUP
           o: ONCE
       log:
-        title: "Последние %{count} строк лога сервиса %{name} - %{info}"
-        header: "Последние %{count} строк лога сервиса <strong>%{name}</strong>: %{info} (<code>%{text}</code>)"
+        title: "Последние %{count} строк лога сервиса %{name} - %{log_location}"
+        header: "Последние %{count} строк лога сервиса <strong>%{name}</strong>: %{host} (<code>%{log_location}</code>)"
         counts: "Показать %{count} строк лога"
         updated: "Страница обновлена %{time}"
         reload: Обновить страницу
@@ -72,4 +72,28 @@ ru:
       header: 'Просмотр файла %{name} на %{host}'
       updated: "Страница обновлена %{time}"
       reload: Обновить страницу
+
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names: [воскресенье, понедельник, вторник, среда, четверг, пятница, суббота]
+    standalone_day_names: [Воскресенье, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота]
+    abbr_day_names: [Вс, Пн, Вт, Ср, Чт, Пт, Сб]
+
+    month_names: [~, января, февраля, марта, апреля, мая, июня, июля, августа, сентября, октября, ноября, декабря]
+    # see russian gem for info on "standalone" day names
+    standalone_month_names: [~, Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
+    abbr_month_names: [~, янв., февр., марта, апр., мая, июня, июля, авг., сент., окт., нояб., дек.]
+    standalone_abbr_month_names: [~, янв., февр., март, апр., май, июнь, июль, авг., сент., окт., нояб., дек.]
+
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%d.%m.%Y %H:%M"
+    am: "утра"
+    pm: "вечера"
 

@@ -48,8 +48,8 @@ en:
           h: HUP
           o: ONCE
       log:
-        title: "Tail @{count} lines of service @{name} log - @{info}"
-        header: "Tail @{count} lines of service <strong>@{name}</strong> log: @{info} (<code>@{text}</code>)"
+        title: "Tail @{count} lines of service @{name} log - @{host}"
+        header: "Tail @{count} lines of service <strong>@{name}</strong> log: @{host} (<code>@{log_location}}</code>)"
         counts: "Show @{count} lines of log"
         updated: "Page updated at @{time}"
         reload: Reload
@@ -70,4 +70,26 @@ en:
       header: 'View %{file} file on %{host}'
       updated: "Page updated at %{time}"
       reload: Reload
+
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M"
+    am: "am"
+    pm: "pm"
 
