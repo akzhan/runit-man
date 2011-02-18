@@ -5,8 +5,6 @@ require 'runit-man/utils'
 class ServiceInfo
   SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
 
-  include R18n::Helpers
-
   attr_reader :name
 
   def initialize(a_name)
@@ -109,11 +107,6 @@ class ServiceInfo
     File.expand_path(file_name, dir_name)
   end
 
-  # Localizes time and replaces some localized characters with more file system friendly characters
-  def fl(time)
-    l(time).gsub(/[\:\s]/, '-').gsub(/[\\\/]/, '.')
-  end
-
   def log_files
     r = []
     dir_name = File.dirname(log_file_location)
@@ -122,7 +115,8 @@ class ServiceInfo
       next if SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
-      label = "#{Utils.host_name}-#{self.name}-#{fl(stats.atime.utc)}-#{fl(stats.mtime.utc)}.log"
+      label = "#{Utils.host_name}-#{self.name}-#{I18n.l(stats.atime.utc)}-#{I18n.l(stats.mtime.utc)}.log"
+      label = label.gsub(/[\:\s\,]/, '-').gsub(/[\\\/]/, '.')
       r << {
         :name     => name,
         :label    => label,

@@ -1,4 +1,5 @@
 require 'socket'
+require 'i18n'
 
 class Utils
   class << self
@@ -11,6 +12,10 @@ class Utils
         end
       end
       @host_name
+    end
+
+    def t(*args)
+      I18n.t(*args)
     end
   end
 end

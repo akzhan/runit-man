@@ -1,73 +1,99 @@
-runit:
-  label: runit - управляющий web-интерфейс
-  title: "%1 - %2"
-  header: "%1: %2"
-  error: Ошибка обращения к ресурсу
-  loading: "Идёт загрузка&hellip;"
-  footer: "Состояние сервисов обновляется автоматически каждые %1 секунд."
-  services:
-    table:
-      caption: Сервисы
-      headers:
-        pid: PID
-        name: Название
-        uptime: "Время исполнения (сек.)"
-        stat: Состояние
-        actions: Действия
-        log_file: Лог
-      values:
-        log_hint: Отрыть последние 100 строк лога сервиса %1 в новом окне
-        log_absent: Отсутствует
-        files_to_view: Файлы
-        urls_to_view: Ссылки
-      footer: Обновлено %1
-      subst:
-        inactive: <span class="inactive">неактивен</span>
-        down: <span class="down">остановлен</span>
-        finish: <span class="down">останавливается</span>
-        run: <span class="run">работает</span>
-        up: <span class="run">поднятие</span>
-        got: получен
-        want: ожидается
-      actions:
-        start: Запустить
-        stop: Остановить
-        restart: Перезапустить
-        switch_down: Выключить
-        switch_up: Включить
-      signals:
-        t: TERM
-        k: KILL
-        i: INT
-        1: USR1
-        2: USR2
-        a: ALARM
-        q: QUIT
-        x: EXIT
-        p: PAUSE
-        c: CONT
-        h: HUP
-        o: ONCE
-    log:
-      title: "Последние %3 строк лога сервиса %1 - %2"
-      header: "Последние %3 строк лога сервиса <strong>%1</strong>: %2 (<code>%4</code>)"
-      counts: "Показать %1 строк лога"
-      updated: "Страница обновлена %1"
-      reload: Обновить страницу
+ru:
+  runit:
+    label: runit - управляющий web-интерфейс
+    title: "%{p1} - %{p2}"
+    header: "%{p1}: %{p2}"
+    error: Ошибка обращения к ресурсу
+    loading: "Идёт загрузка&hellip;"
+    footer: "Состояние сервисов обновляется автоматически каждые %{sec} секунд."
+    services:
+      table:
+        caption: Сервисы
+        headers:
+          pid: PID
+          name: Название
+          uptime: "Время исполнения (сек.)"
+          stat: Состояние
+          actions: Действия
+          log_file: Лог
+        values:
+          log_hint: Отрыть последние 100 строк лога сервиса %{name} в новом окне
+          log_absent: Отсутствует
+          files_to_view: Файлы
+          urls_to_view: Ссылки
+        footer: Обновлено %{time}
+        subst:
+          inactive: <span class="inactive">неактивен</span>
+          down: <span class="down">остановлен</span>
+          finish: <span class="down">останавливается</span>
+          run: <span class="run">работает</span>
+          up: <span class="run">поднятие</span>
+          got: получен
+          want: ожидается
+        actions:
+          start: Запустить
+          stop: Остановить
+          restart: Перезапустить
+          switch_down: Выключить
+          switch_up: Включить
+        signals:
+          t: TERM
+          k: KILL
+          i: INT
+          1: USR1
+          2: USR2
+          a: ALARM
+          q: QUIT
+          x: EXIT
+          p: PAUSE
+          c: CONT
+          h: HUP
+          o: ONCE
+      log:
+        title: "Последние %{count} строк лога сервиса %{name} - %{log_location}"
+        header: "Последние %{count} строк лога сервиса <strong>%{name}</strong>: %{host} (<code>%{log_location}</code>)"
+        counts: "Показать %{count} строк лога"
+        updated: "Страница обновлена %{time}"
+        reload: Обновить страницу
+        raw: Текст
+        downloads: Загрузка логов
+        download: Скачать
+        modified: Последнее изменение
+        file_name: Имя файла
+        file_size: Размер файла
+        about_utc: Все времена для файлов представлены в формате UTC.
+        b: б
+        Kb: Кб
+        Mb: Мб
+        Gb: Гб
+    view_file:
       raw: Текст
-      downloads: Загрузка логов
-      download: Скачать
-      modified: Последнее изменение
-      file_name: Имя файла
-      file_size: Размер файла
-      about_utc: Все времена для файлов представлены в формате UTC.
-      b: б
-      Kb: Кб
-      Mb: Мб
-      Gb: Гб
-  view_file:
-    raw: Текст
-    title: 'Файл %1 на %2'
-    header: 'Просмотр файла %1 на %2'
-    updated: "Страница обновлена %1"
-    reload: Обновить страницу
+      title: 'Файл %{name} на %{host}'
+      header: 'Просмотр файла %{name} на %{host}'
+      updated: "Страница обновлена %{time}"
+      reload: Обновить страницу
+
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names: [воскресенье, понедельник, вторник, среда, четверг, пятница, суббота]
+    standalone_day_names: [Воскресенье, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота]
+    abbr_day_names: [Вс, Пн, Вт, Ср, Чт, Пт, Сб]
+
+    month_names: [~, января, февраля, марта, апреля, мая, июня, июля, августа, сентября, октября, ноября, декабря]
+    # see russian gem for info on "standalone" day names
+    standalone_month_names: [~, Январь, Февраль, Март, Апрель, Май, Июнь, Июль, Август, Сентябрь, Октябрь, Ноябрь, Декабрь]
+    abbr_month_names: [~, янв., февр., марта, апр., мая, июня, июля, авг., сент., окт., нояб., дек.]
+    standalone_abbr_month_names: [~, янв., февр., март, апр., май, июнь, июль, авг., сент., окт., нояб., дек.]
+
+    order: [ :day, :month, :year ]
+
+  time:
+    formats:
+      default: "%d.%m.%Y %H:%M"
+    am: "утра"
+    pm: "вечера"
+
