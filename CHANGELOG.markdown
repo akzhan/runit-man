@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 1.11.1
+* Fixed i18n for file view (bug introduced in 1.11.0).
+
 ### Version 1.11.0
 * Switched from sinatra-r18n gem to i18n gem due to various aperiodic translation problems.
 
