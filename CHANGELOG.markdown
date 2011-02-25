@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 1.11.1
+### Version 1.11.2
 * Fixed i18n for file view (bug introduced in 1.11.0).
 
 ### Version 1.11.0
