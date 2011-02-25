@@ -172,7 +172,7 @@ class RunitMan < Sinatra::Base
     if data.nil?
       return not_found
     end
-    @title = t.runit.view_file.title(h(data[:name]), h(host_name))
+    @title = t('runit.view_file.title', :file => h(data[:name]), :host => h(host_name))
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
     erubis :view_file, :locals => data 
   end
