@@ -68,8 +68,8 @@ ru:
         Gb: Гб
     view_file:
       raw: Текст
-      title: 'Файл %{name} на %{host}'
-      header: 'Просмотр файла %{name} на %{host}'
+      title: 'Файл %{file} на %{host}'
+      header: 'Просмотр файла %{file} на %{host}'
       updated: "Страница обновлена %{time}"
       reload: Обновить страницу
 
