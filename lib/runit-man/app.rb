@@ -96,7 +96,7 @@ class RunitMan < Sinatra::Base
   end
 
   get '/' do
-    @scripts = [ 'jquery-1.5.0.min' ]
+    @scripts = [ 'jquery-1.5.1.min' ]
     @title = host_name
     erubis :index
   end
