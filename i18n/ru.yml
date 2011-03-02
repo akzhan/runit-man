@@ -17,7 +17,7 @@ ru:
           actions: Действия
           log_file: Лог
         values:
-          log_hint: Отрыть последние 100 строк лога сервиса %{name} в новом окне
+          log_hint: Открыть последние 100 строк лога сервиса %{name} в новом окне
           log_absent: Отсутствует
           files_to_view: Файлы
           urls_to_view: Ссылки
