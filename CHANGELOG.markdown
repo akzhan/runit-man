@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 1.11.4
+* jQuery upgraded to version 1.5.1.
+* Fixed i18n for en locale in log view (bug introduced in 1.11.0).
+* Minor typo in ru locale.
+
 ### Version 1.11.3
 * Fixed i18n for file view (bug introduced in 1.11.0).
 
@@ -23,7 +28,7 @@
 * Ability to download log files of concrete service.
 
 ### Version 1.9.8
-* Upgrade jQuery to 1.5.0.
+* jQuery upgraded to version 1.5.0.
 
 ### Version 1.9.7
 * Useless json gem compatibility layer has been removed.
@@ -40,7 +45,7 @@
 * Use RSpec 2.
 
 ### Version 1.9.3
-* Upgrade jQuery from 1.4.2 to 1.4.4.
+* jQuery upgraded from version 1.4.2 to version 1.4.4.
 * Switch from json gem to yajl-ruby gem.
 
 ### Versions 1.9.0 up to 1.9.2
