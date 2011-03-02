@@ -48,10 +48,10 @@ en:
           h: HUP
           o: ONCE
       log:
-        title: "Tail @{count} lines of service @{name} log - @{host}"
-        header: "Tail @{count} lines of service <strong>@{name}</strong> log: @{host} (<code>@{log_location}}</code>)"
-        counts: "Show @{count} lines of log"
-        updated: "Page updated at @{time}"
+        title: "Tail %{count} lines of service %{name} log - %{host}"
+        header: "Tail %{count} lines of service <strong>%{name}</strong> log: %{host} (<code>%{log_location}</code>)"
+        counts: "Show %{count} lines of log"
+        updated: "Page updated at %{time}"
         reload: Reload
         raw: Raw
         downloads: Log downloads
