@@ -4,7 +4,7 @@ need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_vi
 <tr class="<%= even_or_odd ? 'even' : 'odd' %>">
   <td<%= need_second_row ? ' rowspan="2"' : '' %>><%= h(service_info.pid) %></td>
   <th scope="row"><%= h(service_info.name) %></th>
-  <td><%= service_info.started_at.utc ? service_info.started_at  : '' %></td>
+  <td><%= service_info.started_at ? service_info.started_at.utc : '' %></td>
   <td><%= service_info.uptime ? ('%.2f' % service_info.uptime) : '' %></td>
   <td><%= stat_subst(service_info.stat) %></td>
   <td>
