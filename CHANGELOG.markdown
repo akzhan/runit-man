@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 1.11.5
+* New column (started_at) has been added.
+
 ### Version 1.11.4
 * jQuery upgraded to version 1.5.1.
 * Fixed i18n for en locale in log view (bug introduced in 1.11.0).
