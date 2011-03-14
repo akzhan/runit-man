@@ -84,6 +84,10 @@ class ServiceInfo
     up!
   end
 
+  def started_at
+    @status.started_at
+  end
+
   def pid
     @status.pid
   end

@@ -12,6 +12,7 @@ ru:
         headers:
           pid: PID
           name: Название
+          started_at: Запущен
           uptime: "Время исполнения (сек.)"
           stat: Состояние
           actions: Действия

@@ -4,6 +4,7 @@
         <tr>
             <th><%= h(t('runit.services.table.headers.pid')) %></th>
             <th><%= h(t('runit.services.table.headers.name')) %></th>
+            <th><%= h(t('runit.services.table.headers.started_at')) %></th>
             <th><%= h(t('runit.services.table.headers.uptime')) %></th>
             <th><%= h(t('runit.services.table.headers.stat')) %></th>
             <th><%= h(t('runit.services.table.headers.actions')) %></th>
