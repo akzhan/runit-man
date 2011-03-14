@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 1.11.5
+### Version 1.11.6
 * New column (started_at) has been added.
 
 ### Version 1.11.4
