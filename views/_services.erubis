@@ -4,6 +4,7 @@
         <tr>
             <th><%= h(t('runit.services.table.headers.pid')) %></th>
             <th><%= h(t('runit.services.table.headers.name')) %></th>
+            <th><%= h(t('runit.services.table.headers.started_at')) %></th>
             <th><%= h(t('runit.services.table.headers.uptime')) %></th>
             <th><%= h(t('runit.services.table.headers.stat')) %></th>
             <th><%= h(t('runit.services.table.headers.actions')) %></th>
@@ -12,7 +13,7 @@
     </thead>
     <tfoot>
         <tr>
-            <td colspan="6"><%= t('runit.services.table.footer', :time => h(Time.now.utc)) %></td>
+            <td colspan="7"><%= t('runit.services.table.footer', :time => h(Time.now.utc)) %></td>
         </tr>
     </tfoot>
     <tbody>

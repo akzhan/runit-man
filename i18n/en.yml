@@ -12,6 +12,7 @@ en:
         headers:
           pid: PID
           name: Name
+          started_at: Started at
           uptime: Uptime (s)
           stat: Status
           actions: Actions
