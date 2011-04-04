@@ -240,6 +240,10 @@ class RunitMan < Sinatra::Base
       @files_to_view ||= []
     end
 
+    def logger
+      'svlogd'
+		end
+
     def allowed_users
       @allowed_users ||= {}
     end
