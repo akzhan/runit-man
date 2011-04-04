@@ -1,0 +1,8 @@
+#!/bin/sh
+<% if logger == 'svlogd' %>
+mkdir -p /var/log/runit-man
+exec svlogd -tt /var/log/runit-man
+<% elsif logger =~ /logger(?:\:([^\s\:]+)(?:\:(\S+))?)?/ %>
+exec logger -i -t "<%= $1 ? $1 : 'runit-man' %>" -p <% $2 ? $2 : 'local1.info' %>
+<% end %>
+

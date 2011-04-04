@@ -220,7 +220,7 @@ class RunitMan < Sinatra::Base
       end
       unless File.directory?(all_r_dir)
         FileUtils.mkdir_p(log_dir)
-        FileUtils.cp(File.join(my_dir, 'log', 'run'), File.join(log_dir, 'run'))
+        create_log_run_script(all_r_dir)
       end
       create_run_script(all_r_dir)
       unless File.symlink?(active_r_dir)
@@ -270,5 +270,17 @@ class RunitMan < Sinatra::Base
       end
       File.chmod(0755, script_name)
     end
+
+    def create_log_run_script(dir)
+      script_name   = File.join(dir, 'log', 'run')
+      template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
+      File.open(script_name, 'w') do |script_source|
+        script_source.print Erubis::Eruby.new(IO.read(template_name)).result(
+          :logger                    => RunitMan.logger
+        )
+      end
+      File.chmod(0755, script_name)
+    end
   end
 end
+
