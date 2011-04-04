@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'fileutils'
 require 'yajl'
 require 'erubis'
@@ -5,8 +7,6 @@ require 'i18n'
 require 'sinatra/base'
 require 'runit-man/helpers'
 require 'runit-man/version'
-
-
 
 class RunitMan < Sinatra::Base
   VERSION       = RunitManVersion::VERSION
@@ -96,7 +96,7 @@ class RunitMan < Sinatra::Base
   end
 
   get '/' do
-    @scripts = [ 'jquery-1.5.1.min' ]
+    @scripts = [ 'jquery-1.5.2.min' ]
     @title = host_name
     erubis :index
   end
@@ -264,6 +264,7 @@ class RunitMan < Sinatra::Base
           :bind                      => RunitMan.respond_to?(:bind) ? RunitMan.bind : nil,
           :server                    => RunitMan.server,
           :files_to_view             => RunitMan.files_to_view,
+          :logger                    => RunitMan.logger,
           :auth                      => RunitMan.allowed_users
         )
       end

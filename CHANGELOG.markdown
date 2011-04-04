@@ -1,5 +1,8 @@
 ## Changes
 
+### master (not tagged yet
+* jQuery upgraded to version 1.5.2.
+
 ### Version 1.11.6
 * New column (started_at) has been added.
 
