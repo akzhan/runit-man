@@ -106,12 +106,25 @@ class ServiceInfo
     File.expand_path(rel_path, log_run_folder)
   end
 
-  def log_file_path(file_name)
+  def svlogd_log_file_path(file_name)
     dir_name = File.dirname(log_file_location)
     File.expand_path(file_name, dir_name)
   end
 
-  def log_files
+  def logger_log_file_path(file_name)
+    dir_name = File.dirname(File.dirname(log_file_location))
+    File.expand_path(File.join(file_name, "#{name}.log"), dir_name)
+  end
+
+  def log_file_path(file_name)
+    case RunitMan.logger
+    when 'svlogd' then svlogd_log_file_path(file_name)
+    when /^logger(?:\:.+)?/ then logger_log_file_path(file_name)
+    else nil
+    end
+  end
+
+  def svlogd_log_files
     r = []
     dir_name = File.dirname(log_file_location)
     Dir.foreach(dir_name) do |name|
@@ -134,6 +147,39 @@ class ServiceInfo
     end
     r
   end
+
+  def logger_log_files
+    r = []
+    dir_name = File.dirname(File.dirname(log_file_location))
+    Dir.foreach(dir_name) do |name|
+      next if ServiceInfo.itself_or_parent?(name)
+      full_name = File.expand_path(name, dir_name)
+      next unless File.directory?(full_name)
+      file_name = File.join(full_name, "#{self.name}.log")
+      stats = File.stat(file_name)
+      label = "#{Utils.host_name}-#{self.name}-#{name}.log"
+      r << {
+        :name     => name,
+        :label    => label,
+        :size     => stats.size,
+        :created  => stats.ctime.utc,
+        :modified => stats.mtime.utc
+      }
+    end
+    if r.length >= 2
+      r.sort! { |a, b| a[:modified] <=> b[:modified] }
+    end
+    r
+  end
+
+  def log_files
+    case RunitMan.logger
+    when 'svlogd' then svlogd_log_files
+    when /^logger(?:\:.+)?/ then logger_log_files
+    else []
+    end
+  end
+
 
   def send_signal(signal)
     return unless supervise?
@@ -229,7 +275,7 @@ private
 
     def log_location_cache
       unless @log_location_cache
-        @log_location_cache = LogLocationCache.new
+        @log_location_cache = LogLocationCache.new(RunitMan.logger)
       end
       @log_location_cache
     end
