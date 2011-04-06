@@ -1,6 +1,7 @@
 ## Changes
 
-### master (not tagged yet
+### Version 2.0.0
+* Support for logger in addition to svlogd
 * jQuery upgraded to version 1.5.2.
 
 ### Version 1.11.6

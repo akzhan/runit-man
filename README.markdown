@@ -72,9 +72,16 @@ Supported signals and their's meaning:
 
 ### Read logs
 
+#### svlogd
+
 You can read tail of service log using
 `GET /<service name>/log/<count of tailing lines>.txt`
 
 Note that to use this feature You must do logging using 
 `exec svlogd options log_directory_location`
+
+#### logger
+Use logger like:
+`exec logger  -i -t "runit-man" -p local1.info`
+and use option -l "logger:/var/log/" where base logs directory shown after period.
 

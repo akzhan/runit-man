@@ -21,12 +21,13 @@ class RunitMan < Sinatra::Base
     :json => 'application/json'
   }.freeze
 
-  set :environment,  :production
-  set :static,       true
-  set :logging,      true
-  set :dump_errors,  true
-  set :raise_errors, false
-  set :root,         GEM_FOLDER
+	set :logger_option, 'svlogd'
+  set :environment,   :production
+  set :static,        true
+  set :logging,       true
+  set :dump_errors,   true
+  set :raise_errors,  false
+  set :root,          GEM_FOLDER
 
   helpers do
     include Helpers
@@ -243,7 +244,7 @@ class RunitMan < Sinatra::Base
     end
 
     def logger
-      settings.logger || 'svlogd'
+      settings.logger_option || 'svlogd'
     end
 
     def prepare_to_run

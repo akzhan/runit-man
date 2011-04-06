@@ -15,7 +15,7 @@ OptionParser.new { |op|
   op.on('-a active_services_directory (/etc/service by default)') { |val| RunitMan.set :active_services_directory, val }
   op.on('-f all_services_directory (/etc/sv by default)')         { |val| RunitMan.set :all_services_directory, val }
   op.separator 'Logger options (now svlogd and logger supported only):'
-  op.on('-l logger application[:base folder[:priority]] (svlogd by default)') { |val| RunitMan.set :logger, val }
+  op.on('-l logger application[:base folder[:priority]] (svlogd by default)') { |val| RunitMan.set :logger_option, val }
   op.separator 'View options:'
   op.on('-v file_location', 'Enables view of specified file through runit-man') { |val| RunitMan.enable_view_of(val) }
   op.on('-u user:password', 'Requires user name with given password to auth') { |val| RunitMan.add_user(*(val.split(':', 2))) }
