@@ -1,7 +1,11 @@
 ## Changes
 
+### Version 2.0.1
+* Use Bundler ti simplify development tasks.
+* Fix registration of -l option.
+
 ### Version 2.0.0
-* Support for logger in addition to svlogd
+* Support for logger utility in addition to svlogd utility
 * jQuery upgraded to version 1.5.2.
 
 ### Version 1.11.6
