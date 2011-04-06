@@ -28,7 +28,7 @@ need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_vi
   </td>
   <td>
     <% if service_info.logged? %>
-      <%= log_link(service_info.name, :hint => t('runit.services.table.values.log_hint', service_info.name), :blank => true, :title => service_info.log_file_location) %>
+      <%= log_link(service_info.name, :hint => t('runit.services.table.values.log_hint', :name => service_info.name), :blank => true, :title => service_info.log_file_location) %>
       <%= log_downloads_link(service_info.name) %>
     <% else %>
       <%= t('runit.services.table.values.log_absent') %>

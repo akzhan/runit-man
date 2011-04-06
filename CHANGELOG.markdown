@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.0.2
+* Fix log link hint, that's broken from 1.11.x (thanks to verm666).
+
 ### Version 2.0.1
 * Use Bundler to simplify development tasks.
 * Fix registration of -l option.
