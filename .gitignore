@@ -1,3 +1,3 @@
-*.swp
-pkg
-runit-man.kpf
+*.sw?
+*.gem
+Gemfile.lock
