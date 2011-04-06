@@ -147,8 +147,6 @@ class RunitMan < Sinatra::Base
     send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
-
-
   get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
@@ -242,6 +240,10 @@ class RunitMan < Sinatra::Base
 
     def allowed_users
       @allowed_users ||= {}
+    end
+
+    def logger
+      settings.logger || 'svlogd'
     end
 
     def prepare_to_run

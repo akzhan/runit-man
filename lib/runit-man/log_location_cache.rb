@@ -1,7 +1,8 @@
 class LogLocationCache
   TIME_LIMIT = 6000
 
-  def initialize
+  def initialize(logger)
+    @logger = logger
     clear
   end
 
@@ -16,6 +17,7 @@ class LogLocationCache
 private
   attr_accessor :query_counter
   attr_accessor :pids
+  attr_reader   :logger
 
   def clear
     self.query_counter = 0
@@ -41,7 +43,8 @@ private
   def get_pid_location(lpid)
     folder = log_folder(lpid)
     return nil if folder.nil?
-    File.join(folder, 'current')
+    return File.join(folder, 'current') if logger == 'svlogd'
+    File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log") # TODO: may be UTC?
   end
 
   def log_command(lpid)
@@ -52,12 +55,36 @@ private
     cmd != '' ? cmd : nil
   end
 
-  def log_folder(lpid)
+  def logger_name
+    (logger =~ /^([^\:]+)\:/) ? $1 : logger
+  end
+
+  def log_base_folder
+    (logger =~ /^[^\:]+\:([^\:]+)/) ? $1 : nil
+  end
+
+  def log_command_args(lpid)
     cmd = log_command(lpid)
     return nil if cmd.nil?
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
-    return nil if args.shift !~ /svlogd/
+    return nil if args.shift !~ /#{Regexp.escape(logger_name)}/
+    args
+  end
+
+  def log_folder_base_name(lpid)
+    args = log_command_args(lpid)
+    return nil if args.nil?
     args.first
+  end
+
+  def log_folder(lpid)
+    folder = log_folder_base_name(lpid) 
+    log_base_folder.nil? ? folder : File.join(log_base_folder, folder)
+  end
+
+  def log_priority(lpid)
+    args = log_command_args(lpid)
+    args.nil? ? logger_priority : args.last
   end
 
   def set_pid_log_location(pid, log_location)

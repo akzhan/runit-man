@@ -116,7 +116,7 @@ class ServiceInfo
     dir_name = File.dirname(log_file_location)
     Dir.foreach(dir_name) do |name|
       next if ServiceInfo.itself_or_parent?(name)
-      next if SPECIAL_LOG_FILES.include?(name)
+      next if RunitMan.logger == 'svlogd' && SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
       label = "#{Utils.host_name}-#{self.name}-#{I18n.l(stats.atime.utc)}-#{I18n.l(stats.mtime.utc)}.log"
@@ -229,7 +229,7 @@ private
 
     def log_location_cache
       unless @log_location_cache
-        @log_location_cache = LogLocationCache.new
+        @log_location_cache = LogLocationCache.new(RunitMan.logger)
       end
       @log_location_cache
     end
