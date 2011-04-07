@@ -113,7 +113,9 @@ class ServiceInfo
 
   def logger_log_file_path(file_name)
     dir_name = File.dirname(File.dirname(log_file_location))
-    File.expand_path(File.join(file_name, "#{name}.log"), dir_name)
+    loc = File.expand_path(File.join(file_name, "#{name}.log"), dir_name)
+    loc = "#{loc}.gz" unless File.exists?(loc)
+    loc
   end
 
   def log_file_path(file_name)

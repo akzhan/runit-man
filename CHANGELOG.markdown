@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 2.0.5
+### Version 2.0.6
 * Support for gzipped logs.
 
 ### Version 2.0.2
