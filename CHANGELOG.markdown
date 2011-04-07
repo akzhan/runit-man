@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.0.3
+* Support for gzipped logs.
+
 ### Version 2.0.2
 * Fix log link hint, that's broken from 1.11.x (thanks to verm666).
 

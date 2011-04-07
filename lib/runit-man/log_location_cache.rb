@@ -44,7 +44,9 @@ private
     folder = log_folder(lpid)
     return nil if folder.nil?
     return File.join(folder, 'current') if logger == RunitMan::DEFAULT_LOGGER
-    File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log") # TODO: may be UTC?
+    loc = File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log")
+    loc = "#{loc}.gz" unless File.exists?(loc)
+    loc
   end
 
   def log_command(lpid)
