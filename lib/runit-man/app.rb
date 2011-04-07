@@ -20,8 +20,9 @@ class RunitMan < Sinatra::Base
     :js   => 'application/x-javascript',
     :json => 'application/json'
   }.freeze
+  DEFAULT_LOGGER = 'svlogd'.freeze
 
-	set :logger_option, 'svlogd'
+	set :logger_option, DEFAULT_LOGGER
   set :environment,   :production
   set :static,        true
   set :logging,       true
@@ -239,16 +240,12 @@ class RunitMan < Sinatra::Base
       @files_to_view ||= []
     end
 
-    def logger
-      'svlogd'
-		end
-
     def allowed_users
       @allowed_users ||= {}
     end
 
     def logger
-      settings.logger_option || 'svlogd'
+      settings.logger_option || DEFAULT_LOGGER
     end
 
     def prepare_to_run

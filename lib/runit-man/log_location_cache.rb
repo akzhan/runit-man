@@ -43,7 +43,7 @@ private
   def get_pid_location(lpid)
     folder = log_folder(lpid)
     return nil if folder.nil?
-    return File.join(folder, 'current') if logger == 'svlogd'
+    return File.join(folder, 'current') if logger == RunitMan::DEFAULT_LOGGER
     File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log") # TODO: may be UTC?
   end
 
