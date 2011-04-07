@@ -156,6 +156,7 @@ class ServiceInfo
       full_name = File.expand_path(name, dir_name)
       next unless File.directory?(full_name)
       file_name = File.join(full_name, "#{self.name}.log")
+      file_name = "#{file_name}.gz" unless File.exists?(file_name)
       stats = File.stat(file_name)
       label = "#{Utils.host_name}-#{self.name}-#{name}.log"
       r << {
