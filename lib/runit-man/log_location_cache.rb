@@ -1,5 +1,5 @@
 class LogLocationCache
-  TIME_LIMIT = 6000
+  TIME_LIMIT = 600
 
   def initialize(logger)
     @logger = logger
@@ -8,10 +8,12 @@ class LogLocationCache
 
   def [](pid)
     pid = pid.to_i
+    loc = nil
     unless pids.include?(pid)
-      set_pid_log_location(pid, get_pid_location(pid))
+      loc = get_pid_location(pid)
+      set_pid_log_location(pid, loc)
     end
-    pids[pid][:value]
+    loc || pids[pid][:value]
   end
 
 private
@@ -27,7 +29,7 @@ private
 
   def remove_old_values
     self.query_counter = query_counter + 1
-    if query_counter < 1000
+    if query_counter < 10
       return
     end
     self.query_counter = 0
@@ -91,10 +93,12 @@ private
 
   def set_pid_log_location(pid, log_location)
     remove_old_values
-    pids[pid.to_i] = {
-      :value => log_location,
-      :time  => Time.now
-    }
+    if log_location =~ /current$/
+      pids[pid.to_i] = {
+        :value => log_location,
+        :time  => Time.now
+      }
+    end
     self
   end
 end
