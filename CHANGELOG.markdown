@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 2.0.9.
+### Version 2.0.9
 * English locale fixed (broken in 2.0.0).
 * Caching fixed (broken in 2.0.7).
 
