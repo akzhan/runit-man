@@ -13,7 +13,9 @@ class LogLocationCache
       loc = get_pid_location(pid)
       set_pid_log_location(pid, loc)
     end
-    loc || pids[pid][:value]
+    return loc unless loc.nil?
+    return nil unless pids.include?(pid)
+    pids[pid][:value]
   end
 
 private

@@ -1,7 +1,8 @@
 ## Changes
 
-### Version 2.0.8
-* English locale fixed.
+### Version 2.0.9.
+* English locale fixed (broken in 2.0.0).
+* Caching fixed (broken in 2.0.7).
 
 ### Version 2.0.7
 * Caching of logger log locations removed, other caching was shortened.
