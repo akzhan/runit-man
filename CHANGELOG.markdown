@@ -1,5 +1,11 @@
 ## Changes
 
+### Version 2.0.8
+* English locale fixed.
+
+### Version 2.0.7
+* Caching of logger log locations removed, other caching was shortened.
+
 ### Version 2.0.6
 * Support for gzipped logs.
 
