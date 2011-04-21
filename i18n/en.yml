@@ -21,7 +21,7 @@ en:
           log_hint: Open tail 100 lines of %{name} service log in new window
           log_absent: Absent
           files_to_view: Files
-          urls_to_views: Urls
+          urls_to_view: Urls
         footer: Updated at %{time}
         subst:
           inactive: <span class="inactive">inactive</span>
