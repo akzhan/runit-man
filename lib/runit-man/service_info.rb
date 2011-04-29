@@ -127,6 +127,11 @@ class ServiceInfo
     end
   end
 
+  def sorted_log_files(log_files)
+    return log_files if log_files.length < 2
+    log_files.sort { |a, b| a[:created] <=> b[:created] }
+  end
+
   def svlogd_log_files
     r = []
     dir_name = File.dirname(log_file_location)
@@ -135,20 +140,20 @@ class ServiceInfo
       next if SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
-      label = "#{Utils.host_name}-#{self.name}-#{I18n.l(stats.atime.utc)}-#{I18n.l(stats.mtime.utc)}.log"
+      stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
+      min_time, max_time = stat_times.min, stat_times.max
+
+      label = "#{Utils.host_name}-#{self.name}-#{I18n.l(min_time)}-#{I18n.l(max_time)}.log"
       label = label.gsub(/[\:\s\,]/, '-').gsub(/[\\\/]/, '.')
       r << {
         :name     => name,
         :label    => label,
         :size     => stats.size,
-        :created  => stats.ctime.utc,
-        :modified => stats.mtime.utc
+        :created  => min_time,
+        :modified => max_time
       }
     end
-    if r.length >= 2
-      r.sort! { |a, b| a[:modified] <=> b[:modified] }
-    end
-    r
+    sorted_log_files(r)
   end
 
   def logger_log_files
@@ -165,19 +170,18 @@ class ServiceInfo
         label = "#{label}.gz"
       end
       stats = File.stat(file_name)
+      stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
+      min_time, max_time = stat_times.min, stat_times.max
 
       r << {
         :name     => name,
         :label    => label,
         :size     => stats.size,
-        :created  => stats.ctime.utc,
-        :modified => stats.mtime.utc
+        :created  => min_time,
+        :modified => max_time
       }
     end
-    if r.length >= 2
-      r.sort! { |a, b| a[:modified] <=> b[:modified] }
-    end
-    r
+    sorted_log_files(r)
   end
 
   def log_files
