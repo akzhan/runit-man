@@ -1,0 +1,39 @@
+- need_second_row = !service_info.files_to_view.empty? || !service_info.urls_to_view.empty?
+%tr{:class=> even_or_odd ? 'even' : 'odd'}
+  %td{:rowspan=> need_second_row ? 2 : 1}= h(service_info.pid)
+  %th{:scope=>"row"}= h(service_info.name)
+  %td= service_info.started_at ? service_info.started_at.utc : ''
+  %td= service_info.uptime ? ('%.2f' % service_info.uptime) : ''
+  %td= stat_subst(service_info.stat)
+  %td
+    - if service_info.active?
+      = service_action service_info.name, :restart, t('runit.services.table.actions.restart'), !service_info.down?
+      = service_action service_info.name, :down, t('runit.services.table.actions.stop'), !service_info.down?
+      = service_action service_info.name, :up, t('runit.services.table.actions.start'), service_info.down?
+      - unless service_info.down?
+        - service_info.allowed_signals.each do |signal|
+          = service_signal service_info.name, signal, t("runit.services.table.signals.#{signal}")
+      - if service_info.switchable?
+        = service_action service_info.name, :switch_down, t('runit.services.table.actions.switch_down')
+    - else
+      - if service_info.switchable?
+        = service_action service_info.name, :switch_up, t('runit.services.table.actions.switch_up')
+  %td
+    - if service_info.logged?
+      = log_link(service_info.name, :hint => t('runit.services.table.values.log_hint', :name => service_info.name), :blank => true, :title => service_info.log_file_location)
+      = log_downloads_link(service_info.name)
+    - else
+      = t('runit.services.table.values.log_absent')
+- if need_second_row
+  %tr
+    %td{:colspan=>6}
+      - unless service_info.files_to_view.empty?
+        = h(t('runit.services.table.values.files_to_view'))
+        %span :
+        - service_info.files_to_view.each do |f|
+          %a{:href=>"/view?file=#{h(f)}"}= h(f)
+      - unless service_info.urls_to_view.empty?
+        = h(t('runit.services.table.values.urls_to_view'))
+        %span :
+        - service_info.urls_to_view.each do |url|
+          %a{:href=>h(url)}= h(url)

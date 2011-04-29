@@ -1,7 +1,0 @@
-<% if enabled %>
-  <form class="service-action" action="<%= h(name) %>/<%= h(action) %>" method="POST">
-    <input type="submit" value="<%= h(label) %>" />
-  </form>
-<% else %>
-  <input type="submit" disabled="disabled" value="<%= h(label) %>" onclick="return false;" />
-<% end %>

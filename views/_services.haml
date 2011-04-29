@@ -1,0 +1,21 @@
+%table
+  %caption= h(t('runit.services.table.caption'))
+  %thead
+    %tr
+      %th= h(t('runit.services.table.headers.pid'))
+      %th= h(t('runit.services.table.headers.name'))
+      %th= h(t('runit.services.table.headers.started_at'))
+      %th= h(t('runit.services.table.headers.uptime'))
+      %th= h(t('runit.services.table.headers.stat'))
+      %th= h(t('runit.services.table.headers.actions'))
+      %th= h(t('runit.services.table.headers.log_file'))
+  %tfoot
+    %tr
+      %td{:colspan=>7}= t('runit.services.table.footer', :time => h(Time.now.utc))
+  %tbody
+    = partial(:service_info, :collection => service_infos)
+%ul
+  - files_to_view.each do |f|
+    %li
+      %a{:target=>"_blank", :href=>"/view?file=#{h(f)}"}= h(f)
+
