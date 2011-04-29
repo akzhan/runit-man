@@ -2,7 +2,7 @@
 
 require 'fileutils'
 require 'yajl'
-require 'erubis'
+require 'haml'
 require 'i18n'
 require 'sinatra/base'
 require 'runit-man/helpers'
@@ -98,9 +98,9 @@ class RunitMan < Sinatra::Base
   end
 
   get '/' do
-    @scripts = [ 'jquery-1.5.2.min' ]
+    @scripts = %w[ jquery-1.5.2.min runit-man ]
     @title = host_name
-    erubis :index
+    haml :index
   end
 
   get '/services' do
@@ -129,13 +129,13 @@ class RunitMan < Sinatra::Base
     data = log_of_service(name, count)
     return not_found if data.nil?
     @title = t('runit.services.log.title', :name => h(name), :host => h(host_name), :count => h(count), :log_location => h(data[:log_location]))
-    erubis :log, :locals => data
+    haml :log, :locals => data
   end
 
   get %r[^/([^/]+)/log\-downloads/?$] do |name|
     srv = ServiceInfo[name]
     return not_found if srv.nil? || !srv.logged?
-    erubis :log_downloads, :locals => {
+    haml :log_downloads, :locals => {
       :name  => name,
       :files => srv.log_files
     }
@@ -174,7 +174,7 @@ class RunitMan < Sinatra::Base
     end
     @title = t('runit.view_file.title', :file => h(data[:name]), :host => h(host_name))
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
-    erubis :view_file, :locals => data 
+    haml :view_file, :locals => data 
   end
 
   get '/view.txt' do
@@ -189,7 +189,8 @@ class RunitMan < Sinatra::Base
   def log_action(name, text)
     env  = request.env
     addr = env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
-    puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
+    $stdout.puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
+    $stdout.flush
   end
 
   post '/:name/signal/:signal' do |name, signal|

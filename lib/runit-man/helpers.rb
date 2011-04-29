@@ -16,7 +16,6 @@ module Helpers
     Utils.host_name
   end
 
-
   def t(*args)
     Utils.t(*args)
   end

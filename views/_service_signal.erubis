@@ -1,3 +1,0 @@
-<form class="service-signal" action="<%= h(name) %>/signal/<%= h(signal) %>" method="POST">
-    <input type="submit" value="<%= h(label) %>" />
-</form>

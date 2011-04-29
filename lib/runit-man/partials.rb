@@ -8,11 +8,11 @@ module Sinatra::Partials
     options.merge!(:layout => false)
     if collection = options.delete(:collection) then
       collection.inject([]) do |buffer, member|
-        buffer << erubis(:"#{template}", options.merge(:layout =>
+        buffer << haml(:"#{template}", options.merge(:layout =>
         false, :locals => {template_array[-1].to_sym => member}))
       end.join("\n")
     else
-      erubis(:"#{template}", options)
+      haml(:"#{template}", options)
     end
   end
 end
