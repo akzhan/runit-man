@@ -115,6 +115,7 @@ class ServiceInfo
     dir_name = File.dirname(File.dirname(log_file_location))
     loc = File.expand_path(File.join(file_name, "#{name}.log"), dir_name)
     loc = "#{loc}.gz" unless File.exists?(loc)
+    loc = nil unless File.exists?(loc)
     loc
   end
 
