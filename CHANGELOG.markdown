@@ -1,5 +1,8 @@
 ## Changes
 
+## Version 2.1.0
+* erubis replaced with haml (because newest erubis breaks rendering of page).
+
 ### Version 2.0.9
 * English locale fixed (broken in 2.0.0).
 * Caching fixed (broken in 2.0.7).
