@@ -1,5 +1,9 @@
 ## Changes
 
+## Version 2.1.2
+* Sometimes we have no current log file in logger (no records in current day). Test for it.
+* Updated logic of calculation of log file times.
+
 ## Version 2.1.1
 * erubis replaced with haml (because newest erubis breaks rendering of page).
 * CSS updated.
