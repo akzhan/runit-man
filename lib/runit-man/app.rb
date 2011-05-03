@@ -51,6 +51,7 @@ class RunitMan < Sinatra::Base
 
   configure do
     RunitMan.setup_i18n_files
+    Haml::Template.options[:ugly] = true
   end
 
   before do
