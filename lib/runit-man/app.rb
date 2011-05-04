@@ -118,11 +118,13 @@ class RunitMan < Sinatra::Base
     count = MAX_TAIL if count > MAX_TAIL
     srv   = ServiceInfo[name]
     return nil if srv.nil? || !srv.logged?
+    text = `tail -n #{count} #{srv.log_file_location}`
+    text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
     {
       :name         => name,
       :count        => count,
       :log_location => srv.log_file_location,
-      :text         => `tail -n #{count} #{srv.log_file_location}`
+      :text         => text
     }
   end
 
@@ -162,9 +164,11 @@ class RunitMan < Sinatra::Base
     end
     file_path = request.GET['file']
     return nil unless all_files_to_view.include?(file_path)
+    text = IO.read(file_path)
+    text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
     {
        :name => file_path,
-       :text => IO.read(file_path)
+       :text => text
     }
   end
 
