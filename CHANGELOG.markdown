@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 2.2.0
+### Version 2.2.1
 * Spawning of tail command replaced with file-tail gem.
 * Force UTF-8 encoding on file contents in ruby 1.9.
 

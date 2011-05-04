@@ -120,8 +120,8 @@ class RunitMan < Sinatra::Base
     srv   = ServiceInfo[name]
     return nil if srv.nil? || !srv.logged?
     text = ''
-    File::Tail::Logfile.open(srv.log_file_location) do |log|
-      log.backward(count).tail { |line| text += line }
+    File::Tail::Logfile.open(srv.log_file_location, :backward => count, :return_if_eof => true) do |log|
+      log.tail { |line| text += line }
     end
     text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
     {
