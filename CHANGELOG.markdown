@@ -1,6 +1,10 @@
 ## Changes
 
-### Version 2.2.1
+### Version 2.2.3
+* Upgrade jQuery to 1.6.
+* Fix jslint errors and warnings.
+
+### Version 2.2.2
 * Spawning of tail command replaced with file-tail gem.
 * Force UTF-8 encoding on file contents in ruby 1.9.
 
