@@ -5,6 +5,7 @@ require 'yajl'
 require 'haml'
 require 'i18n'
 require 'sinatra/base'
+require 'file/tail'
 require 'runit-man/helpers'
 require 'runit-man/version'
 
@@ -118,7 +119,10 @@ class RunitMan < Sinatra::Base
     count = MAX_TAIL if count > MAX_TAIL
     srv   = ServiceInfo[name]
     return nil if srv.nil? || !srv.logged?
-    text = `tail -n #{count} #{srv.log_file_location}`
+    text = ''
+    File::Tail::Logfile.open(srv.log_file_location) do |log|
+      log.backward(count).tail { |line| text += line }
+    end
     text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
     {
       :name         => name,

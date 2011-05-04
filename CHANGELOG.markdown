@@ -1,10 +1,14 @@
 ## Changes
 
-## Version 2.1.2
+### Version 2.2.0
+* Spawning of tail command replaced with file-tail gem.
+* Force UTF-8 encoding on file contents in ruby 1.9.
+
+### Version 2.1.2
 * Sometimes we have no current log file in logger (no records in current day). Test for it.
 * Updated logic of calculation of log file times.
 
-## Version 2.1.1
+### Version 2.1.1
 * erubis replaced with haml (because newest erubis breaks rendering of page).
 * CSS updated.
 
