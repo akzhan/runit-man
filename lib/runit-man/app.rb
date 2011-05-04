@@ -53,7 +53,9 @@ class RunitMan < Sinatra::Base
   configure do
     Encoding.default_internal = 'utf-8' if defined?(Encoding) && Encoding.respond_to?(:default_internal=)
     RunitMan.setup_i18n_files
-    set :haml, :ugly => true, :encoding => 'utf-8'
+    haml_options = { :ugly => true }
+    haml_options[:encoding] = 'utf-8' if defined?(Encoding)
+    set :haml, haml_options
   end
 
   before do
