@@ -1,17 +1,19 @@
-(function($)
+/*jslint browser: true, forin: true */
+(function($, window)
 {
+    "use strict";
     var REFRESH_SERVICES_TIMEOUT = 5000;
 
     $.ajaxSetup({
         error: function(e, req, options, error)
         {
-            $('#url').text(settings.url);
+            $('#url').text(options.url);
             $('#error').show();
         }
     });
 
-    var needRefreshServices;
-    var refreshServices = function()
+    var needRefreshServices, refreshServices;
+    refreshServices = function()
     {
         refreshServices.timer = null;
         $.ajax({
@@ -30,12 +32,13 @@
             needRefreshServices(false);
         });
     };
+    refreshServices.timer = null;
 
     needRefreshServices = function(now)
     {
-        if (refreshServices.timer != null)
+        if (refreshServices.timer !== null)
         {
-            clearTimeout(refreshServices.timer);
+            window.clearTimeout(refreshServices.timer);
             refreshServices.timer = null;
         }
         if (now)
@@ -44,7 +47,7 @@
         }
         else
         {
-            refreshServices.timer = setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
+            refreshServices.timer = window.setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
         }
     };
 
@@ -61,4 +64,4 @@
     $('#service-refresh-interval').text(REFRESH_SERVICES_TIMEOUT / 1000);
 
     needRefreshServices(true);
-})(jQuery);
+})(jQuery, window);
