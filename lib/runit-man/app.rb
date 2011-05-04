@@ -51,8 +51,9 @@ class RunitMan < Sinatra::Base
   end
 
   configure do
+    Encoding.default_internal = 'utf-8' if defined?(Encoding) && Encoding.respond_to?(:default_internal=)
     RunitMan.setup_i18n_files
-    set :haml, :ugly => true
+    set :haml, :ugly => true, :encoding => 'utf-8'
   end
 
   before do
@@ -120,10 +121,14 @@ class RunitMan < Sinatra::Base
     srv   = ServiceInfo[name]
     return nil if srv.nil? || !srv.logged?
     text = ''
+    text.force_encoding('utf-8') if text.respond_to?(:force_encoding)
     File::Tail::Logfile.open(srv.log_file_location, :backward => count, :return_if_eof => true) do |log|
-      log.tail { |line| text += line }
+      log.tail do |line|
+        line.force_encoding('utf-8') if line.respond_to?(:force_encoding)
+        text += line
+      end
     end
-    text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
+
     {
       :name         => name,
       :count        => count,
@@ -169,7 +174,7 @@ class RunitMan < Sinatra::Base
     file_path = request.GET['file']
     return nil unless all_files_to_view.include?(file_path)
     text = IO.read(file_path)
-    text.force_encoding('UTF-8') if text.respond_to?(:force_encoding)
+    text.force_encoding('utf-8') if text.respond_to?(:force_encoding)
     {
        :name => file_path,
        :text => text
