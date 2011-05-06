@@ -85,7 +85,7 @@ private
 
   def log_folder(lpid)
     folder = log_folder_base_name(lpid) 
-    log_base_folder.nil? ? folder : File.join(log_base_folder, folder)
+    (log_base_folder.nil? || folder.nil?) ? folder : File.join(log_base_folder, folder)
   end
 
   def log_priority(lpid)
