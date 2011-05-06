@@ -288,10 +288,11 @@ class RunitMan < Sinatra::Base
 
   private
     def create_run_script(dir)
+      require 'erb'
       script_name   = File.join(dir, 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'run.erb')
       File.open(script_name, 'w') do |script_source|
-        script_source.print Erubis::Eruby.new(IO.read(template_name)).result(
+        script_source.print ERB.new(IO.read(template_name)).result(
           :all_services_directory    => RunitMan.all_services_directory,
           :active_services_directory => RunitMan.active_services_directory,
           :port                      => RunitMan.port,
@@ -306,10 +307,11 @@ class RunitMan < Sinatra::Base
     end
 
     def create_log_run_script(dir)
+      require 'erb'
       script_name   = File.join(dir, 'log', 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
       File.open(script_name, 'w') do |script_source|
-        script_source.print Erubis::Eruby.new(IO.read(template_name)).result(
+        script_source.print ERB.new(IO.read(template_name)).result(
           :logger                    => RunitMan.logger
         )
       end
