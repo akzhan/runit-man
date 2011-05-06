@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.2.6
+* Use standalone ERB instead of Erubis because we now not depend on erubis gem (registration broken in 2.1.1 when erubis is not installed).
+
 ### Version 2.2.5
 * Try to show human readable error message when file cannot be parsed in UTF-8 encoding.
 
