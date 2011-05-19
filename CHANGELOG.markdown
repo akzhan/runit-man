@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.2.8
+* Encodings handling has been fixed (ruby 1.9 was affected) - prepor
+
 ### Version 2.2.7
 * Yet another fix for logger applied when no current log file exists.
 
@@ -11,7 +14,8 @@
 * Try to show human readable error message when file cannot be parsed in UTF-8 encoding.
 
 ### Version 2.2.4
-* Fix haml options for ruby 1.8 (bug introduced in yanked 2.2.2)### Version 2.2.* Try to show human readable error message when file cannot be parsed in UTF-8 encoding.
+* Fix haml options for ruby 1.8 (bug introduced in yanked 2.2.2)
+* Try to show human readable error message when file cannot be parsed in UTF-8 encoding.
 
 ### Version 2.2.3 (yanked)
 * Upgrade jQuery to 1.6.
