@@ -279,17 +279,16 @@ class RunitMan < Sinatra::Base
       require 'erb'
       script_name   = File.join(dir, 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'run.erb')
+      all_services_directory    = RunitMan.all_services_directory
+      active_services_directory = RunitMan.active_services_directory
+      port                      = RunitMan.port
+      bind                      = RunitMan.respond_to?(:bind) ? RunitMan.bind : nil
+      server                    = RunitMan.server
+      files_to_view             = RunitMan.files_to_view
+      logger                    = RunitMan.logger
+      auth                      = RunitMan.allowed_users
       File.open(script_name, 'w') do |script_source|
-        script_source.print ERB.new(IO.read(template_name)).result(
-          :all_services_directory    => RunitMan.all_services_directory,
-          :active_services_directory => RunitMan.active_services_directory,
-          :port                      => RunitMan.port,
-          :bind                      => RunitMan.respond_to?(:bind) ? RunitMan.bind : nil,
-          :server                    => RunitMan.server,
-          :files_to_view             => RunitMan.files_to_view,
-          :logger                    => RunitMan.logger,
-          :auth                      => RunitMan.allowed_users
-        )
+        script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
       File.chmod(0755, script_name)
     end
@@ -298,10 +297,9 @@ class RunitMan < Sinatra::Base
       require 'erb'
       script_name   = File.join(dir, 'log', 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
+      logger        = RunitMan.logger
       File.open(script_name, 'w') do |script_source|
-        script_source.print ERB.new(IO.read(template_name)).result(
-          :logger                    => RunitMan.logger
-        )
+        script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
       File.chmod(0755, script_name)
     end
