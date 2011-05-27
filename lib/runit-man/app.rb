@@ -229,6 +229,17 @@ class RunitMan < Sinatra::Base
   end
 
   class << self
+    def exec_rackup(command)
+      ENV['RUNIT_ALL_SERVICES_DIR']    = RunitMan.all_services_directory
+      ENV['RUNIT_ACTIVE_SERVICES_DIR'] = RunitMan.active_services_directory
+      ENV['RUNIT_LOGGER']              = RunitMan.logger
+      ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan.files_to_view.join(',')
+      ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
+
+      Dir.chdir(GEM_FOLDER)
+      exec(command)
+    end
+
     def register_as_runit_service
       all_r_dir    = File.join(RunitMan.all_services_directory, 'runit-man')
       active_r_dir = File.join(RunitMan.active_services_directory, 'runit-man')
@@ -264,7 +275,7 @@ class RunitMan < Sinatra::Base
     end
 
     def logger
-      settings.logger_option || DEFAULT_LOGGER
+      settings.logger_option
     end
 
     def prepare_to_run
