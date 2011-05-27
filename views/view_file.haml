@@ -1,7 +1,7 @@
 - content_for :content do
   = t('runit.view_file.header', :file =>h(name), :host => h(host_name))
   &nbsp;|&nbsp;
-  %a{:href=>"/view.txt?file=#{h(name)}"}= t('runit.view_file.raw')
+  %a{:href=>"/view.txt?file=#{name}"}= t('runit.view_file.raw')
   %pre= h(text)
 - content_for :footer do
   %p

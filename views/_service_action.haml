@@ -1,5 +1,5 @@
 - if enabled
-  %form.service-action{:action=>"#{h(name)}/#{h(action)}", :method=>"POST"}
-    %input{:type=>"submit", :value=>h(label)}/
+  %form.service-action{:action=>"#{name}/#{action}", :method=>"POST"}
+    %input{:type=>"submit", :value=>label}/
 - else
-  %input{:type=>"submit", :disabled=>"disabled", :value=>h(label), :onclick=>"return false;"}/
+  %input{:type=>"submit", :disabled=>"disabled", :value=>label, :onclick=>"return false;"}/

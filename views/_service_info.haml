@@ -31,9 +31,10 @@
         = h(t('runit.services.table.values.files_to_view'))
         %span :
         - service_info.files_to_view.each do |f|
-          %a{:href=>"/view?file=#{h(f)}"}= h(f)
+          %a{:href=>"/view?file=#{f}"}= h(f)
       - unless service_info.urls_to_view.empty?
         = h(t('runit.services.table.values.urls_to_view'))
         %span :
         - service_info.urls_to_view.each do |url|
-          %a{:href=>h(url)}= h(url)
+          %a{:href=>url}= h(url)
+

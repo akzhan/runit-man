@@ -63,11 +63,11 @@ module Helpers
     raw   = options[:raw] || false
     hint  = " title=\"#{h(hint)}\"" unless hint.empty?
     blank = blank ? ' target="_blank"' : ''
-    "<a#{hint}#{blank} href=\"/#{h(name)}/log#{ (count != 100) ? "/#{count}" : '' }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
+    "<a#{hint}#{blank} href=\"/#{name}/log#{ (count != 100) ? "/#{count}" : '' }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
   end
 
   def log_downloads_link(name)
-    "<a target=\"_blank\" href=\"/#{h(name)}/log-downloads\/\">#{h(t('runit.services.log.downloads'))}&hellip;</a>"
+    "<a target=\"_blank\" href=\"/#{name}/log-downloads\/\">#{h(t('runit.services.log.downloads'))}&hellip;</a>"
   end
 
   def even_or_odd
@@ -112,3 +112,4 @@ module Helpers
     end.join(' ')
   end
 end
+
