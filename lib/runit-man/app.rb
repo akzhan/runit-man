@@ -26,9 +26,10 @@ class RunitMan < Sinatra::Base
     :js   => 'application/x-javascript',
     :json => 'application/json'
   }.freeze
-  DEFAULT_LOGGER = 'svlogd'.freeze
+  DEFAULT_LOGGER              = 'svlogd'.freeze
+  DEFAULT_ALL_SERVICES_DIR    = '/etc/sv'.freeze
+  DEFAULT_ACTIVE_SERVICES_DIR = '/etc/service'.freeze
 
-	set :logger_option, DEFAULT_LOGGER
   set :environment,   :production
   set :static,        true
   set :logging,       true

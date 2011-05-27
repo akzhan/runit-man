@@ -1,8 +1,9 @@
 require 'optparse'
 require 'runit-man/app'
 
-RunitMan.set :active_services_directory, '/etc/service'
-RunitMan.set :all_services_directory,    '/etc/sv'
+RunitMan.set :active_services_directory, RunitMan::DEFAULT_ACTIVE_SERVICES_DIR
+RunitMan.set :all_services_directory,    RunitMan::DEFAULT_ALL_SERVICES_DIR
+RunitMan.set :logger_option,             RunitMan::DEFAULT_LOGGER
 
 OptionParser.new { |op|
   op.banner = 'Usage: runit-man <options>'
