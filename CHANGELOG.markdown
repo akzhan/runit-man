@@ -1,6 +1,6 @@
 ## Changes
 
-### Version 2.3.0
+### Version 2.3.1
 * New --rackup option to start runit-man using any Rack-compatible server (like unicorn/rainbows).
 
 ### Version 2.2.9
