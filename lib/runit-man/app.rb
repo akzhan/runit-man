@@ -236,7 +236,7 @@ class RunitMan < Sinatra::Base
       ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan.files_to_view.join(',')
       ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
 
-      Dir.chdir(GEM_FOLDER)
+      Dir.chdir(File.dirname(__FILE__))
       exec(command)
     end
 
