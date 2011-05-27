@@ -9,13 +9,17 @@ Server will run by **runit-man** script. Take a note that **runit-man** must hav
 Usually You should install both **runit-man** and **thin** gems to run this tool fine.
 `gem install runit-man thin`
 
-
 Pragmatic approach is to setup runit-man as runit service like this:
 `runit-man -p 14500 -r`
 
 This command installs runit-man as runit service (using default folders */etc/sv/* and */etc/service/*). 
 
 Look at INSTALL for details.
+
+### rackup configuration
+
+Take a note that runit-man gem also provides config.ru rackup configuration file.
+It's useful for running under unicorn/rainbows etc. runit-man --rackup=command option does `cd config.ru directory && set environment && exec command`,
 
 ## Customization
 
