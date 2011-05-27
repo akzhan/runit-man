@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.2.9
+* Fix runit-man service registration.
+
 ### Version 2.2.8
 * Encodings handling has been fixed (ruby 1.9 was affected) - prepor
 
