@@ -1,7 +1,11 @@
 ## Changes
 
+### Version 2.3.0
+* New --rackup option to start runit-man using any Rack-compatible server (like unicorn/rainbows).
+
 ### Version 2.2.9
-* Fix runit-man service registration.
+* Fix runit-man service registration (bug introduced in 2.2.6).
+* Upgrade jQuery to 1.6.1.
 
 ### Version 2.2.8
 * Encodings handling has been fixed (ruby 1.9 was affected) - prepor
