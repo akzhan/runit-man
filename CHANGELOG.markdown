@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.3.3
+* Typo (very old one).
+
 ### Version 2.3.2
 * Thread safety.
 * rainbows.conf file provided aside config.ru to optimize running under rainbows application server.
