@@ -286,10 +286,7 @@ private
     end
 
     def log_location_cache
-      unless @log_location_cache
-        @log_location_cache = LogLocationCache.new(RunitMan.logger)
-      end
-      @log_location_cache
+      @log_location_cache ||= LogLocationCache.new(RunitMan.logger)
     end
 
     def real_data_from_file(file_name)

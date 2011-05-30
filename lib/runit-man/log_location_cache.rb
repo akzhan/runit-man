@@ -1,8 +1,11 @@
+require 'monitor'
+
 class LogLocationCache
   TIME_LIMIT = 600
 
   def initialize(logger)
     @logger = logger
+    @monitor = Monitor.new
     clear
   end
 
@@ -22,23 +25,28 @@ private
   attr_accessor :query_counter
   attr_accessor :pids
   attr_reader   :logger
+  attr_reader   :monitor
 
   def clear
-    self.query_counter = 0
-    self.pids = {}
+    monitor.synchronize do
+      self.query_counter = 0
+      self.pids = {}
+    end
     self
   end
 
   def remove_old_values
-    self.query_counter = query_counter + 1
-    if query_counter < 10
-      return
-    end
-    self.query_counter = 0
-    limit = Time.now - TIME_LIMIT
-    pids.keys.each do |pid|
-      if pids[pid][:time] < limit
-        pids.remove(pid)
+    monitor.synchronize do
+      self.query_counter = query_counter + 1
+      if query_counter < 10
+        return
+      end
+      self.query_counter = 0
+      limit = Time.now - TIME_LIMIT
+      pids.keys.each do |pid|
+        if pids[pid][:time] < limit
+          pids.remove(pid)
+        end
       end
     end
     self
@@ -96,11 +104,14 @@ private
   def set_pid_log_location(pid, log_location)
     remove_old_values
     if log_location =~ /current$/
-      pids[pid.to_i] = {
-        :value => log_location,
-        :time  => Time.now
-      }
+      monitor.synchronize do
+        pids[pid.to_i] = {
+          :value => log_location,
+          :time  => Time.now
+        }
+      end
     end
     self
   end
 end
+
