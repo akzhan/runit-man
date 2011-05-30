@@ -45,7 +45,7 @@ private
       limit = Time.now - TIME_LIMIT
       pids.keys.each do |pid|
         if pids[pid][:time] < limit
-          pids.remove(pid)
+          pids.delete(pid)
         end
       end
     end
