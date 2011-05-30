@@ -11,9 +11,17 @@ Take a look at runit-man script options:
  -f - Directory of all known services (/etc/sv by default)
  -u - User and password delimited by ':' for HTTP authentication (disabled by default)
  -r - Register runit-man as runit service (as defined by other options)
+ --rackup='command' - Runs specified command in folder where is runit'man's config.ru located.
 
 Usually you need thin gem to run runit-man effectively.
   gem install thin
+
+When You need to handle large files (logs etc.) by runit-man script You need another setup:
+ * Install rainbows gem (it prevents memory consumption).
+ * Upgrade rack gem to version 1.3 or higher and install sendfile gem if possible (It decreases CPU usage in combination with rainbows).
+ * Run runit-man as:
+
+    runit-man --rackup='rainbows -E production -c rainbows.conf -p <PORT>'
 
 Any localization can be done by editing of ./i18n/*.yml locale files.
 Contributions are welcome.
