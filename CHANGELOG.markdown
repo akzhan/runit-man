@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 2.3.2
+* Thread safety.
+* rainbows.conf file provided aside config.ru to optimize running under rainbows application server.
+
 ### Version 2.3.1
 * New --rackup option to start runit-man using any Rack-compatible server (like unicorn/rainbows).
 
