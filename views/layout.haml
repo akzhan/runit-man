@@ -13,7 +13,7 @@
       #header
         .content
           %strong= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
-          %a{:href=>'/info'} information
+          %a{:href=>'/info'}= h(t('runit.info.title'))
 
       .content= yield_content :content
 

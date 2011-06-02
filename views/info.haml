@@ -6,20 +6,16 @@
   %blockquote
     %div
       %br/
-      Server:
-      = h(@server)
+      = "#{h(t('runit.info.server'))}: #{h(@server)}"
     %div
-      Rack:
-      = h(@rack_version)
+      = "#{h(t('runit.info.rack'))}: #{h(@rack_version)}"
     %br/
   %blockquote
     %div
       %br/
-      = @large_files ? 'Does' : 'Doesn\'t'
-      support downloading of large files.
+      = h(t(@large_files ?  'runit.info.large_files.yes' : 'runit.info.large_files.no'))
     %div
-      = @sendfile ? 'Does' : 'Doesn\'t'
-      support low CPU usage.
+      = h(t(@sendfile ? 'runit.info.sendfile.yes' : 'runit.info.sendfile.no'))
     %br/
 - content_for(:footer) do
   %span

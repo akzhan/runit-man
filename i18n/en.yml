@@ -6,6 +6,16 @@ en:
     error: Error encountered while accessing resource
     loading: "Please wait while loading&hellip;"
     footer: "State of services updated automatically every %{sec} seconds."
+    info:
+      title: Information
+      server: Server
+      rack: Rack
+      large_files:
+        'yes': Does support downloading of large files using Rainbows.
+        'no': Doesn''t support downloading of large files using Rainbows.
+      sendfile:
+        'yes': Does support low CPU usage using sendfile API.
+        'no': Doesn''t support low CPU usage using sendfile API.
     services:
       table:
         caption: Services
