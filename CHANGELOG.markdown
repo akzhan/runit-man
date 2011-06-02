@@ -1,5 +1,8 @@
 ## Changes
 
+### Version 2.3.5
+* Added /info (system information page).
+
 ### Version 2.3.4
 * Rack::File used to serve static files in old Sinatra releases (Sinatra 1.3.0 have this functionality built-in). Requires Rack 1.3.0 or higher.
 * rainbows configuration now uses sendfile gem if it's available to decrease CPU usage on serving large files.
