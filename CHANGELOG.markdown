@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 2.3.6
+* Internationalization of system information page.
+* favicon added.
+
 ### Version 2.3.5
 * Added /info (system information page).
 
