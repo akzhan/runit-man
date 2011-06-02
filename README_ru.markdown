@@ -19,7 +19,7 @@
 ### Конфигурирование под Rack
 
 Обратите внимание, что гем runit-man gem также предоставляет файл конфигурации Rack config.ru.
-Он полезен для запуска runit-man под такими серверами, как unicorn, rainbows и другими. Опция runit-man --rackup=command выполняет команду `cd каталог, где лежит config.ru && set environment && exec command`.
+Он полезен для запуска runit-man под такими серверами, как unicorn, rainbows и другими. Опция `runit-man --rackup=command` выполняет команду `cd каталог, где лежит config.ru && set environment && exec command`.
 
 ## Кастомизация
 

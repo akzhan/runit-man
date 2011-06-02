@@ -19,7 +19,7 @@ Look at INSTALL for details.
 ### rackup configuration
 
 Take a note that runit-man gem also provides config.ru rackup configuration file.
-It's useful for running under unicorn/rainbows etc. runit-man --rackup=command option does `cd config.ru directory && set environment && exec command`,
+It's useful for running under unicorn/rainbows etc. `runit-man --rackup=command` option does `cd config.ru directory && set environment && exec command`.
 
 ## Customization
 
