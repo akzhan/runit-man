@@ -1,0 +1,26 @@
+- content_for(:content) do
+  %h2
+    runit-man v
+    %strong= h(RunitMan::VERSION)
+  %br/
+  %blockquote
+    %div
+      %br/
+      Server:
+      = h(@server)
+    %div
+      Rack:
+      = h(@rack_version)
+    %br/
+  %blockquote
+    %div
+      %br/
+      = @large_files ? 'Does' : 'Doesn\'t'
+      support downloading of large files.
+    %div
+      = @sendfile ? 'Does' : 'Doesn\'t'
+      support low CPU usage.
+    %br/
+- content_for(:footer) do
+  %span
+

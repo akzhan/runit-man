@@ -14,10 +14,11 @@ if RUBY_VERSION >= '1.9'
   Encoding.default_internal = "utf-8"
 end
 
+RunitManVersion.sendfile = (Sinatra::VERSION >= '1.3.0')
+
 if Sinatra::VERSION < '1.3.0' && Rack.release >= '1.3'
   # Monkey patch old Sinatra to use Rack::File to serve files.
-  $stdout.puts 'Use custom Rack::File send_file'
-  $stdout.flush
+  RunitManVersion.sendfile = true
 
   Sinatra::Helpers.class_eval do
     # Got from Sinatra 1.3.0 sources
@@ -44,6 +45,8 @@ if Sinatra::VERSION < '1.3.0' && Rack.release >= '1.3'
     end
   end
 end
+
+RunitManVersion.sendfile &&= !!File.instance_methods.detect { |m| "#{m}" == 'trysendfile' }
 
 class RunitMan < Sinatra::Base
   VERSION       = RunitManVersion::VERSION
@@ -142,6 +145,14 @@ class RunitMan < Sinatra::Base
     @scripts = %w[ jquery-1.6.1.min runit-man ]
     @title = host_name
     haml :index
+  end
+
+  get '/info' do
+    @server = env['SERVER_SOFTWARE']
+    @large_files = !!(@server =~ /rainbows/i)
+    @rack_version = Rack.release
+    @sendfile = RunitManVersion.sendfile && @large_files
+    haml :info
   end
 
   get '/services' do
