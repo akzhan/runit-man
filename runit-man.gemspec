@@ -1,6 +1,4 @@
-require 'rake'
-
-$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift File.expand_path('./lib', File.dirname(__FILE__))
 require 'runit-man/version'
 
 spec = Gem::Specification.new do |s|
@@ -14,8 +12,12 @@ spec = Gem::Specification.new do |s|
   s.version = RunitManVersion::VERSION.dup
   s.requirements << 'none'
   s.require_path = 'lib'
-  s.files = FileList["{bin,lib,public,views,i18n,sv}/**/*"].exclude(/^\.gitignore|supervise$/).to_a
-  s.executables << 'runit-man'
+  s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
+  s.extra_rdoc_files = [
+    "README.markdown"
+  ]
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.add_dependency 'yajl-ruby', '>= 0.7.8'
   s.add_dependency 'haml', '>= 3.0'
   s.add_dependency 'sinatra', '>= 1.1'
