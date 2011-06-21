@@ -9,6 +9,7 @@ spec = Gem::Specification.new do |s|
   s.name = 'runit-man'
   s.author = 'Akzhan Abdulin'
   s.email = 'akzhan.abdulin@gmail.com'
+  s.date = Time.now.strftime('%Y-%m-%d')
   s.homepage = 'https://github.com/Undev/runit-man'
   s.version = RunitManVersion::VERSION.dup
   s.requirements << 'none'
