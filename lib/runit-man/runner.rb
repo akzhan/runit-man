@@ -31,8 +31,8 @@ OptionParser.new { |op|
   end
 }.parse!(ARGV.dup)
 
-if RunitMan.settings.rackup_command_line
-  RunitMan.exec_rackup(rackup_command_line)
+if RunitMan.rackup_command_line
+  RunitMan.exec_rackup(RunitMan.rackup_command_line)
 end
 
 RunitMan.prepare_to_run
