@@ -3,7 +3,7 @@ require 'runit-man/app'
 
 RunitMan.set :active_services_directory, RunitMan::DEFAULT_ACTIVE_SERVICES_DIR
 RunitMan.set :all_services_directory,    RunitMan::DEFAULT_ALL_SERVICES_DIR
-RunitMan.set :logger_option,             RunitMan::DEFAULT_LOGGER
+RunitMan.set :runit_logger,              RunitMan::DEFAULT_LOGGER
 
 OptionParser.new { |op|
   op.banner = 'Usage: runit-man <options>'
