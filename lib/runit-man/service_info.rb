@@ -120,7 +120,7 @@ class ServiceInfo
   end
 
   def log_file_path(file_name)
-    case RunitMan.logger
+    case RunitMan.runit_logger
     when RunitMan::DEFAULT_LOGGER then svlogd_log_file_path(file_name)
     when /^logger(?:\:.+)?/ then logger_log_file_path(file_name)
     else nil
@@ -185,7 +185,7 @@ class ServiceInfo
   end
 
   def log_files
-    case RunitMan.logger
+    case RunitMan.runit_logger
     when RunitMan::DEFAULT_LOGGER then svlogd_log_files
     when /^logger(?:\:.+)?/ then logger_log_files
     else []
@@ -286,7 +286,7 @@ private
     end
 
     def log_location_cache
-      @log_location_cache ||= LogLocationCache.new(RunitMan.logger)
+      @log_location_cache ||= LogLocationCache.new(RunitMan.runit_logger)
     end
 
     def real_data_from_file(file_name)
