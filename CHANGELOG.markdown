@@ -1,5 +1,11 @@
 ## Changes
 
+### Version 2.3.7
+
+* '--rackup' option now takes in care all specified options (earlier it takes in care only preceding options).
+* Registration option now takes in care '--rackup' option.
+* Minor refactoring.
+
 ### Version 2.3.6
 * Internationalization of system information page.
 * favicon added.
