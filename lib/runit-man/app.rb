@@ -274,7 +274,7 @@ class RunitMan < Sinatra::Base
     def exec_rackup(command)
       ENV['RUNIT_ALL_SERVICES_DIR']    = RunitMan.all_services_directory
       ENV['RUNIT_ACTIVE_SERVICES_DIR'] = RunitMan.active_services_directory
-      ENV['RUNIT_LOGGER']              = RunitMan.logger
+      ENV['RUNIT_LOGGER']              = RunitMan.runit_logger
       ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan.files_to_view.join(',')
       ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
 
@@ -316,10 +316,6 @@ class RunitMan < Sinatra::Base
       @allowed_users ||= {}
     end
 
-    def logger
-      settings.logger_option
-    end
-
     def prepare_to_run
       unless allowed_users.empty?
         use Rack::Auth::Basic, 'runit-man' do |username, password|
@@ -339,7 +335,7 @@ class RunitMan < Sinatra::Base
       bind                      = RunitMan.respond_to?(:bind) ? RunitMan.bind : nil
       server                    = RunitMan.server
       files_to_view             = RunitMan.files_to_view
-      logger                    = RunitMan.logger
+      logger                    = RunitMan.runit_logger
       auth                      = RunitMan.allowed_users
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
@@ -351,7 +347,7 @@ class RunitMan < Sinatra::Base
       require 'erb'
       script_name   = File.join(dir, 'log', 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
-      logger        = RunitMan.logger
+      logger        = RunitMan.runit_logger
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
