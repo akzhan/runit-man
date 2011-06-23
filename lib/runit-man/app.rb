@@ -337,6 +337,7 @@ class RunitMan < Sinatra::Base
       files_to_view             = RunitMan.files_to_view
       logger                    = RunitMan.runit_logger
       auth                      = RunitMan.allowed_users
+      rackup_command_line       = RunitMan.rackup_command_line
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end

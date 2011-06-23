@@ -4,6 +4,7 @@ require 'runit-man/app'
 RunitMan.set :active_services_directory, RunitMan::DEFAULT_ACTIVE_SERVICES_DIR
 RunitMan.set :all_services_directory,    RunitMan::DEFAULT_ALL_SERVICES_DIR
 RunitMan.set :runit_logger,              RunitMan::DEFAULT_LOGGER
+RunitMan.set :rackup_command_line,       false
 
 OptionParser.new { |op|
   op.banner = 'Usage: runit-man <options>'
@@ -21,14 +22,18 @@ OptionParser.new { |op|
   op.on('-v file_location', 'Enables view of specified file through runit-man') { |val| RunitMan.enable_view_of(val) }
   op.on('-u user:password', 'Requires user name with given password to auth') { |val| RunitMan.add_user(*(val.split(':', 2))) }
   op.separator 'Configuration options:'
-  op.on_tail('--rackup command_line', 'Change directory to config.ru location, set environment by options and execute specified command_line') do |command_line|
-    RunitMan.exec_rackup(command_line)
+  op.on('--rackup command_line', 'Change directory to config.ru location, set environment by options and execute specified command_line') do |command_line|
+    RunitMan.set :rackup_command_line, command_line
   end
   op.on_tail('-r', '--register', 'Register as runit service') do
     RunitMan.register_as_runit_service
     exit
   end
 }.parse!(ARGV.dup)
+
+if RunitMan.settings.rackup_command_line
+  RunitMan.exec_rackup(rackup_command_line)
+end
 
 RunitMan.prepare_to_run
 
