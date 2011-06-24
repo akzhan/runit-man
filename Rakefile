@@ -24,6 +24,7 @@ end
 
 begin
   require 'bundler'
+  Bundler.setup(:default)
   Bundler::GemHelper.install_tasks
 rescue LoadError
   $stderr.puts "Bundler not available. Install it with: gem install bundler"
