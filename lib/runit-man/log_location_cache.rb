@@ -88,11 +88,14 @@ private
   def log_folder_base_name(lpid)
     args = log_command_args(lpid)
     return nil if args.nil?
-    args.first
+    result = args.first
+    # we should remove : from the end of the line for logger installations.
+    result = $1 if  result =~ /^(.+)\:$/
+    result
   end
 
   def log_folder(lpid)
-    folder = log_folder_base_name(lpid) 
+    folder = log_folder_base_name(lpid)
     (log_base_folder.nil? || folder.nil?) ? folder : File.join(log_base_folder, folder)
   end
 
