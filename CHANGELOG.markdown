@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 2.3.8
+
+* Minor update of handling logger log directories (we should remove last character from log directory name if it's equal to ':').
+* Enabling of using 'bundle exec rake ...' command.
+
 ### Version 2.3.7
 
 * '--rackup' option now takes in care all specified options (earlier it takes in care only preceding options).
