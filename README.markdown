@@ -4,6 +4,8 @@ Simple [runit](http://smarden.org/runit/ "runit home page") web management tool 
 
 Server will run by **runit-man** script. Take a note that **runit-man** must have privileges like **runsvdir** process ones.
 
+![Screenshot](https://github.com/Undev/runit-man/raw/master/runit-man-screenshot.gif "Screenshot")
+
 ## Installation
 
 Usually You should install both **runit-man** and **thin** gems to run this tool fine.
