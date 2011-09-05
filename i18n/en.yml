@@ -17,6 +17,7 @@ en:
         'yes': Does support low CPU usage using sendfile API.
         'no': Doesn''t support low CPU usage using sendfile API.
     services:
+      readonly: Only view enabled.
       table:
         caption: Services
         headers:

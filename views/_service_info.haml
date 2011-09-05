@@ -6,8 +6,8 @@
   %td= service_info.uptime ? ('%.2f' % service_info.uptime) : ''
   %td= stat_subst(service_info.stat)
   %td
-    - unless @read_write_mode
-      %strong Read only mode.
+    - if readonly?
+      %strong= t('runit.services.readonly')
     - else
       - if service_info.active?
         = service_action service_info.name, :restart, t('runit.services.table.actions.restart'), !service_info.down?

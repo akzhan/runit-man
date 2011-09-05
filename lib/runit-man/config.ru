@@ -4,7 +4,8 @@ require 'runit-man/app'
 
 RunitMan.set :active_services_directory, ENV['RUNIT_ACTIVE_SERVICES_DIR'] || RunitMan::DEFAULT_ACTIVE_SERVICES_DIR
 RunitMan.set :all_services_directory,    ENV['RUNIT_ALL_SERVICES_DIR'] || RunitMan::DEFAULT_ALL_SERVICES_DIR
-RunitMan.set :runit_logger,             ENV['RUNIT_LOGGER'] || RunitMan::DEFAULT_LOGGER
+RunitMan.set :runit_logger,              ENV['RUNIT_LOGGER'] || RunitMan::DEFAULT_LOGGER
+RunitMan.set :read_write_mode,           (ENV['RUNIT_READWRITE_MODE'] || 'rw').to_sym
 
 if ENV['RUNIT_MAN_VIEW_FILES']
   ENV['RUNIT_MAN_VIEW_FILES'].split(/\s*\,\s*/).each do |floc|

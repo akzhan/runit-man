@@ -12,6 +12,15 @@ module Helpers
 
   attr_accessor :even_or_odd_state
 
+  def addr
+    env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
+  end
+
+  def log(s)
+    $stdout.puts s
+    $stdout.flush
+  end
+
   def host_name
     Utils.host_name
   end

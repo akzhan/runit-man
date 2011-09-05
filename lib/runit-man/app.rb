@@ -73,6 +73,11 @@ class RunitMan < Sinatra::Base
 
   helpers do
     include Helpers
+
+    def readonly?
+      @read_write_mode == :readonly
+    end
+
   end
 
   def self.i18n_location
@@ -249,43 +254,37 @@ class RunitMan < Sinatra::Base
 
   def log_action(name, text)
     env  = request.env
-    addr = env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
-    $stdout.puts "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
-    $stdout.flush
+    log "#{addr} - - [#{Time.now}] \"Do #{text} on #{name}\""
   end
 
   def log_denied_action(name, text)
     env  = request.env
-    addr = env.include?('X_REAL_IP') ? env['X_REAL_IP'] : env['REMOTE_ADDR']
-    $stdout.puts "#{addr} - - [#{Time.now}] \"Receive #{text} for #{name}. Denied.\""
-    $stdout.flush
+    log "#{addr} - - [#{Time.now}] \"Receive #{text} for #{name}. Denied.\""
   end
 
   post '/:name/signal/:signal' do |name, signal|
-    if @read_write_mode
+    unless readonly?
       service = ServiceInfo[name]
       return not_found if service.nil?
       service.send_signal(signal)
       log_action(name, "send signal \"#{signal}\"")
-      ''
     else
       log_denied_action(name, "signal \"#{signal}\"")
-      ''
     end
+    ''
   end
 
   post '/:name/:action' do |name, action|
-    if @read_write_mode
+    unless readonly?
       service = ServiceInfo[name]
       action = "#{action}!".to_sym
       return not_found if service.nil? || !service.respond_to?(action)
       service.send(action)
       log_action(name, action)
-      ''
     else
       log_denied_action(name, action)
-      ''
     end
+    ''
   end
 
   class << self
@@ -295,6 +294,7 @@ class RunitMan < Sinatra::Base
       ENV['RUNIT_LOGGER']              = RunitMan.runit_logger
       ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan.files_to_view.join(',')
       ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
+      ENV['RUNIT_MAN_READWRITE_MODE']  = RunitMan.read_write_mode.to_s
 
       Dir.chdir(File.dirname(__FILE__))
       exec(command)
@@ -356,6 +356,7 @@ class RunitMan < Sinatra::Base
       logger                    = RunitMan.runit_logger
       auth                      = RunitMan.allowed_users
       rackup_command_line       = RunitMan.rackup_command_line
+      read_write_mode           = RunitMan.read_write_mode.to_s
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
