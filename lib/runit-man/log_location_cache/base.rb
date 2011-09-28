@@ -1,10 +1,11 @@
 require 'monitor'
 
-class LogLocationCache
+module LogLocationCache; end
+
+class LogLocationCache::Base
   TIME_LIMIT = 600
 
-  def initialize(logger)
-    @logger = logger
+  def initialize
     @monitor = Monitor.new
     clear
   end
@@ -21,11 +22,18 @@ class LogLocationCache
     pids[pid][:value]
   end
 
-private
+protected
   attr_accessor :query_counter
   attr_accessor :pids
-  attr_reader   :logger
   attr_reader   :monitor
+
+  def not_implemented
+    raise NotImplementedError.new
+  end
+
+  def get_pid_location(lpid)
+    not_implemented
+  end
 
   def clear
     monitor.synchronize do
@@ -52,15 +60,6 @@ private
     self
   end
 
-  def get_pid_location(lpid)
-    folder = log_folder(lpid)
-    return nil if folder.nil?
-    return File.join(folder, 'current') if logger == RunitMan::DEFAULT_LOGGER
-    loc = File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log")
-    loc = "#{loc}.gz" unless File.exists?(loc)
-    loc
-  end
-
   def log_command(lpid)
     return nil if lpid.nil?
     ps_output = `ps -o args -p #{lpid} 2>&1`.split("\n")
@@ -70,11 +69,7 @@ private
   end
 
   def logger_name
-    (logger =~ /^([^\:]+)\:/) ? $1 : logger
-  end
-
-  def log_base_folder
-    (logger =~ /^[^\:]+\:([^\:]+)/) ? $1 : nil
+    not_implemented
   end
 
   def log_command_args(lpid)
@@ -99,22 +94,8 @@ private
     (log_base_folder.nil? || folder.nil?) ? folder : File.join(log_base_folder, folder)
   end
 
-  def log_priority(lpid)
-    args = log_command_args(lpid)
-    args.nil? ? logger_priority : args.last
-  end
-
   def set_pid_log_location(pid, log_location)
-    remove_old_values
-    if log_location =~ /current$/
-      monitor.synchronize do
-        pids[pid.to_i] = {
-          :value => log_location,
-          :time  => Time.now
-        }
-      end
-    end
-    self
+    not_implemented
   end
 end
 

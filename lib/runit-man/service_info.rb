@@ -1,4 +1,6 @@
-require 'runit-man/log_location_cache'
+require 'runit-man/log_location_cache/base'
+require 'runit-man/log_location_cache/svlogd'
+require 'runit-man/log_location_cache/logger'
 require 'runit-man/service_status'
 require 'runit-man/utils'
 
@@ -286,7 +288,11 @@ private
     end
 
     def log_location_cache
-      @log_location_cache ||= LogLocationCache.new(RunitMan.runit_logger)
+      @log_location_cache ||= case RunitMan.runit_logger
+      when RunitMan::DEFAULT_LOGGER; LogLocationCache::Svlogd.new
+      when /^logger\b/; LogLocationCache::Logger.new(RunitMan.runit_logger)
+      else raise NotImplementedError.new
+      end
     end
 
     def real_data_from_file(file_name)
