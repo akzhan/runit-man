@@ -84,14 +84,11 @@ protected
     args = log_command_args(lpid)
     return nil if args.nil?
     result = args.first
-    # we should remove : from the end of the line for logger installations.
-    result = $1 if  result =~ /^(.+)\:$/
     result
   end
 
   def log_folder(lpid)
-    folder = log_folder_base_name(lpid)
-    (log_base_folder.nil? || folder.nil?) ? folder : File.join(log_base_folder, folder)
+    not_implemented
   end
 
   def set_pid_log_location(pid, log_location)

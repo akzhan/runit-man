@@ -27,6 +27,11 @@ protected
     (logger =~ /^[^\:]+\:([^\:]+)/) ? $1 : nil
   end
 
+  def log_folder(lpid)
+    folder = log_folder_base_name(lpid)
+    (log_base_folder.nil? || folder.nil?) ? folder : File.join(log_base_folder, folder)
+  end
+
   def log_priority(lpid)
     args = log_command_args(lpid)
     args.nil? ? logger_priority : args.last
@@ -34,6 +39,13 @@ protected
 
   def set_pid_log_location(pid, log_location)
     remove_old_values
+  end
+
+  def log_folder_base_name(lpid)
+    result = super(lpid)
+    # we should remove : from the end of the line for logger installations.
+    result = $1 if  result =~ /^(.+)\:$/
+    result
   end
 end
 

@@ -13,6 +13,10 @@ protected
     'svlogd'
   end
 
+  def log_folder(lpid)
+    log_folder_base_name(lpid)
+  end
+
   def set_pid_log_location(pid, log_location)
     remove_old_values
     monitor.synchronize do
