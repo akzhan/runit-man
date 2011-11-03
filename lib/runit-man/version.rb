@@ -1,5 +1,5 @@
 module RunitManVersion
-  VERSION = '2.3.9'.freeze
+  VERSION = '2.3.10'.freeze
 
   class << self
     attr_accessor :sendfile
