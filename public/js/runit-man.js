@@ -51,7 +51,7 @@
         }
     };
 
-    $('#services').delegate('form.service-action,form.service-signal', 'submit', function(e)
+    $('#services').on('submit', 'form.service-action,form.service-signal', function(e)
     {
         e.preventDefault();
         $.post($(this).attr('action')).complete(function()
