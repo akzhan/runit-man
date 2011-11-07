@@ -14,8 +14,6 @@ if RUBY_VERSION >= '1.9'
   Encoding.default_internal = "utf-8"
 end
 
-RunitManVersion.sendfile = !!File.instance_methods.detect { |m| "#{m}" == 'trysendfile' }
-
 class RunitMan < Sinatra::Base
   VERSION       = RunitManVersion::VERSION
   MIN_TAIL      = 100
@@ -46,10 +44,13 @@ class RunitMan < Sinatra::Base
       @read_write_mode == :readonly
     end
 
+    def sendfile?
+      !!File.instance_methods.detect { |m| "#{m}" == 'trysendfile' }
+    end
   end
 
   def self.i18n_location
-    File.join(GEM_FOLDER, 'i18n') 
+    File.join(GEM_FOLDER, 'i18n')
   end
 
   def self.setup_i18n_files
@@ -125,7 +126,7 @@ class RunitMan < Sinatra::Base
     @server = env['SERVER_SOFTWARE']
     @large_files = !!(@server =~ /rainbows/i)
     @rack_version = Rack.release
-    @sendfile = RunitManVersion.sendfile && @large_files
+    @sendfile = sendfile? && @large_files
     haml :info
   end
 
