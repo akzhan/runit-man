@@ -2,6 +2,7 @@ require 'monitor'
 
 class LogLocationCache::Logger < LogLocationCache::Base
   def initialize(logger)
+    super
     @logger = logger
   end
 
