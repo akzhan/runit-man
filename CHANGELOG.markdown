@@ -1,5 +1,11 @@
 ## Changes
 
+### Version 2.3.12
+
+* Russian locale updated to meet Psych YAML parser.
+* Codebase updated to use modern Sinatra 1.3.
+* Minor refactoring.
+
 ### Version 2.3.8
 
 * Minor update of handling logger log directories (we should remove last character from log directory name if it's equal to ':').
