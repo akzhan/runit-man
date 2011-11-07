@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'lib', 'runit-man', 'app')
 
 require 'rack/test'
-require 'rspec'
+require 'rspec/core'
 
 class RunitMan
   # set test environment

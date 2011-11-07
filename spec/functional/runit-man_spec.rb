@@ -5,6 +5,10 @@ describe RunitMan do
     RunitMan
   end
 
+  before(:all) do
+    RunitMan.set :read_write_mode,           :readwrite
+  end
+
   it "should respond to /" do
     get '/'
     last_response.should be_ok
