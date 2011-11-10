@@ -62,8 +62,9 @@ ru:
           h: HUP
           o: ONCE
       log:
-        title: "Последние %{count} строк лога сервиса %{name} - %{log_location}"
-        header: "Последние %{count} строк лога сервиса <strong>%{name}</strong>: %{host} (<code>%{log_location}</code>)"
+        title: "Последние %{count} строк журнала(-ов) сервиса %{name}"
+        header: "Последние %{count} строк журнала(-ов) сервиса <strong>%{name}</strong>: %{host}"
+        subheader: "(<code>%{log_location}</code>)"
         counts: "Показать %{count} строк лога"
         updated: "Страница обновлена %{time}"
         reload: Обновить страницу

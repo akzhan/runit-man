@@ -138,7 +138,7 @@ class RunitMan < Sinatra::Base
     Yajl::Encoder.encode(service_infos)
   end
 
-  def log_of_service(name, count)
+  def log_of_service(name, count, no)
     count = count.to_i
     count = MIN_TAIL if count < MIN_TAIL
     count = MAX_TAIL if count > MAX_TAIL
@@ -152,10 +152,14 @@ class RunitMan < Sinatra::Base
     end
 
     {
-      :name         => name,
-      :count        => count,
-      :log_location => srv.log_file_location,
-      :text         => text
+      :name  => name,
+      :count => count,
+      :logs  => [
+        {
+          :location => srv.log_file_location,
+          :text         => text
+        }
+      ]
     }
   end
 
@@ -173,9 +177,9 @@ class RunitMan < Sinatra::Base
   end
 
   get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
-    data = log_of_service(name, count)
+    data = log_of_service(name, count, nil)
     return not_found if data.nil?
-    @title = t('runit.services.log.title', :name => name, :host => host_name, :count => count, :log_location => data[:log_location])
+    @title = t('runit.services.log.title', :name => name, :host => host_name, :count => count)
     haml :log, :locals => data
   end
 
@@ -196,8 +200,13 @@ class RunitMan < Sinatra::Base
     send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
-  get %r[^/([^/]+)/log(?:/(\d+))?\.txt$] do |name, count|
-    data = log_of_service(name, count)
+  get %r[^/([^/]+)/log(?:/(\d+))?/(\d+)\.txt$] do |name, d1, d2|
+    if d2
+      count, no = d1, d2
+    else
+      count, no = nil, d1
+    end
+    data = log_of_service(name, count, no.to_i)
     return not_found if data.nil?
     data[:text]
   end
