@@ -19,15 +19,15 @@
         $.ajax({
             url: '/services',
             cache: false
-        }).error(function()
+        }).fail(function()
         {
             $('#url').text('/services');
             $('#error').show();
-        }).success(function(html)
+        }).done(function(html)
         {
             $('#error').hide();
             $('#services').html(html);
-        }).complete(function()
+        }).always(function()
         {
             needRefreshServices(false);
         });
@@ -54,7 +54,7 @@
     $('#services').on('submit', 'form.service-action,form.service-signal', function(e)
     {
         e.preventDefault();
-        $.post($(this).attr('action')).complete(function()
+        $.post($(this).attr('action')).always(function()
         {
             needRefreshServices(true);
         });
