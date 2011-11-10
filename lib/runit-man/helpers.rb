@@ -27,9 +27,9 @@ module Helpers
   def t(*args)
     Utils.t(*args)
   end
-  
+
   def service_infos
-    ServiceInfo.all
+    ServiceInfo::Base.all
   end
 
   def files_to_view

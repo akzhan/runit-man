@@ -69,6 +69,12 @@ class RunitMan < Sinatra::Base
   end
 
   before do
+    case RunitMan.runit_logger
+    when RunitMan::DEFAULT_LOGGER;
+      ServiceInfo.klass = ServiceInfo::Svlogd
+    else
+      ServiceInfo.klass = ServiceInfo::Logger
+    end
     @read_write_mode = RunitMan.read_write_mode
     @scripts = []
     base_content_type = CONTENT_TYPES.keys.detect do |t|
@@ -139,7 +145,7 @@ class RunitMan < Sinatra::Base
     count = count.to_i
     count = MIN_TAIL if count < MIN_TAIL
     count = MAX_TAIL if count > MAX_TAIL
-    srv   = ServiceInfo[name]
+    srv   = ServiceInfo.klass[name]
     return nil if srv.nil? || !srv.logged?
     text = ''
     File::Tail::Logfile.open(srv.log_file_location, :backward => count, :return_if_eof => true) do |log|
@@ -194,7 +200,7 @@ class RunitMan < Sinatra::Base
   end
 
   get %r[^/([^/]+)/log\-downloads/?$] do |name|
-    srv = ServiceInfo[name]
+    srv = ServiceInfo.klass[name]
     return not_found if srv.nil? || !srv.logged?
     haml :log_downloads, :locals => {
       :name  => name,
@@ -203,7 +209,7 @@ class RunitMan < Sinatra::Base
   end
 
   get %r[^/([^/]+)/log\-download/(.+)$] do |name, file_name|
-    srv = ServiceInfo[name]
+    srv = ServiceInfo.klass[name]
     return not_found if srv.nil? || !srv.logged?
     f = srv.log_files.detect { |f| f[:name] == file_name }
     return not_found unless f
@@ -241,7 +247,7 @@ class RunitMan < Sinatra::Base
 
   post '/:name/signal/:signal' do |name, signal|
     unless readonly?
-      service = ServiceInfo[name]
+      service = ServiceInfo.klass[name]
       return not_found if service.nil?
       service.send_signal(signal)
       log_action(name, "send signal \"#{signal}\"")
@@ -253,7 +259,7 @@ class RunitMan < Sinatra::Base
 
   post '/:name/:action' do |name, action|
     unless readonly?
-      service = ServiceInfo[name]
+      service = ServiceInfo.klass[name]
       action = "#{action}!".to_sym
       return not_found if service.nil? || !service.respond_to?(action)
       service.send(action)
