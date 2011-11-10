@@ -64,7 +64,7 @@ ru:
       log:
         title: "Последние %{count} строк журнала(-ов) сервиса %{name}"
         header: "Последние %{count} строк журнала(-ов) сервиса <strong>%{name}</strong>: %{host}"
-        subheader: "(<code>%{log_location}</code>)"
+        subheader: "<code>%{log_location}</code>"
         counts: "Показать %{count} строк лога"
         updated: "Страница обновлена %{time}"
         reload: Обновить страницу

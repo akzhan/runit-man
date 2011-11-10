@@ -1,13 +1,14 @@
 - content_for :content do
-  = t('runit.services.log.header', :name => h(name), :host => h(host_name), :count => h(count), :log_location => h(log_location))
-    %p
-      = t('runit.services.log.counts', :count => [100, 250, 500, 1000, 5000].map { |n| log_link(name, :count => n, :title => n) }.join(' '))
-      = log_downloads_link(name)
+  = t('runit.services.log.header', :name => h(name), :host => h(host_name), :count => h(count))
+  %p
+    = t('runit.services.log.counts', :count => [100, 250, 500, 1000, 5000].map { |n| log_link(name, :count => n, :title => n) }.join(' '))
+    = log_downloads_link(name)
   - logs.each do |log|
     = t('runit.services.log.subheader', :log_location => h(log[:location]))
     &nbsp;|&nbsp;
     = log_link(name, :count => count, :title => t('runit.services.log.raw'), :log => log,  :raw => true)
     %pre= h(log[:text])
+
 - content_for :footer do
   %p
     = t('runit.services.log.updated', :time => I18n.l(Time.now.utc))
