@@ -17,8 +17,7 @@ module Helpers
   end
 
   def log(s)
-    $stdout.puts s
-    $stdout.flush
+    logger.info s
   end
 
   def host_name

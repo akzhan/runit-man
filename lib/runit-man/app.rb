@@ -31,11 +31,10 @@ class RunitMan < Sinatra::Base
   DEFAULT_ACTIVE_SERVICES_DIR = '/etc/service'.freeze
 
   set :environment,   :production
-  set :static,        true
-  set :logging,       true
-  set :dump_errors,   true
-  set :raise_errors,  false
   set :root,          GEM_FOLDER
+
+  enable :logging, :dump_errors, :static
+  disable :raise_errors
 
   helpers do
     include Helpers
