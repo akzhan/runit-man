@@ -181,6 +181,18 @@ class RunitMan < Sinatra::Base
     haml :log, :locals => data
   end
 
+  get %r[^/([^/]+)/log(?:/(\d+))?/(\d+)\.txt$] do |name, d1, d2|
+    if d2
+      count, no = d1, d2
+    else
+      count, no = nil, d1
+    end
+    no = no.to_i
+    data = log_of_service(name, count, no)
+    return not_found if data.nil?
+    data[:logs][no][:text]
+  end
+
   get %r[^/([^/]+)/log\-downloads/?$] do |name|
     srv = ServiceInfo[name]
     return not_found if srv.nil? || !srv.logged?
@@ -196,17 +208,6 @@ class RunitMan < Sinatra::Base
     f = srv.log_files.detect { |f| f[:name] == file_name }
     return not_found unless f
     send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
-  end
-
-  get %r[^/([^/]+)/log(?:/(\d+))?/(\d+)\.txt$] do |name, d1, d2|
-    if d2
-      count, no = d1, d2
-    else
-      count, no = nil, d1
-    end
-    data = log_of_service(name, count, no.to_i)
-    return not_found if data.nil?
-    data[:text]
   end
 
   get '/view' do
