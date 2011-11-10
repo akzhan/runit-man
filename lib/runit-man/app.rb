@@ -154,7 +154,8 @@ class RunitMan < Sinatra::Base
       :logs  => [
         {
           :location => srv.log_file_location,
-          :text         => text
+          :text     => text,
+          :id       => 0
         }
       ]
     }

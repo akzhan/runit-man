@@ -69,9 +69,10 @@ module Helpers
     blank = options[:blank] || false
     hint  = options[:hint].to_s  || ''
     raw   = options[:raw] || false
+    id    = options[:id] || false
     hint  = " title=\"#{h(hint)}\"" unless hint.empty?
     blank = blank ? ' target="_blank"' : ''
-    "<a#{hint}#{blank} href=\"/#{name}/log#{ (count != 100) ? "/#{count}" : '' }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
+    "<a#{hint}#{blank} href=\"/#{name}/log#{ (count != 100) ? "/#{count}" : '' }#{ id ? "/#{id}" : ''  }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
   end
 
   def log_downloads_link(name)
