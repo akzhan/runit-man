@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 2.3.13
+
+* Minor stylistic update.
+* Minor refactorings, deprecations and fixes.
+
 ### Version 2.3.12
 
 * Russian locale updated to meet Psych YAML parser.
