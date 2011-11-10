@@ -9,7 +9,7 @@ spec = Gem::Specification.new do |s|
   s.email = 'akzhan.abdulin@gmail.com'
   s.date = Time.now.strftime('%Y-%m-%d')
   s.homepage = 'https://github.com/Undev/runit-man'
-  s.version = RunitManVersion::VERSION.dup
+  s.version = RunitMan::VERSION.dup
   s.requirements << 'none'
   s.require_path = 'lib'
   s.executables = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }

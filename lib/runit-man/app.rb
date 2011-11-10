@@ -7,7 +7,6 @@ require 'i18n'
 require 'sinatra/base'
 require 'file/tail'
 require 'runit-man/helpers'
-require 'runit-man/version'
 
 if RUBY_VERSION >= '1.9'
   Encoding.default_external = "utf-8"
@@ -15,7 +14,6 @@ if RUBY_VERSION >= '1.9'
 end
 
 class RunitMan < Sinatra::Base
-  VERSION       = RunitManVersion::VERSION
   MIN_TAIL      = 100
   MAX_TAIL      = 10000
   GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
@@ -352,4 +350,6 @@ class RunitMan < Sinatra::Base
     end
   end
 end
+
+require 'runit-man/version'
 

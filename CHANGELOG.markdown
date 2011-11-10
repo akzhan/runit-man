@@ -1,8 +1,11 @@
 ## Changes
 
+### Version 2.3.14
+
+* Minor stylistic update and refactoring.
+
 ### Version 2.3.13
 
-* Minor stylistic update.
 * Minor refactorings, deprecations and fixes.
 
 ### Version 2.3.12

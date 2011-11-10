@@ -1,4 +1,4 @@
-module RunitManVersion
-  VERSION = '2.3.13'.freeze
+class RunitMan
+  VERSION = '2.3.14'.freeze
 end
 
