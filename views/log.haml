@@ -7,8 +7,7 @@
     = t('runit.services.log.subheader', :log_location => h(log[:location]))
     &nbsp;|&nbsp;
     = log_link(name, :count => count, :title => t('runit.services.log.raw'), :log => log,  :raw => true)
-
-  %pre= h(text)
+    %pre= h(log[:text])
 - content_for :footer do
   %p
     = t('runit.services.log.updated', :time => I18n.l(Time.now.utc))
