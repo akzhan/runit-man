@@ -175,7 +175,7 @@ class RunitMan < Sinatra::Base
   get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
     data = log_of_service(name, count)
     return not_found if data.nil?
-    @title = t('runit.services.log.title', :name => h(name), :host => h(host_name), :count => h(count), :log_location => h(data[:log_location]))
+    @title = t('runit.services.log.title', :name => name, :host => host_name, :count => count, :log_location => data[:log_location])
     haml :log, :locals => data
   end
 
@@ -207,7 +207,7 @@ class RunitMan < Sinatra::Base
     if data.nil?
       return not_found
     end
-    @title = t('runit.view_file.title', :file => h(data[:name]), :host => h(host_name))
+    @title = t('runit.view_file.title', :file => data[:name], :host => host_name)
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
     haml :view_file, :locals => data 
   end
