@@ -1,0 +1,6 @@
+#!/bin/bash
+exec 2>&1
+source /usr/local/rvm/scripts/rvm
+source ~/.rvm/scripts/rvm
+
+exec ./rubyscript.rb
