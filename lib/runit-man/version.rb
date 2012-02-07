@@ -1,4 +1,4 @@
 class RunitMan
-  VERSION = '2.3.17'.freeze
+  VERSION = '2.3.18'.freeze
 end
 
