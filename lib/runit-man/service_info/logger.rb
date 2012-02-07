@@ -14,9 +14,9 @@ class ServiceInfo::Logger < ServiceInfo::Base
     r = []
     dir_name = File.dirname(File.dirname(log_file_location))
     Dir.foreach(dir_name) do |name|
-      next if ServiceInfo.itself_or_parent?(name)
+      next  if ServiceInfo::Base.itself_or_parent?(name)
       full_name = File.expand_path(name, dir_name)
-      next unless File.directory?(full_name)
+      next  unless File.directory?(full_name)
       file_name = File.join(full_name, "#{self.name}.log")
       label = "#{Utils.host_name}-#{self.name}-#{name}.log"
       unless File.exists?(file_name)

@@ -12,8 +12,8 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
     r = []
     dir_name = File.dirname(log_file_location)
     Dir.foreach(dir_name) do |name|
-      next if ServiceInfo.itself_or_parent?(name)
-      next if SPECIAL_LOG_FILES.include?(name)
+      next  if ServiceInfo::Base.itself_or_parent?(name)
+      next  if SPECIAL_LOG_FILES.include?(name)
       full_name = File.expand_path(name, dir_name)
       stats = File.stat(full_name)
       stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
