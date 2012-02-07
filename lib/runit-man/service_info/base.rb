@@ -194,6 +194,11 @@ protected
     @files[file_name] = ServiceInfo::Base.real_data_from_file(file_name)
   end
 
+  def sorted_log_files(log_files)
+    return log_files  if log_files.length < 2
+    log_files.sort { |a, b| a[:created] <=> b[:created] }
+  end
+
   class << self
     def all
       all_service_names.sort.map do |name|
