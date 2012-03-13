@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 2.3.18
+
+* Bugfixes of log downloads page.
+
 ### Version 2.3.15
 
 * Minor stylistic update.
