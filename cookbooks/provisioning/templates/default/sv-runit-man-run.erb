@@ -1,0 +1,5 @@
+#!/bin/bash
+exec 2>&1
+export PATH="$PATH:/opt/ruby/bin"
+exec ruby /home/runit-man/local-run.rb -p 14500 --rackup 'bundle exec rainbows -c rainbows.conf -p 14500'
+
