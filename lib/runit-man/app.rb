@@ -7,13 +7,14 @@ require 'i18n'
 require 'sinatra/base'
 require 'file/tail'
 require 'runit-man/helpers'
+require 'runit-man/version'
 
 if RUBY_VERSION >= '1.9'
   Encoding.default_external = "utf-8"
   Encoding.default_internal = "utf-8"
 end
 
-class RunitMan < Sinatra::Base
+class RunitMan::App < Sinatra::Base
   MIN_TAIL      = 100
   MAX_TAIL      = 10000
   GEM_FOLDER    = File.expand_path(File.join('..', '..'), File.dirname(__FILE__)).freeze
@@ -62,20 +63,20 @@ class RunitMan < Sinatra::Base
   end
 
   configure do
-    RunitMan.setup_i18n_files
+    RunitMan::App.setup_i18n_files
     haml_options = { :ugly => true }
     haml_options[:encoding] = 'utf-8' if defined?(Encoding)
     set :haml, haml_options
   end
 
   before do
-    case RunitMan.runit_logger
-    when RunitMan::DEFAULT_LOGGER;
+    case RunitMan::App.runit_logger
+    when RunitMan::App::DEFAULT_LOGGER;
       ServiceInfo.klass = ServiceInfo::Svlogd
     else
       ServiceInfo.klass = ServiceInfo::Logger
     end
-    @read_write_mode = RunitMan.read_write_mode
+    @read_write_mode = RunitMan::App.read_write_mode
     @scripts = []
     base_content_type = CONTENT_TYPES.keys.detect do |t|
       request.env['REQUEST_URI'] =~ /\.#{Regexp.escape(t.to_s)}$/
@@ -87,7 +88,6 @@ class RunitMan < Sinatra::Base
     })
     parse_language(request.env['HTTP_ACCEPT_LANGUAGE'])
   end
-
 
   def setup_i18n(locales)
     locales.each do |locale|
@@ -272,20 +272,20 @@ class RunitMan < Sinatra::Base
 
   class << self
     def exec_rackup(command)
-      ENV['RUNIT_ALL_SERVICES_DIR']    = RunitMan.all_services_directory
-      ENV['RUNIT_ACTIVE_SERVICES_DIR'] = RunitMan.active_services_directory
-      ENV['RUNIT_LOGGER']              = RunitMan.runit_logger
-      ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan.files_to_view.join(',')
-      ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
-      ENV['RUNIT_MAN_READWRITE_MODE']  = RunitMan.read_write_mode.to_s
+      ENV['RUNIT_ALL_SERVICES_DIR']    = RunitMan::App.all_services_directory
+      ENV['RUNIT_ACTIVE_SERVICES_DIR'] = RunitMan::App.active_services_directory
+      ENV['RUNIT_LOGGER']              = RunitMan::App.runit_logger
+      ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan::App.files_to_view.join(',')
+      ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan::App.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
+      ENV['RUNIT_MAN_READWRITE_MODE']  = RunitMan::App.read_write_mode.to_s
 
       Dir.chdir(File.dirname(__FILE__))
       exec(command)
     end
 
     def register_as_runit_service
-      all_r_dir    = File.join(RunitMan.all_services_directory, 'runit-man')
-      active_r_dir = File.join(RunitMan.active_services_directory, 'runit-man')
+      all_r_dir    = File.join(RunitMan::App.all_services_directory, 'runit-man')
+      active_r_dir = File.join(RunitMan::App.active_services_directory, 'runit-man')
       my_dir       = File.join(GEM_FOLDER, 'sv')
       log_dir      = File.join(all_r_dir, 'log')
       if File.symlink?(all_r_dir)
@@ -330,16 +330,16 @@ class RunitMan < Sinatra::Base
       require 'erb'
       script_name   = File.join(dir, 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'run.erb')
-      all_services_directory    = RunitMan.all_services_directory
-      active_services_directory = RunitMan.active_services_directory
-      port                      = RunitMan.port
-      bind                      = RunitMan.respond_to?(:bind) ? RunitMan.bind : nil
-      server                    = RunitMan.server
-      files_to_view             = RunitMan.files_to_view
-      logger                    = RunitMan.runit_logger
-      auth                      = RunitMan.allowed_users
-      rackup_command_line       = RunitMan.rackup_command_line
-      read_write_mode           = RunitMan.read_write_mode.to_s
+      all_services_directory    = RunitMan::App.all_services_directory
+      active_services_directory = RunitMan::App.active_services_directory
+      port                      = RunitMan::App.port
+      bind                      = RunitMan::App.bind
+      server                    = RunitMan::App.server
+      files_to_view             = RunitMan::App.files_to_view
+      logger                    = RunitMan::App.runit_logger
+      auth                      = RunitMan::App.allowed_users
+      rackup_command_line       = RunitMan::App.rackup_command_line
+      read_write_mode           = RunitMan::App.read_write_mode.to_s
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
@@ -350,7 +350,7 @@ class RunitMan < Sinatra::Base
       require 'erb'
       script_name   = File.join(dir, 'log', 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
-      logger        = RunitMan.runit_logger
+      logger        = RunitMan::App.runit_logger
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
@@ -358,6 +358,4 @@ class RunitMan < Sinatra::Base
     end
   end
 end
-
-require 'runit-man/version'
 

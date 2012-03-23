@@ -33,7 +33,7 @@ module Helpers
   end
 
   def files_to_view
-    RunitMan.files_to_view.map do |f|
+    RunitMan::App.files_to_view.map do |f|
       File.symlink?(f) ? File.expand_path(File.readlink(f), File.dirname(f)) : f
     end.select do |f|
       File.readable?(f)

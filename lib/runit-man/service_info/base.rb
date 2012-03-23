@@ -154,11 +154,11 @@ class ServiceInfo::Base
 
 protected
   def inactive_service_folder
-    File.join(RunitMan.all_services_directory, name)
+    File.join(RunitMan::App.all_services_directory, name)
   end
 
   def active_service_folder
-    File.join(RunitMan.active_services_directory, name)
+    File.join(RunitMan::App.active_services_directory, name)
   end
 
   def files_to_view_folder
@@ -227,18 +227,18 @@ protected
 
   private
     def active_service_names
-      return [] unless File.directory?(RunitMan.active_services_directory)
-      Dir.entries(RunitMan.active_services_directory).reject do |name|
-        full_name = File.join(RunitMan.active_services_directory, name)
+      return [] unless File.directory?(RunitMan::App.active_services_directory)
+      Dir.entries(RunitMan::App.active_services_directory).reject do |name|
+        full_name = File.join(RunitMan::App.active_services_directory, name)
         itself_or_parent?(name) || (!File.symlink?(full_name) && !File.directory?(full_name))
       end
     end
 
     def inactive_service_names
-      return [] unless File.directory?(RunitMan.all_services_directory)
+      return [] unless File.directory?(RunitMan::App.all_services_directory)
       actives = active_service_names
-      Dir.entries(RunitMan.all_services_directory).reject do |name|
-        full_name = File.join(RunitMan.all_services_directory, name)
+      Dir.entries(RunitMan::App.all_services_directory).reject do |name|
+        full_name = File.join(RunitMan::App.all_services_directory, name)
         itself_or_parent?(name) || !File.directory?(full_name) || actives.include?(name)
       end
     end

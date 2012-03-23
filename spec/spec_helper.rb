@@ -1,9 +1,11 @@
-require File.join(File.dirname(__FILE__), '..', 'lib', 'runit-man', 'app')
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rack/test'
 require 'rspec/core'
 
-class RunitMan
+require 'runit-man/app'
+
+class RunitMan::App
   # set test environment
   set :environment,  :test
   set :raise_errors, true
