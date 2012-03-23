@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-expectations'
   s.add_development_dependency 'rr'
   s.add_development_dependency 'rack-test'
-  s.add_development_dependency 'bundler', '~> 1.0.10'
+  s.add_development_dependency 'bundler', ['~> 1.0', '> 1.0.10']
   s.description = File.open(File.join(File.dirname(__FILE__), 'DESCRIPTION')).read
 end
 
