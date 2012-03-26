@@ -1,0 +1,3 @@
+[submodule "cookbooks/runit"]
+	path = cookbooks/runit
+	url = https://github.com/opscode-cookbooks/runit.git
