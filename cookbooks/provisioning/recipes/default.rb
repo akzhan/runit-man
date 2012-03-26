@@ -4,6 +4,7 @@ gem_package "bundler"
 
 git "/home/runit-man" do
   repository "git://github.com/Undev/runit-man.git"
+  enable_submodules true
 end
 
 bash "bundle" do
