@@ -3,7 +3,7 @@
 ### Version 2.3.19
 
 * Running using <tt>bundle exec</tt> is fixed.
-* Initial staging environment added using [http://vagrantup/](Vagrant "Vagrant").
+* Initial staging environment added using [http://vagrantup.com/](Vagrant "Vagrant").
 
 ### Version 2.3.18
 
