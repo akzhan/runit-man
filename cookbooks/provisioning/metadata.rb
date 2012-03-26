@@ -1,6 +1,6 @@
-maintainer       "Akzhan"
+maintainer       "Akzhan Abdulin"
 maintainer_email "akzhan.abdulin@gmail.com"
-license          "All rights reserved"
+license          "MIT License"
 description      "runit-man development VM"
 version          "0.1"
 
