@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 2.3.19
+
+* Running using <tt>bundle exec</tt> is fixed.
+* Initial staging environment added using [http://vagrantup/](Vagrant "Vagrant").
+
 ### Version 2.3.18
 
 * Bugfixes of log downloads page.
