@@ -101,7 +101,8 @@ class ServiceInfo::Base
 
   def log_file_location
     rel_path = ServiceInfo.klass.log_location_cache[log_pid]
-    return nil if rel_path.nil?
+    return nil  if rel_path.nil?
+
     File.expand_path(rel_path, log_run_folder)
   end
 
@@ -114,14 +115,16 @@ class ServiceInfo::Base
   end
 
   def send_signal(signal)
-    return unless supervise?
+    return  unless supervise?
+
     File.open(File.join(supervise_folder, 'control'), 'w') do |f|
       f.print signal.to_s
     end
   end
 
   def files_to_view
-    return [] unless File.directory?(files_to_view_folder)
+    return []  unless File.directory?(files_to_view_folder)
+
     Dir.entries(files_to_view_folder).select do |name|
       File.symlink?(File.join(files_to_view_folder, name))
     end.map do |name|
@@ -135,7 +138,8 @@ class ServiceInfo::Base
   end
 
   def urls_to_view
-    return [] unless File.directory?(urls_to_view_folder)
+    return []  unless File.directory?(urls_to_view_folder)
+
     Dir.entries(urls_to_view_folder).select do |name|
       name =~ /\.url$/ && File.file?(File.join(urls_to_view_folder, name))
     end.map do |name|
@@ -146,7 +150,8 @@ class ServiceInfo::Base
   end
 
   def allowed_signals
-    return [] unless File.directory?(allowed_signals_folder)
+    return []  unless File.directory?(allowed_signals_folder)
+
     Dir.entries(allowed_signals_folder).reject do |name|
       ServiceInfo::Base.itself_or_parent?(name)
     end
@@ -190,12 +195,14 @@ protected
   end
 
   def data_from_file(file_name)
-    return @files[file_name] if @files.include?(file_name)
+    return @files[file_name]  if @files.include?(file_name)
+
     @files[file_name] = ServiceInfo::Base.real_data_from_file(file_name)
   end
 
   def sorted_log_files(log_files)
     return log_files  if log_files.length < 2
+
     log_files.sort { |a, b| a[:created] <=> b[:created] }
   end
 
@@ -211,13 +218,15 @@ protected
     end
 
     def real_data_from_file(file_name)
-      return nil unless File.readable?(file_name)
+      return nil  unless File.readable?(file_name)
+
       if RUBY_VERSION >= '1.9'
         data = IO.read(file_name, :external_encoding => 'ASCII-8BIT')
       else
         data = IO.read(file_name)
       end
-      data.chomp! unless data.nil?
+
+      data.chomp!  unless data.nil?
       data.empty? ? nil : data
     end
 
@@ -227,7 +236,8 @@ protected
 
   private
     def active_service_names
-      return [] unless File.directory?(RunitMan::App.active_services_directory)
+      return []  unless File.directory?(RunitMan::App.active_services_directory)
+
       Dir.entries(RunitMan::App.active_services_directory).reject do |name|
         full_name = File.join(RunitMan::App.active_services_directory, name)
         itself_or_parent?(name) || (!File.symlink?(full_name) && !File.directory?(full_name))
@@ -235,8 +245,10 @@ protected
     end
 
     def inactive_service_names
-      return [] unless File.directory?(RunitMan::App.all_services_directory)
+      return []  unless File.directory?(RunitMan::App.all_services_directory)
+
       actives = active_service_names
+
       Dir.entries(RunitMan::App.all_services_directory).reject do |name|
         full_name = File.join(RunitMan::App.all_services_directory, name)
         itself_or_parent?(name) || !File.directory?(full_name) || actives.include?(name)

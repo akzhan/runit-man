@@ -53,17 +53,21 @@ class RunitMan::App < Sinatra::Base
 
   def self.setup_i18n_files
     files = []
+
     Dir.glob("#{i18n_location}/*.yml") do |full_path|
-      next unless File.file?(full_path)
+      next  unless File.file?(full_path)
+
       files << full_path
     end
+
     I18n.load_path = files
     I18n.reload!
-    nil 
+    nil
   end
 
   configure do
     RunitMan::App.setup_i18n_files
+
     haml_options = { :ugly => true }
     haml_options[:encoding] = 'utf-8' if defined?(Encoding)
     set :haml, haml_options
@@ -76,16 +80,20 @@ class RunitMan::App < Sinatra::Base
     else
       ServiceInfo.klass = ServiceInfo::Logger
     end
+
     @read_write_mode = RunitMan::App.read_write_mode
     @scripts = []
+
     base_content_type = CONTENT_TYPES.keys.detect do |t|
       request.env['REQUEST_URI'] =~ /\.#{Regexp.escape(t.to_s)}$/
     end || :html
     content_type CONTENT_TYPES[base_content_type], :charset => 'utf-8'
+
     headers({
       'X-Powered-By' => 'runit-man',
       'X-Version' => RunitMan::VERSION
     })
+
     parse_language(request.env['HTTP_ACCEPT_LANGUAGE'])
   end
 
@@ -100,6 +108,7 @@ class RunitMan::App < Sinatra::Base
 
   def parse_language(header)
     weighted_locales = []
+
     if header
       header.split(',').each do |s|
         if s =~ /^(.+)\;q\=(\d(?:\.\d)?)$/
@@ -109,12 +118,15 @@ class RunitMan::App < Sinatra::Base
         end
       end
     end
+
     weighted_locales << { :locale => :en, :weight => 0.0 }
+
     if weighted_locales.length >= 2
       weighted_locales.sort! do |a, b|
         b[:weight] <=> a[:weight]
       end
     end
+
     locales = weighted_locales.map { |wl| wl[:locale] }
     setup_i18n(locales)
   end
@@ -146,7 +158,8 @@ class RunitMan::App < Sinatra::Base
     count = MIN_TAIL if count < MIN_TAIL
     count = MAX_TAIL if count > MAX_TAIL
     srv   = ServiceInfo.klass[name]
-    return nil if srv.nil? || !srv.logged?
+    return nil  if srv.nil? || !srv.logged?
+
     text = ''
     File::Tail::Logfile.open(srv.log_file_location, :backward => count, :return_if_eof => true) do |log|
       log.tail do |line|
@@ -171,8 +184,10 @@ class RunitMan::App < Sinatra::Base
     if !request.GET.has_key?('file')
       return nil
     end
+
     file_path = request.GET['file']
-    return nil unless all_files_to_view.include?(file_path)
+    return nil  unless all_files_to_view.include?(file_path)
+
     text = IO.read(file_path)
     {
        :name => file_path,
@@ -182,7 +197,8 @@ class RunitMan::App < Sinatra::Base
 
   get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
     data = log_of_service(name, count, nil)
-    return not_found if data.nil?
+    return not_found  if data.nil?
+
     @title = t('runit.services.log.title', :name => name, :host => host_name, :count => count)
     haml :log, :locals => data
   end
@@ -193,15 +209,19 @@ class RunitMan::App < Sinatra::Base
     else
       count, no = nil, d1
     end
+
     no = no.to_i
+
     data = log_of_service(name, count, no)
-    return not_found if data.nil?
+    return not_found  if data.nil?
+
     data[:logs][no][:text]
   end
 
   get %r[^/([^/]+)/log\-downloads/?$] do |name|
     srv = ServiceInfo.klass[name]
-    return not_found if srv.nil? || !srv.logged?
+    return not_found  if srv.nil? || !srv.logged?
+
     haml :log_downloads, :locals => {
       :name  => name,
       :files => srv.log_files
@@ -210,17 +230,18 @@ class RunitMan::App < Sinatra::Base
 
   get %r[^/([^/]+)/log\-download/(.+)$] do |name, file_name|
     srv = ServiceInfo.klass[name]
-    return not_found if srv.nil? || !srv.logged?
+    return not_found  if srv.nil? || !srv.logged?
+
     f = srv.log_files.detect { |f| f[:name] == file_name }
-    return not_found unless f
+    return not_found  unless f
+
     send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
   get '/view' do
     data = data_of_file_view(request)
-    if data.nil?
-      return not_found
-    end
+    return not_found  if data.nil?
+
     @title = t('runit.view_file.title', :file => data[:name], :host => host_name)
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
     haml :view_file, :locals => data 
@@ -228,9 +249,8 @@ class RunitMan::App < Sinatra::Base
 
   get '/view.txt' do
     data = data_of_file_view(request)
-    if data.nil?
-      return not_found
-    end
+    return not_found  if data.nil?
+
     content_type CONTENT_TYPES[:txt], :charset => 'utf-8'
     data[:text]
   end
@@ -248,7 +268,8 @@ class RunitMan::App < Sinatra::Base
   post '/:name/signal/:signal' do |name, signal|
     unless readonly?
       service = ServiceInfo.klass[name]
-      return not_found if service.nil?
+      return not_found  if service.nil?
+
       service.send_signal(signal)
       log_action(name, "send signal \"#{signal}\"")
     else
@@ -261,7 +282,8 @@ class RunitMan::App < Sinatra::Base
     unless readonly?
       service = ServiceInfo.klass[name]
       action = "#{action}!".to_sym
-      return not_found if service.nil? || !service.respond_to?(action)
+      return not_found  if service.nil? || !service.respond_to?(action)
+
       service.send(action)
       log_action(name, action)
     else
@@ -288,14 +310,18 @@ class RunitMan::App < Sinatra::Base
       active_r_dir = File.join(RunitMan::App.active_services_directory, 'runit-man')
       my_dir       = File.join(GEM_FOLDER, 'sv')
       log_dir      = File.join(all_r_dir, 'log')
+
       if File.symlink?(all_r_dir)
         File.unlink(all_r_dir)
       end
+
       unless File.directory?(all_r_dir)
         FileUtils.mkdir_p(log_dir)
         create_log_run_script(all_r_dir)
       end
+
       create_run_script(all_r_dir)
+
       unless File.symlink?(active_r_dir)
         File.symlink(all_r_dir, active_r_dir)
       end
@@ -340,9 +366,11 @@ class RunitMan::App < Sinatra::Base
       auth                      = RunitMan::App.allowed_users
       rackup_command_line       = RunitMan::App.rackup_command_line
       read_write_mode           = RunitMan::App.read_write_mode.to_s
+
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
+
       File.chmod(0755, script_name)
     end
 
@@ -351,9 +379,11 @@ class RunitMan::App < Sinatra::Base
       script_name   = File.join(dir, 'log', 'run')
       template_name = File.join(GEM_FOLDER, 'sv', 'log', 'run.erb')
       logger        = RunitMan::App.runit_logger
+
       File.open(script_name, 'w') do |script_source|
         script_source.print ERB.new(IO.read(template_name)).result(binding())
       end
+
       File.chmod(0755, script_name)
     end
   end

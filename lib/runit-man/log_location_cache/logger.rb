@@ -11,12 +11,14 @@ protected
 
   def get_pid_location(lpid)
     folder = log_folder(lpid)
-    return nil if folder.nil?
+    return  nil if folder.nil?
+
     loc = File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log")
     unless File.exists?(loc)
       loc = "#{loc}.gz"
-      loc = nil unless File.exists?(loc)
+      loc = nil  unless File.exists?(loc)
     end
+
     loc
   end
 
@@ -44,8 +46,10 @@ protected
 
   def log_folder_base_name(lpid)
     result = super(lpid)
+
     # we should remove : from the end of the line for logger installations.
-    result = $1 if  result =~ /^(.+)\:$/
+    result = $1  if result =~ /^(.+)\:$/
+
     result
   end
 end

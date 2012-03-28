@@ -9,6 +9,7 @@ class ServiceStatus
     # status in daemontools supervise format
     # look at runit's sv.c for details
     data = (!data.nil? && data.length == STATUS_SIZE) ? data : nil
+
     @raw = data.nil? ? nil : data.unpack('NNxxxxVxa1CC')
   end
 
@@ -54,12 +55,13 @@ class ServiceStatus
   end
 
   def to_s
-    return 'inactive' if inactive?
+    return 'inactive'  if inactive?
+
     # try to mimics stat behaviour to minimize readings
     result = status_string
-    result += ', got TERM' if got_term?
-    result += ', want down' if want_down?
-    result += ', want up' if want_up?
+    result += ', got TERM'  if got_term?
+    result += ', want down'  if want_down?
+    result += ', want up'  if want_up?
     result 
   end
 
@@ -70,9 +72,9 @@ private
 
   def status_string
     case status_byte
-      when S_DOWN then 'down'
-      when S_RUN then 'run'
-      when S_FINISH then 'finish'
+      when S_DOWN; 'down'
+      when S_RUN; 'run'
+      when S_FINISH; 'finish'
     end
   end
 end

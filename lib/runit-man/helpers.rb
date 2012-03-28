@@ -72,6 +72,7 @@ module Helpers
     id    = options[:id] || false
     hint  = " title=\"#{h(hint)}\"" unless hint.empty?
     blank = blank ? ' target="_blank"' : ''
+
     "<a#{hint}#{blank} href=\"/#{name}/log#{ (count != 100) ? "/#{count}" : '' }#{ id ? "/#{id}" : ''  }#{ raw ? '.txt' : '' }#footer\">#{h(title)}</a>"
   end
 
@@ -92,6 +93,7 @@ module Helpers
     sign = (bytes >= 0) ? '' : '-'
     suffix = 'b'
     bytes = bytes.abs.to_f
+
     if bytes > GIGABYTE
       bytes /= GIGABYTE
       suffix = 'Gb'
@@ -102,7 +104,9 @@ module Helpers
       bytes /= KILOBYTE
       suffix = 'Kb'
     end
+
     bytes = ((bytes * 100 + 0.5).to_i.to_f / 100)
+
     "#{sign}#{bytes}#{t("runit.services.log.#{suffix}")}"
   end
 
@@ -110,6 +114,7 @@ module Helpers
     s.split(/\s/).map do |s|
       if s =~ /(\w+)/
         word = $1
+
         if t("runit.services.table.subst.#{word}") !~ /translation missing/
           s.sub(word, t("runit.services.table.subst.#{word}"))
         else

@@ -11,6 +11,7 @@ class Utils
           @host_name = Socket.gethostname
         end
       end
+
       @host_name
     end
 
