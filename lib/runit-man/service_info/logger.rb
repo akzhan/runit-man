@@ -40,7 +40,7 @@ class ServiceInfo::Logger < ServiceInfo::Base
 
   class << self
     def log_location_cache
-      @log_location_cache ||= LogLocationCache::Logger.new(RunitMan.runit_logger)
+      @log_location_cache ||= LogLocationCache::Logger.new(RunitMan::App.runit_logger)
     end
   end
 
