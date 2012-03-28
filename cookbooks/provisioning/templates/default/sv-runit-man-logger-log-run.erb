@@ -1,0 +1,5 @@
+#!/bin/bash
+
+mkdir -p /var/log/runit-man
+exec logger -i -t "runit-man-logger" -p local1.info
+

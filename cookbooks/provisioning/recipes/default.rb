@@ -11,5 +11,9 @@ bash "bundle" do
   code "cd /home/runit-man && bundle install --without development"
 end
 
+# default svlogd installation
 runit_service "runit-man"
+
+# logger installation
+runit_service "runit-man-logger"
 
