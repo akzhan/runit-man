@@ -11,8 +11,10 @@ class ServiceInfo::Logger < ServiceInfo::Base
   end
 
   def log_files
+    lfloc = log_file_location
+    return []  if lfloc.nil?
     r = []
-    dir_name = File.dirname(File.dirname(log_file_location))
+    dir_name = File.dirname(File.dirname(lfn))
     Dir.foreach(dir_name) do |name|
       next  if ServiceInfo::Base.itself_or_parent?(name)
       full_name = File.expand_path(name, dir_name)
