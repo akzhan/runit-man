@@ -1,4 +1,4 @@
 module RunitMan
-  VERSION = '2.3.21'.freeze
+  VERSION = '2.4.0a1'.freeze
 end
 
