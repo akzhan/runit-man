@@ -250,7 +250,7 @@ class RunitMan::App < Sinatra::Base
     f = srv.all_log_file_locations.detect { |f| f[:name] == file_name }
     return not_found  unless f
 
-    send_file(f[:name], :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
+    send_file(f[:path], :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
   get '/view' do

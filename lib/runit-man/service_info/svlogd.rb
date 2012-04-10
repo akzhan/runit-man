@@ -27,8 +27,8 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       next  if ServiceInfo::Base.itself_or_parent?(name)
       next  if SPECIAL_LOG_FILES.include?(name)
 
-      full_name = File.expand_path(name, dir_name)
-      stats = File.stat(full_name)
+      path = File.expand_path(name, dir_name)
+      stats = File.stat(path)
       stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
       min_time, max_time = stat_times.min, stat_times.max
 
@@ -36,6 +36,7 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       label = label.gsub(/[\:\s\,]/, '-').gsub(/[\\\/]/, '.')
       r << {
         :name     => name,
+        :path     => path,
         :label    => label,
         :size     => stats.size,
         :created  => min_time,
