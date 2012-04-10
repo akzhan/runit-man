@@ -40,7 +40,7 @@ protected
 
   def log_priority(lpid)
     args = log_command_args(lpid)
-    args.nil? ? logger_priority : args.last
+    args.nil? ? 'info' : args.last
   end
 
   def set_pid_log_location(pid, log_location)
