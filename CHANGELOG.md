@@ -1,8 +1,13 @@
 ## Changes
 
+### Version 2.4.0
+
+* LogLocationCache completely removed to keep codebase small and readable.
+* Code refactoring to support multiple log file downloads and to avoid errors in case of file absence.
+
 ### Version 2.3.21
 
-* Running using <tt>bundle exec</tt> is fixed.
+* Running using `bundle exec` is fixed.
 * Initial staging environment added using [http://vagrantup.com/](Vagrant "Vagrant").
 * Fix internal error when log downloads directory is absent.
 
@@ -23,8 +28,8 @@
 
 ### Version 2.3.8
 
-* Minor update of handling logger log directories (we should remove last character from log directory name if it's equal to ':').
-* Enabling of using 'bundle exec rake ...' command.
+* Minor update of handling logger log directories (we should remove last character from log directory name if it equals to ':').
+* Enable of using `bundle exec rake ...` command.
 
 ### Version 2.3.7
 
@@ -41,7 +46,7 @@
 
 ### Version 2.3.4
 * Rack::File used to serve static files in old Sinatra releases (Sinatra 1.3.0 have this functionality built-in). Requires Rack 1.3.0 or higher.
-* rainbows configuration now uses sendfile gem if it's available to decrease CPU usage on serving large files.
+* rainbows configuration now uses sendfile gem if its available to decrease CPU usage on serving large files.
 
 ### Version 2.3.3
 * Typo (very old one).
@@ -99,7 +104,7 @@
 * Support for gzipped logs.
 
 ### Version 2.0.2
-* Fix log link hint, that's broken from 1.11.x (thanks to verm666).
+* Fix log link hint, thats broken from 1.11.x (thanks to verm666).
 
 ### Version 2.0.1
 * Use Bundler to simplify development tasks.
@@ -216,7 +221,7 @@
 * runit-man now can show custom count of lines per log.
 
 ### Version 1.4.5
-* Fix error when ran on machine when it's name cannot be resolved by DNS.
+* Fix error when ran on machine when its name cannot be resolved by DNS.
 * /services.json added to provide automation API. 
 
 ### Version 1.4.3
@@ -224,7 +229,7 @@
 * Script renamed to runit-man without extension.
 
 ### Version 1.4.1
-* Workaround for rubygems behavior (sometimes it doesn't update binaries).
+* Workaround for rubygems behavior (sometimes it doesnt update binaries).
 
 ### Version 1.4
 * Automated registration with given options.
@@ -254,3 +259,4 @@
 
 ### Version 0.1
 * First working release
+
