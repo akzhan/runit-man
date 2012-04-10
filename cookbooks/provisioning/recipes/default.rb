@@ -17,3 +17,6 @@ runit_service "runit-man"
 # logger installation
 runit_service "runit-man-logger"
 
+# need vim for inplace actions
+package "vim-nox"
+

@@ -23,7 +23,7 @@
           = service_action service_info.name, :switch_up, t('runit.services.table.actions.switch_up')
   %td
     - if service_info.logged?
-      = log_link(service_info.name, :hint => t('runit.services.table.values.log_hint', :name => service_info.name), :blank => true, :title => service_info.log_file_location)
+      = log_link(service_info.name, :hint => t('runit.services.table.values.log_hint', :name => service_info.name), :blank => true, :title => service_info.log_file_locations.join(', '))
       = log_downloads_link(service_info.name)
     - else
       = t('runit.services.table.values.log_absent')

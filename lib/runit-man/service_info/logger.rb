@@ -1,6 +1,10 @@
 # Represents information about service on logger-enabled host.
 class ServiceInfo::Logger < ServiceInfo::Base
 
+  def logger_name
+    'logger'
+  end
+
   def log_files
     lfloc = log_file_location
     return []  if lfloc.nil?

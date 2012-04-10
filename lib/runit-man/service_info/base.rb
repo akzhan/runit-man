@@ -201,6 +201,37 @@ protected
     file_locations.sort { |a, b| a[:created] <=> b[:created] }
   end
 
+  def logger_name
+    not_implemented
+  end
+
+  def log_command
+    return nil  if log_pid.nil?
+
+    ps_output = `ps -o args -p #{log_pid} 2>&1`.split("\n")
+    return nil  if ps_output.length < 2
+
+    cmd = ps_output[1].chomp
+    cmd != '' ? cmd : nil
+  end
+
+  def log_command_args
+    cmd = log_command(log_pid)
+    return nil  if cmd.nil?
+
+    args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
+    return nil  if args.shift !~ /#{Regexp.escape(logger_name)}/
+
+    args
+  end
+
+  def log_folder_base_name
+    args = log_command_args
+    return nil  if args.nil?
+
+    args.first
+  end
+
   class << self
     def all
       all_service_names.sort.map do |name|

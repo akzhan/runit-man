@@ -2,8 +2,12 @@
 class ServiceInfo::Svlogd < ServiceInfo::Base
   SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
 
+  def logger_name
+    'svlogd'
+  end
+
   def log_folder
-    log_folder_base_name(log_pid)
+    log_folder_base_name
   end
 
   def log_file_locations
