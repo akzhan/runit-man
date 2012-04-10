@@ -42,6 +42,8 @@ class ServiceInfo::Logger < ServiceInfo::Base
 
       r << filepath
     end
+
+    r
   end
 
   # All log file locations
