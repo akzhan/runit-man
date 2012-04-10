@@ -1,6 +1,15 @@
 # encoding: utf-8
 
 require 'rubygems'
+
+begin
+  require 'bundler'
+  Bundler.setup(:default, :development, :test)
+  Bundler::GemHelper.install_tasks
+rescue LoadError
+  $stderr.puts "Bundler not available. Install it with: gem install bundler"
+end
+
 $LOAD_PATH.unshift('./lib')
 
 require 'runit-man/version'
@@ -23,10 +32,10 @@ rescue LoadError
 end
 
 begin
-  require 'bundler'
-  Bundler.setup(:default)
-  Bundler::GemHelper.install_tasks
+  require 'yard'
+
+  YARD::Rake::YardocTask.new
 rescue LoadError
-  $stderr.puts "Bundler not available. Install it with: gem install bundler"
+  $stderr.puts "YARD not available. Install it with: gem install yard"
 end
 

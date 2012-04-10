@@ -1,0 +1,14 @@
+--markup markdown
+--markup-provider redcarpet
+--charset utf-8
+--no-private
+--readme README.md
+--title "runit-man Documentation"
+-
+README.md
+INSTALL.md
+CHANGELOG.md
+README_ru.md
+LICENSE
+DESCRIPTION
+
