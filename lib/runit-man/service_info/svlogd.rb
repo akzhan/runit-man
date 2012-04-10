@@ -28,6 +28,8 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       next  if SPECIAL_LOG_FILES.include?(name)
 
       path = File.expand_path(name, dir_name)
+      next  unless File.readable?(path)
+
       stats = File.stat(path)
       stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
       min_time, max_time = stat_times.min, stat_times.max

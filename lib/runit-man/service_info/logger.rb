@@ -58,15 +58,16 @@ class ServiceInfo::Logger < ServiceInfo::Base
       Dir.foreach(subdirpath) do |filename|
         next  if ServiceInfo::Base.itself_or_parent?(filename)
         filepath = File.expand_path(filename, subdirpath)
-        label = "#{Utils.host_name}-#{filename}"
         next  unless File.file?(filepath) && File.readable?(filepath)
 
-        stats = File.stat(file_name)
+        label = "#{Utils.host_name}-#{subdirname}-#{filename}"
+
+        stats = File.stat(filepath)
         stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
         min_time, max_time = stat_times.min, stat_times.max
 
         r << {
-          :name     => name,
+          :name     => filename,
           :path     => filepath,
           :label    => label,
           :size     => stats.size,
@@ -75,7 +76,8 @@ class ServiceInfo::Logger < ServiceInfo::Base
         }
       end
     end
-    sorted_log_files(r)
+
+    sorted_file_locations(r)
   end
 end
 
