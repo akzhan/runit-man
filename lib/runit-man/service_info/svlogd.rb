@@ -10,13 +10,15 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
     log_folder_base_name
   end
 
+  # Current log file locations
   def log_file_locations
     folder = log_folder
-    return nil  if folder.nil?
+    return []  if folder.nil?
 
     [ File.join(folder, 'current') ]
   end
 
+  # All log file locations
   def all_log_file_locations
     dir_name = log_folder
     return []  if dir_name.nil? || ! File.directory?(dir_name)
