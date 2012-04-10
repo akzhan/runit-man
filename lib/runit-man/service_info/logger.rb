@@ -67,6 +67,7 @@ class ServiceInfo::Logger < ServiceInfo::Base
 
         r << {
           :name     => name,
+          :path     => filepath,
           :label    => label,
           :size     => stats.size,
           :created  => min_time,
