@@ -34,7 +34,13 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       stat_times = [stats.ctime.utc, stats.mtime.utc]
       min_time, max_time = stat_times.min, stat_times.max
 
-      label = "#{Utils.host_name}-#{self.name}-#{I18n.l(min_time)}-#{I18n.l(max_time)}.log"
+      if min_time != max_time
+        stat_times = "#{I18n.l(min_time)}-#{I18n.l(max_time)}"
+      else
+        stat_times = I18n.l(min_time)
+      end
+
+      label = "#{Utils.host_name}-#{self.name}-#{stat_times}.log"
       label = label.gsub(/[\:\s\,]/, '-').gsub(/[\\\/]/, '.')
       r << {
         :name     => name,
