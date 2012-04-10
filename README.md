@@ -11,14 +11,20 @@ Server will run by **runit-man** script. Take a note that **runit-man** must hav
 ## Installation
 
 Usually You should install both **runit-man** and **thin** gems to run this tool fine.
-`gem install runit-man thin`
+
+```bash
+gem install runit-man thin
+```
 
 Pragmatic approach is to setup runit-man as runit service like this:
-`runit-man -p 14500 -r`
 
-This command installs runit-man as runit service (using default folders */etc/sv/* and */etc/service/*). 
+```bash
+runit-man -p 14500 -r
+```
 
-Look at INSTALL for details.
+This command installs runit-man as runit service (using default folders `/etc/sv/` and `/etc/service/`).
+
+Look at {file:INSTALL.md} for details.
 
 ### rackup configuration
 
@@ -31,17 +37,17 @@ This tool can provide additional information or actions through it's Web page.
 
 ### View names and content of files that related to concrete service
 
-For each known runit service this tool looks for **./runit-man/files-to-view/** folder.
+For each known runit service this tool looks for `./runit-man/files-to-view/` folder.
 Every symlink here will be shown as link to view target file content.
 
 ### Show links that related to concrete service
 
-For each known runit service this tool looks for **./runit-man/urls-to-view/** folder.
+For each known runit service this tool looks for `./runit-man/urls-to-view/` folder.
 Every file ended with .url will be shown as link to view target location (location should be written as content of this file).
 
 ### Show buttons that send signals to concrete service
 
-For each known runit service this tool looks for **./runit-man/allowed-signals/** folder.
+For each known runit service this tool looks for `./runit-man/allowed-signals/` folder.
 Each one-letter-named file declares that signal button should be shown in Web UI.
 
 Signal letters listed below in REST API section.
@@ -86,10 +92,17 @@ You can read tail of service log using
 `GET /<service name>/log/<count of tailing lines>.txt`
 
 Note that to use this feature You must do logging using 
-`exec svlogd options log_directory_location`
+
+```bash
+exec svlogd <options> $LOG_DIRECTORY_LOCATION
+```
 
 #### logger
 Use logger like:
-`exec logger  -i -t "runit-man" -p local1.info`
-and use option -l "logger:/var/log/" where base logs directory shown after period.
+
+```bash
+exec logger  -i -t "runit-man" -p local1.info
+```
+
+and use option `-l "logger:/var/log/"` where base logs directory shown after period.
 
