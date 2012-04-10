@@ -65,7 +65,7 @@ class ServiceInfo::Logger < ServiceInfo::Base
         label = "#{Utils.host_name}-#{subdirname}-#{filename}"
 
         stats = File.stat(filepath)
-        stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
+        stat_times = [stats.ctime.utc, stats.mtime.utc]
         min_time, max_time = stat_times.min, stat_times.max
 
         r << {

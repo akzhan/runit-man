@@ -1,6 +1,8 @@
 # Namespace: Information about service
 module ServiceInfo
   class << self
+    # Actual descendant class used to instantiate service information instances.
+    # @return [Class] Actual descendant class.
     attr_accessor :klass
   end
 end

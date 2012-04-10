@@ -31,7 +31,7 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       next  unless File.readable?(path)
 
       stats = File.stat(path)
-      stat_times = [stats.ctime.utc, stats.atime.utc, stats.mtime.utc]
+      stat_times = [stats.ctime.utc, stats.mtime.utc]
       min_time, max_time = stat_times.min, stat_times.max
 
       label = "#{Utils.host_name}-#{self.name}-#{I18n.l(min_time)}-#{I18n.l(max_time)}.log"
