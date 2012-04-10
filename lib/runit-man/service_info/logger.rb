@@ -1,16 +1,5 @@
-require 'runit-man/log_location_cache/logger'
-
+# Represents information about service on logger-enabled host.
 class ServiceInfo::Logger < ServiceInfo::Base
-
-  def log_file_path(file_name)
-    dir_name = File.dirname(File.dirname(log_file_location))
-    loc = File.expand_path(File.join(file_name, "#{name}.log"), dir_name)
-
-    loc = "#{loc}.gz"  unless File.exists?(loc)
-    loc = nil  unless File.exists?(loc)
-
-    loc
-  end
 
   def log_files
     lfloc = log_file_location
@@ -45,12 +34,6 @@ class ServiceInfo::Logger < ServiceInfo::Base
       end
     end
     sorted_log_files(r)
-  end
-
-  class << self
-    def log_location_cache
-      @log_location_cache ||= LogLocationCache::Logger.new(RunitMan::App.runit_logger)
-    end
   end
 end
 

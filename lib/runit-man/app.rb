@@ -153,30 +153,45 @@ class RunitMan::App < Sinatra::Base
     Yajl::Encoder.encode(service_infos)
   end
 
+  def log_of_service_n(filepath, count, no)
+    text = ''
+    if File.readable?(filepath)
+      File::Tail::Logfile.open(filepath, :backward => count, :return_if_eof => true) do |log|
+        log.tail do |line|
+          text += line
+        end
+      end
+    end
+
+    {
+      :location => filepath,
+      :text     => text,
+      :id       => no
+    }
+  end
+
   def log_of_service(name, count, no)
     count = count.to_i
-    count = MIN_TAIL if count < MIN_TAIL
-    count = MAX_TAIL if count > MAX_TAIL
+    count = MIN_TAIL  if count < MIN_TAIL
+    count = MAX_TAIL  if count > MAX_TAIL
     srv   = ServiceInfo.klass[name]
     return nil  if srv.nil? || !srv.logged?
 
-    text = ''
-    File::Tail::Logfile.open(srv.log_file_location, :backward => count, :return_if_eof => true) do |log|
-      log.tail do |line|
-        text += line
+    logs = []
+    if no.nil?
+      srv.log_file_locations.each_with_index do |filepath, no|
+        logs << log_of_service_n(filepath, count, no)
       end
+    else
+      filepath = srv.log_file_locations[no]
+      return nil  if filepath.nil?
+      logs << log_of_service_n(filepath, count, no)
     end
 
     {
       :name  => name,
       :count => count,
-      :logs  => [
-        {
-          :location => srv.log_file_location,
-          :text     => text,
-          :id       => 0
-        }
-      ]
+      :logs  =>  logs
     }
   end
 
@@ -224,7 +239,7 @@ class RunitMan::App < Sinatra::Base
 
     haml :log_downloads, :locals => {
       :name  => name,
-      :files => srv.log_files
+      :files => srv.all_log_file_locations
     }
   end
 
@@ -232,10 +247,10 @@ class RunitMan::App < Sinatra::Base
     srv = ServiceInfo.klass[name]
     return not_found  if srv.nil? || !srv.logged?
 
-    f = srv.log_files.detect { |f| f[:name] == file_name }
+    f = srv.all_log_file_locations.detect { |f| f[:name] == file_name }
     return not_found  unless f
 
-    send_file(srv.log_file_path(file_name), :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
+    send_file(f[:name], :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
   end
 
   get '/view' do
@@ -244,7 +259,7 @@ class RunitMan::App < Sinatra::Base
 
     @title = t('runit.view_file.title', :file => data[:name], :host => host_name)
     content_type CONTENT_TYPES[:html], :charset => 'utf-8'
-    haml :view_file, :locals => data 
+    haml :view_file, :locals => data
   end
 
   get '/view.txt' do

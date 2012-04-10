@@ -1,7 +1,7 @@
-require 'runit-man/log_location_cache/base'
 require 'runit-man/service_status'
 require 'runit-man/utils'
 
+# Represents information about service on any host.
 class ServiceInfo::Base
 
   attr_reader :name
@@ -99,18 +99,13 @@ class ServiceInfo::Base
     @log_status.pid
   end
 
-  def log_file_location
-    rel_path = ServiceInfo.klass.log_location_cache[log_pid]
-    return nil  if rel_path.nil?
-
-    File.expand_path(rel_path, log_run_folder)
+  # Current log file locations
+  def log_file_locations
+    []
   end
 
-  def log_file_path(file_name)
-    nil
-  end
-
-  def log_files
+  # All log file locations
+  def all_log_file_locations
     []
   end
 
@@ -200,10 +195,10 @@ protected
     @files[file_name] = ServiceInfo::Base.real_data_from_file(file_name)
   end
 
-  def sorted_log_files(log_files)
-    return log_files  if log_files.length < 2
+  def sorted_file_locations(file_locations)
+    return file_locations  if file_locations.length < 2
 
-    log_files.sort { |a, b| a[:created] <=> b[:created] }
+    file_locations.sort { |a, b| a[:created] <=> b[:created] }
   end
 
   class << self

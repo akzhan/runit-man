@@ -1,3 +1,4 @@
+# Namespace: Information about service
 module ServiceInfo
   class << self
     attr_accessor :klass

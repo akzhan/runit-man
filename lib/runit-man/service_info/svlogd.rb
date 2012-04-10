@@ -1,16 +1,22 @@
-require 'runit-man/log_location_cache/svlogd'
-
+# Represents information about service on svlogd-enabled host.
 class ServiceInfo::Svlogd < ServiceInfo::Base
   SPECIAL_LOG_FILES = %w(lock config state newstate).freeze
 
-  def log_file_path(file_name)
-    dir_name = File.dirname(log_file_location)
-    File.expand_path(file_name, dir_name)
+  def log_folder
+    log_folder_base_name(log_pid)
   end
 
-  def log_files
+  def log_file_locations
+    folder = log_folder
+    return nil  if folder.nil?
+
+    [ File.join(folder, 'current') ]
+  end
+
+  def all_log_file_locations
+    dir_name = log_folder
+    return []  if dir_name.nil? || ! File.directory?(dir_name)
     r = []
-    dir_name = File.dirname(log_file_location)
     Dir.foreach(dir_name) do |name|
       next  if ServiceInfo::Base.itself_or_parent?(name)
       next  if SPECIAL_LOG_FILES.include?(name)
@@ -30,13 +36,7 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
         :modified => max_time
       }
     end
-    sorted_log_files(r)
-  end
-
-  class << self
-    def log_location_cache
-      @log_location_cache ||= LogLocationCache::Svlogd.new
-    end
+    sorted_file_locations(r)
   end
 end
 

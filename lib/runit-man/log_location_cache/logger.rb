@@ -13,7 +13,10 @@ protected
     folder = log_folder(lpid)
     return  nil if folder.nil?
 
-    loc = File.join(folder, Time.now.strftime('%Y-%m-%d'), "#{log_folder_base_name(lpid)}.log")
+    loc = File.join(folder, Time.now.strftime('%Y-%m-%d'))
+    return []  unless 
+    
+    , "#{log_folder_base_name(lpid)}.log")
     unless File.exists?(loc)
       loc = "#{loc}.gz"
       loc = nil  unless File.exists?(loc)
