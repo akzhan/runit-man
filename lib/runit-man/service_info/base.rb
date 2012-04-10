@@ -216,7 +216,7 @@ protected
   end
 
   def log_command_args
-    cmd = log_command(log_pid)
+    cmd = log_command
     return nil  if cmd.nil?
 
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
