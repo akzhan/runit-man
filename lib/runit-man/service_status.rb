@@ -1,5 +1,5 @@
 # Represents service status in daemontools supervise format.
-# @ note see runit's sv.c source code for details.
+# @note see runit's sv.c source code for details.
 class ServiceStatus
   # Size of status data in bytes
   STATUS_SIZE = 20
@@ -10,7 +10,7 @@ class ServiceStatus
   # Service is finishing.
   S_FINISH    = 2
 
-  # Initializes serice status by binary data.
+  # Initializes service status by binary data.
   # @param [String] data Binary data of service status in daemontools supervise format.
   def initialize(data)
     data = (!data.nil? && data.length == STATUS_SIZE) ? data : nil
@@ -57,18 +57,23 @@ class ServiceStatus
     @uptime ||= down? ? nil : Time.now - started_at
   end
 
+  # Is service want up?
   def want_up?
     @raw && !pid && @raw[3] == 'u'
   end
 
+  # Is service want down?
   def want_down?
     pid && @raw[3] == 'd'
   end
 
+  # Is service got TERM signal?
   def got_term?
     pid && @raw[4] != 0
   end
 
+  # Gets service status in string format.
+  # @return [String] Service status in string format.
   def to_s
     return 'inactive'  if inactive?
 
