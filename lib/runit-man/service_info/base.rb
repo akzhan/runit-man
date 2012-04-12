@@ -111,7 +111,7 @@ class ServiceInfo::Base
 
   def watched_modified_files
     files_to_watch.map do |filepath|
-      mtime = File.stat(filepath).mtime
+      mtime = File.stat(filepath).mtime.utc
       { :path => filepath, :mtime => mtime }
     end.select do |rec|
       rec[:mtime] > @status.started_at
