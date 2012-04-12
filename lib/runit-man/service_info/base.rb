@@ -18,7 +18,7 @@ class ServiceInfo::Base
     data = {}
     [
       :name, :stat, :active?, :logged?, :switchable?,
-      :log_file_location, :log_pid, :restart_dangerous?
+      :log_file_location, :log_pid, :watched_modified_files
     ].each do |sym|
       data[sym] = send(sym)
     end
@@ -109,10 +109,12 @@ class ServiceInfo::Base
     []
   end
 
-  def restart_dangerous?
-    ! ! files_to_watch.detect do |file|
-      mtime = File.stat(file).mtime
-      mtime > @status.started_at
+  def watched_modified_files
+    files_to_watch.map do |filepath|
+      mtime = File.stat(filepath).mtime
+      { :path => filepath, :mtime => mtime }
+    end.select do |rec|
+      rec[:mtime] > @status.started_at
     end
   end
 
