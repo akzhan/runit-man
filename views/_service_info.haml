@@ -3,7 +3,7 @@
   %td{:rowspan=> need_second_row ? 2 : 1}= h(service_info.pid)
   %th{:scope=>"row"}
     - unless service_info.watched_modified_files.empty?
-      %span.danger{:title => h(service_info.watched_modified_files.map { |rec| "#{rec[:path]} #{I18n.l(rec[:mtime])}" }.join(', '))}
+      %span.danger{:title => service_info.watched_modified_files.map { |rec| "#{rec[:path]} #{I18n.l(rec[:mtime])}" }.join(', ')}
         = h(service_info.name)
     - else
       = h(service_info.name)
