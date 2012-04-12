@@ -38,12 +38,18 @@ This tool can provide additional information or actions through it's Web page.
 ### View names and content of files that related to concrete service
 
 For each known runit service this tool looks for `./runit-man/files-to-view/` folder.
-Every symlink here will be shown as link to view target file content.
+Every symlink there will be shown as link to view target file content.
 
 ### Show links that related to concrete service
 
 For each known runit service this tool looks for `./runit-man/urls-to-view/` folder.
 Every file ended with .url will be shown as link to view target location (location should be written as content of this file).
+
+### Indicate services with any of watched files are modified since service startup
+
+For each known runit service this tool looks for `./runit-man/files-to-watch/` folder.
+Symlink targets there will be tested for its mtime to be less than service start time.
+Service will be indicated as dangerous (as red color) to restart if any watched file is modified since service startup.
 
 ### Show buttons that send signals to concrete service
 
