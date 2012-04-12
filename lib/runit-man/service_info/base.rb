@@ -18,7 +18,7 @@ class ServiceInfo::Base
     data = {}
     [
       :name, :stat, :active?, :logged?, :switchable?,
-      :log_file_location, :log_pid 
+      :log_file_location, :log_pid, :restart_dangerous?
     ].each do |sym|
       data[sym] = send(sym)
     end
@@ -110,22 +110,10 @@ class ServiceInfo::Base
   end
 
   def restart_dangerous?
-    changed_files_to_watch.size == 0 ? false : true
-  end
-
-  def changed_files_to_watch
-    return  [] if files_to_watch.empty?
-
-    changed_files = []
-    files_to_watch.each do |file|
+    ! ! files_to_watch.detect do |file|
       mtime = File.stat(file).mtime
-
-      if mtime > @status.started_at
-        changed_files << file
-      end
+      mtime > @status.started_at
     end
-
-    return changed_files
   end
 
   def send_signal(signal)
@@ -136,19 +124,27 @@ class ServiceInfo::Base
     end
   end
 
-  def files_to_view
-    return []  unless File.directory?(files_to_view_folder)
+  def symlinks_to_file_paths(dir_path)
+    return []  unless File.directory?(dir_path)
 
-    Dir.entries(files_to_view_folder).select do |name|
-      File.symlink?(File.join(files_to_view_folder, name))
+    Dir.entries(dir_path).select do |name|
+      File.symlink?(File.join(dir_path, name))
     end.map do |name|
       File.expand_path(
-        File.readlink(File.join(files_to_view_folder, name)),
-        files_to_view_folder
+        File.readlink(File.join(dir_path, name)),
+        dir_path
       )
     end.select do |file_path|
       File.file?(file_path)
-    end 
+    end
+  end
+
+  def files_to_view
+    symlinks_to_file_paths(files_to_view_folder)
+  end
+
+  def files_to_watch
+    symlinks_to_file_paths(files_to_watch_folder)
   end
 
   def urls_to_view
@@ -160,21 +156,6 @@ class ServiceInfo::Base
       data_from_file(File.join(urls_to_view_folder, name))
     end.select do |url|
       !url.nil?
-    end
-  end
-
-  def files_to_watch
-    return []  unless File.directory?(files_to_watch_folder)
-
-    Dir.entries(files_to_watch_folder).select do |name|
-      File.symlink?(File.join(files_to_watch_folder, name))
-    end.map do |name|
-      File.expand_path(
-        File.readlink(File.join(files_to_watch_folder, name)),
-        files_to_watch_folder
-      )
-    end.select do |file_path|
-      File.file?(file_path)
     end
   end
 
