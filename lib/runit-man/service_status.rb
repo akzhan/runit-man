@@ -13,9 +13,13 @@ class ServiceStatus
   # Initializes service status by binary data.
   # @param [String] data Binary data of service status in daemontools supervise format.
   def initialize(data)
-    data = (!data.nil? && data.length == STATUS_SIZE) ? data : nil
-
-    @raw = data.nil? ? nil : data.unpack('NNxxxxVxa1CC')
+    @raw = nil
+    unless data.nil?
+      data_size = data.respond_to?(:bytesize) ? data.bytesize : data.size
+      if data_size == STATUS_SIZE
+        @raw = data.unpack('NNxxxxVxa1CC')
+      end
+    end
   end
 
   # Is service inactive?
