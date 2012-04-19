@@ -2,6 +2,7 @@
   = t('runit.services.log.header', :name => h(name), :host => h(host_name), :count => h(count))
   %p
     = t('runit.services.log.counts', :count => [100, 250, 500, 1000, 5000].map { |n| log_link(name, :count => n, :title => n) }.join(' '))
+    |
     = log_downloads_link(name)
   - logs.each do |log|
     = t('runit.services.log.subheader', :log_location => h(log[:location]))
