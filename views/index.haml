@@ -1,5 +1,5 @@
 - content_for :content do
-  #error.alert.alert-error
+  #error.alert.alert-error{:style=>'display: none;'}
     = h(t('runit.error', :err => '<span id="url"></span>'))
     %span .
   #services= t('runit.loading')
