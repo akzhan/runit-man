@@ -2,21 +2,23 @@
 %html
   %head
     %title= h(t('runit.title', :p1 => @title, :p2 => t('runit.label')))
-    %link{:href=>"/css/tripoli.simple.css", :type=>"text/css", :rel=>"stylesheet"}/
-    /[if IE]
-      %link{:href=>"/css/tripoli.simple.ie.css", :type=>"text/css", :rel=>"stylesheet"}/
+    %link{:href=>"/css/bootstrap.min.css", :type=>"text/css", :rel=>"stylesheet"}/
     %link{:href=>"/css/runit-man.css", :type=>"text/css", :rel=>"stylesheet"}/
   %body
-    #container
-      #header
-        .content
-          %strong= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
-          %a{:href=>'/info'}= h(t('runit.info.title'))
+    .container-fluid
+      .navbar
+        .navbar-inner
+          .container
+            %a.brand{:href=>"/"}= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
+            %ul.nav
+              %li
+                %a.info{:href=>'/info'}= h(t('runit.info.title'))
 
-      .content= yield_content :content
+      .row-fluid
+        .span12= yield_content :content
 
-      #footer
-        .content= yield_content :footer
+      .row-fluid
+        .span12= yield_content :footer
     - @scripts.each do |name|
       %script{:type=>"text/javascript", :src=>"/js/#{h(name)}.js"}
 

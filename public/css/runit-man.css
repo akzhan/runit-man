@@ -2,20 +2,6 @@ form.service-action, form.service-signal
 {
   display: inline;
 }
-#container{margin:0 auto;border-top:0;border-top:0;padding-left: 2em; padding-right: 2em;}
-.content{position:relative;padding: 16px 0;color:#c0baba;font-size:1.27em;line-height:1.7}
-.content:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
-.content{display:inline-block;}
-/* \*/ * html .content{height:1%;}.content{display:block;}/* */
-
-#error { display: none; }
-.error, .notice, .success {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
-.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
-.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
-.success {background:#E6EFC2;color:#264409;border-color:#C6D880;}
-.error a {color:#8a1f11;}
-.notice a {color:#514721;}
-.success a {color:#264409;}
 
 span.inactive {color:gray;}
 span.down {color:#8a1f11;}
@@ -24,6 +10,3 @@ span.danger {color:red;}
 
 #services { text-align: center; }
 
-table {width:90%; margin-left:5%; margin-right:5%; color: #000; }
-
-pre {color:#111;}
