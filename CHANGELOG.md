@@ -1,5 +1,9 @@
 ## Changes
 
+### Version 2.4.2
+
+* Use Twitter Bootstrap styles.
+
 ### Version 2.4.1
 
 * New *files to watch* feature that detects and shows watched files that modified since service startup.
