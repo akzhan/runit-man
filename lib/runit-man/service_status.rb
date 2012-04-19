@@ -86,7 +86,7 @@ class ServiceStatus
     result += ', got TERM'  if got_term?
     result += ', want down'  if want_down?
     result += ', want up'  if want_up?
-    result 
+    result
   end
 
 private
