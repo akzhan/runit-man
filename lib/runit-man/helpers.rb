@@ -77,7 +77,7 @@ module Helpers
   end
 
   def log_downloads_link(name)
-    "<a href=\"/#{name}/log-downloads\/\">#{h(t('runit.services.log.downloads'))}&hellip;</a>"
+    "<a.btn.btn-info href=\"/#{name}/log-downloads/\">#{h(t('runit.services.log.downloads'))}&hellip;</a>"
   end
 
   def even_or_odd
