@@ -17,5 +17,5 @@
 %ul
   - files_to_view.each do |f|
     %li
-      %a{:target=>"_blank", :href=>"/view?file=#{f}"}= h(f)
+      %a{:href=>"/view?file=#{f}"}= h(f)
 

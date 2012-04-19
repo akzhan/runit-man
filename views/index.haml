@@ -1,7 +1,8 @@
 - content_for :content do
-  #error{:class=>"error"}
+  #error.alert.alert-error
     = h(t('runit.error', :err => '<span id="url"></span>'))
     %span .
   #services= t('runit.loading')
 - content_for :footer do
   %p= t('runit.footer', :sec => '<span id="service-refresh-interval">?</span>')
+
