@@ -12,7 +12,7 @@
             %a.brand{:href=>"/"}= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
             %ul.nav
               %li
-                %a.info{:href=>'/info'}= h(t('runit.info.title'))
+                %a{:href=>'/info'}= h(t('runit.info.title'))
 
       .row-fluid
         .span12= yield_content :content

@@ -1,5 +1,5 @@
 - if enabled
   %form.service-action{:action=>"#{name}/#{action}", :method=>"POST"}
-    %input.btn-small{:type=>"submit", :value=>label}/
+    %input.btn.btn-mini{:type=>"submit", :value=>label}/
 - else
-  %input.btn-small{:type=>"submit", :disabled=>"disabled", :value=>label, :onclick=>"return false;"}/
+  %input.btn.btn-mini{:type=>"submit", :disabled=>"disabled", :value=>label, :onclick=>"return false;"}/
