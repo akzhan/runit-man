@@ -5,18 +5,16 @@
     %link{:href=>"/css/bootstrap.min.css", :type=>"text/css", :rel=>"stylesheet"}/
     %link{:href=>"/css/runit-man.css", :type=>"text/css", :rel=>"stylesheet"}/
   %body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.brand{:href=>"/"}= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
+          %ul.nav
+            %li
+              %a{:href=>'/info'}= h(t('runit.info.title'))
     .container-fluid
-      .navbar
-        .navbar-inner
-          .container
-            %a.brand{:href=>"/"}= h(t('runit.header', :p1 => host_name, :p2 => t('runit.label')))
-            %ul.nav
-              %li
-                %a{:href=>'/info'}= h(t('runit.info.title'))
-
       .row-fluid
         .span12= yield_content :content
-
       .row-fluid
         .span12= yield_content :footer
     - @scripts.each do |name|
