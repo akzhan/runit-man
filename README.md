@@ -10,6 +10,12 @@ Server will run by **runit-man** script. Take a note that **runit-man** must hav
 
 ## Installation
 
+### Opscode Chef
+
+We provide [runit-man](https://github.com/Undev/runit-man-cookbook) cookbook to automate setup of runit-man using [Opscode Chef](http://www.opscode.com/chef/).
+
+### Manual installation
+
 Usually You should install both **runit-man** and **thin** gems to run this tool fine.
 
 ```bash
@@ -111,4 +117,14 @@ exec logger  -i -t "runit-man" -p local1.info
 ```
 
 and use option `-l "logger:/var/log/"` where base logs directory shown after period.
+
+## Localization
+
+Localization can be done by editing of `./i18n/*.yml` locale files.
+Contributions are welcome.
+
+## Links
+
+* [runit home page](http://smarden.org/runit/)
+* [runit-man home page](https://github.com/Undev/runit-man)
 

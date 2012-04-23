@@ -10,6 +10,12 @@
 
 ## Инсталляция
 
+### Opscode Chef
+
+Мы предоставляем набор рецептов [runit-man](https://github.com/Undev/runit-man-cookbook) для автоматизации установки runit-man с использованием [Opscode Chef](http://www.opscode.com/chef/).
+
+### Ручная установка
+
 Обычно вам нужно поставить гемы **runit-man** и **thin** совместно, чтобы эта утилита работала эффективно.
 
 ```bash
@@ -111,4 +117,15 @@ exec logger -i -t "runit-man" -p local1.info
 ```
 
 При этом нужно использовать опцию `-l "logger:/var/log/"`, где после двоеточия надо указывать базовый каталог логов.
+
+## Локализация
+
+Локализация может быть выполнена редактированием файлов локалей в каталоге `./i18n/*.yml`.
+Ваши дополнения приветствуются.
+
+## Ссылки
+
+* [runit home page](http://smarden.org/runit/)
+* [runit-man home page](https://github.com/Undev/runit-man)
+
 

@@ -40,10 +40,7 @@ When You need to handle large files (logs etc.) by runit-man script You need ano
 runit-man --rackup='rainbows -E production -c rainbows.conf -p $PORT'
 ```
 
-Any localization can be done by editing of `./i18n/*.yml` locale files.
-Contributions are welcome.
+### Using runit-man cookbook
 
-* [runit home page](http://smarden.org/runit/)
-* [runit-man home page](https://github.com/Undev/runit-man)
+We provide [runit-man](https://github.com/Undev/runit-man-cookbook) cookbook to automate setup of runit-man using [Opscode Chef](http://www.opscode.com/chef/).
 
-Yours sincerely, Akzhan.
