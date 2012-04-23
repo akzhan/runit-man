@@ -12,7 +12,7 @@
 
 ### Opscode Chef
 
-Мы предоставляем набор рецептов [runit-man](https://github.com/Undev/runit-man-cookbook) для автоматизации установки runit-man с использованием [Opscode Chef](http://www.opscode.com/chef/).
+Мы предоставляем [набор рецептов runit-man](https://github.com/Undev/runit-man-cookbook) для автоматизации установки runit-man с использованием [Opscode Chef](http://www.opscode.com/chef/).
 
 ### Ручная установка
 

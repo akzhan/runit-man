@@ -12,7 +12,7 @@ Server will run by **runit-man** script. Take a note that **runit-man** must hav
 
 ### Opscode Chef
 
-We provide [runit-man](https://github.com/Undev/runit-man-cookbook) cookbook to automate setup of runit-man using [Opscode Chef](http://www.opscode.com/chef/).
+We provide [runit-man cookbook](https://github.com/Undev/runit-man-cookbook) to automate setup of runit-man using [Opscode Chef](http://www.opscode.com/chef/).
 
 ### Manual installation
 
