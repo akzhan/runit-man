@@ -210,7 +210,7 @@ class RunitMan::App < Sinatra::Base
     }
   end
 
-  get %r[^/([^/]+)/log(?:/(\d+))?/?$] do |name, count|
+  get %r[\A/([^/]+)/log(?:/(\d+))?/?\z] do |name, count|
     data = log_of_service(name, count, nil)
     return not_found  if data.nil?
 
@@ -218,7 +218,7 @@ class RunitMan::App < Sinatra::Base
     haml :log, :locals => data
   end
 
-  get %r[^/([^/]+)/log(?:/(\d+))?/(\d+)\.txt$] do |name, d1, d2|
+  get %r[\A/([^/]+)/log(?:/(\d+))?/(\d+)\.txt\z] do |name, d1, d2|
     if d2
       count, no = d1, d2
     else
@@ -233,7 +233,7 @@ class RunitMan::App < Sinatra::Base
     data[:logs][no][:text]
   end
 
-  get %r[^/([^/]+)/log\-downloads/?$] do |name|
+  get %r[\A/([^/]+)/log\-downloads/?\z] do |name|
     srv = ServiceInfo.klass[name]
     return not_found  if srv.nil? || !srv.logged?
 
@@ -243,7 +243,7 @@ class RunitMan::App < Sinatra::Base
     }
   end
 
-  get %r[^/([^/]+)/log\-download/(.+)$] do |name, file_name|
+  get %r[\A/([^/]+)/log\-download/(.+)\z] do |name, file_name|
     srv = ServiceInfo.klass[name]
     return not_found  if srv.nil? || !srv.logged?
 
