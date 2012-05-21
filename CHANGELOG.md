@@ -1,5 +1,14 @@
 ## Changes
 
+### Version 2.4.6
+
+* GET /services.json API was broken from 2.4.0 release - Bregor.
+
+### Version 2.4.5
+
+* Replace potential incorrect multiline regexps with valid ones. There was no security vulnerabity.
+* Minor visual appearance update.
+
 ### Version 2.4.4
 
 * Use Twitter Bootstrap styles.
@@ -46,6 +55,7 @@
 * Minor refactoring.
 
 ### Version 2.3.6
+
 * Internationalization of system information page.
 * favicon added.
 
