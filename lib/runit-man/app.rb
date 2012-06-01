@@ -313,7 +313,7 @@ class RunitMan::App < Sinatra::Base
       ENV['RUNIT_ACTIVE_SERVICES_DIR'] = RunitMan::App.active_services_directory
       ENV['RUNIT_LOGGER']              = RunitMan::App.runit_logger
       ENV['RUNIT_MAN_VIEW_FILES']      = RunitMan::App.files_to_view.join(',')
-      ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan::App.allowed_users.keys.map { |user| "#{user}:#{RunitMan.allowed_users[user]}" }.join(',')
+      ENV['RUNIT_MAN_CREDENTIALS']     = RunitMan::App.allowed_users.keys.map { |user| "#{user}:#{RunitMan::App.allowed_users[user]}" }.join(',')
       ENV['RUNIT_MAN_READWRITE_MODE']  = RunitMan::App.read_write_mode.to_s
 
       Dir.chdir(File.dirname(__FILE__))
