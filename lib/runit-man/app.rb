@@ -132,7 +132,7 @@ class RunitMan::App < Sinatra::Base
   end
 
   get '/' do
-    @scripts = %w[ jquery-1.7.2.min runit-man ]
+    @scripts = %w[ jquery-1.8.1.min runit-man ]
     @title = host_name
     haml :index
   end
