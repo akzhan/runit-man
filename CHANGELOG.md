@@ -1,5 +1,14 @@
 ## Changes
 
+### Version 2.4.8
+
+* Twitter Bootstrap updated to 2.1.1.
+* jQuery updated to 1.8.1.
+
+### Version 2.4.7
+
+* Credentials setup fixed for --rackup option - galetahub
+
 ### Version 2.4.6
 
 * GET /services.json API was broken from 2.4.0 release - Bregor.
