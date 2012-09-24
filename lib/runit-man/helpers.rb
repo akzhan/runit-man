@@ -98,7 +98,7 @@ module Helpers
     if bytes > TERABYTE
       bytes /= TERABYTE
       suffix = 'TB'
-    if bytes > GIGABYTE
+    elsif bytes > GIGABYTE
       bytes /= GIGABYTE
       suffix = 'GB'
     elsif bytes > MEGABYTE
