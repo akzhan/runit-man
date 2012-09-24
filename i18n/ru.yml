@@ -75,10 +75,11 @@ ru:
         file_name: Имя файла
         file_size: Размер файла
         about_utc: Все времена для файлов представлены в формате UTC.
-        b: б
-        Kb: Кб
-        Mb: Мб
-        Gb: Гб
+        B: Б
+        KB: КБ
+        MB: МБ
+        GB: ГБ
+        TB: ТБ
     view_file:
       raw: Текст
       title: 'Файл %{file} на %{host}'
