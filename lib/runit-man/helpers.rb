@@ -95,16 +95,16 @@ module Helpers
     suffix = 'B'
     bytes = bytes.abs.to_f
 
-    if bytes > TERABYTE
+    if bytes >= TERABYTE
       bytes /= TERABYTE
       suffix = 'TB'
-    elsif bytes > GIGABYTE
+    elsif bytes >= GIGABYTE
       bytes /= GIGABYTE
       suffix = 'GB'
-    elsif bytes > MEGABYTE
+    elsif bytes >= MEGABYTE
       bytes /= MEGABYTE
       suffix = 'MB'
-    elsif bytes > KILOBYTE
+    elsif bytes >= KILOBYTE
       bytes /= KILOBYTE
       suffix = 'KB'
     end
