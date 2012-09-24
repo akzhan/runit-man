@@ -18,6 +18,7 @@
           %td= h(f[:label])
           %td{:title=>h(f[:size])}= h(human_bytes(f[:size]))
           %td
-            %a{:href=>"/#{h(name)}/log-download/#{h(f[:name])}"}
+            - filenamewithsubdir = f[:subdir] ? h(f[:subdir])+'/'+h(f[:name]) : h(f[:name])
+            %a{:href=>"/#{h(name)}/log-download/#{filenamewithsubdir}"}
               = h(t('runit.services.log.download'))
               &hellip;
