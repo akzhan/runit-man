@@ -87,22 +87,26 @@ module Helpers
 
   KILOBYTE = 1024
   MEGABYTE = 1024 * KILOBYTE
-  GIGABYTE =  1024 * MEGABYTE
+  GIGABYTE = 1024 * MEGABYTE
+  TERABYTE = 1024 * GIGABYTE
 
   def human_bytes(bytes)
     sign = (bytes >= 0) ? '' : '-'
-    suffix = 'b'
+    suffix = 'B'
     bytes = bytes.abs.to_f
 
+    if bytes > TERABYTE
+      bytes /= TERABYTE
+      suffix = 'TB'
     if bytes > GIGABYTE
       bytes /= GIGABYTE
-      suffix = 'Gb'
+      suffix = 'GB'
     elsif bytes > MEGABYTE
       bytes /= MEGABYTE
-      suffix = 'Mb'
+      suffix = 'MB'
     elsif bytes > KILOBYTE
       bytes /= KILOBYTE
-      suffix = 'Kb'
+      suffix = 'KB'
     end
 
     bytes = ((bytes * 100 + 0.5).to_i.to_f / 100)
