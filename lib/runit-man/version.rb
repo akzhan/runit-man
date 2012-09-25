@@ -1,6 +1,6 @@
 # runit-man namespace.
 module RunitMan
   # runit-man version.
-  VERSION = '2.4.8'.freeze
+  VERSION = '2.4.9'.freeze
 end
 

@@ -1,5 +1,10 @@
 ## Changes
 
+### Version 2.4.9
+
+* Updates of logger policy - demofly
+* Knowledge about terabytes - demofly
+
 ### Version 2.4.8
 
 * Twitter Bootstrap updated to 2.1.1.
