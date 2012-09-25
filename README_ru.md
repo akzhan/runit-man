@@ -123,6 +123,17 @@ exec logger -i -t "runit-man" -p local1.info
 Локализация может быть выполнена редактированием файлов локалей в каталоге `./i18n/*.yml`.
 Ваши дополнения приветствуются.
 
+## Разработка
+
+Вместе с runit-man поставляется полезный Vagrant-файл.
+Чтобы развернуть окружение для разработки, выполните эти шаги:
+
+* Установите [Vagrant](http://vagrantup.com/)
+* Подключите судмодули: `git submodule update --init`
+* Разверните Vagrant'овское окружение: `vagrant up`
+
+Теперь у вас есть Vagrant box с Ubuntu 10.04 с запущенными сервисами runit и runit-man
+
 ## Ссылки
 
 * [runit home page](http://smarden.org/runit/)

@@ -123,6 +123,18 @@ and use option `-l "logger:/var/log/"` where base logs directory shown after per
 Localization can be done by editing of `./i18n/*.yml` locale files.
 Contributions are welcome.
 
+## Development
+
+Runit-man provides a useful Vagrant file.
+To have a complete development environment:
+
+* Grab [Vagrant](http://vagrantup.com/)
+* Checkout submodules: `git submodule update --init`
+* Setup Vagrant box: `vagrant up`
+
+Now you have an Ubuntu 10.04 system with runit and runit-man running inside
+your Vagrant box
+
 ## Links
 
 * [runit home page](http://smarden.org/runit/)
