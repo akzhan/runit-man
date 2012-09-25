@@ -243,11 +243,11 @@ class RunitMan::App < Sinatra::Base
     }
   end
 
-  get %r[\A/([^/]+)/log\-download/(.+)\z] do |name, file_name|
+  get %r[\A/([^/]+)/log\-download/((.+)/)(.+)\z] do |name, file_date_wd, file_date, file_name|
     srv = ServiceInfo.klass[name]
     return not_found  if srv.nil? || !srv.logged?
 
-    f = srv.all_log_file_locations.detect { |f| f[:name] == file_name }
+    f = srv.all_log_file_locations.detect { |f| ( f[:name] == file_name ) && ( f[:subdir] == file_date ) }
     return not_found  unless f
 
     send_file(f[:path], :type => 'text/plain', :disposition => 'attachment', :filename => f[:label], :last_modified => f[:modified].httpdate)
