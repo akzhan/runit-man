@@ -1,5 +1,11 @@
 ## Changes
 
+### Version 2.4.10
+
+* Log downloads fixed for svlogd mode.
+* jQuery update to 1.8.2
+* Vagrant box updated to precise32.
+
 ### Version 2.4.9
 
 * Updates of logger policy - demofly
