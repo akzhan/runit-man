@@ -1,9 +1,13 @@
 ## Changes
 
+### Version 2.4.11
+
+* Twitter Bootstrap updated to 2.2.1.
+
 ### Version 2.4.10
 
 * Log downloads fixed for svlogd mode.
-* jQuery update to 1.8.2
+* jQuery update to 1.8.2.
 * Vagrant box updated to precise32.
 
 ### Version 2.4.9
