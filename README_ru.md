@@ -128,9 +128,9 @@ exec logger -i -t "runit-man" -p local1.info
 Вместе с runit-man поставляется полезный Vagrant-файл.
 Чтобы развернуть окружение для разработки, выполните эти шаги:
 
-* Установите [Vagrant](http://vagrantup.com/)
-* Разверните подмодули: `git submodule update --init`
-* Разверните Vagrant'овское окружение: `vagrant up`
+* Установите [Vagrant](http://vagrantup.com/) и [Oracle VirtualBox](http://virtualbox.org/);
+* Разверните подмодули: `git submodule update --init`;
+* Разверните Vagrant'овское окружение: `vagrant up`.
 
 Теперь у вас есть Vagrant box с Ubuntu 12.04 с запущенными сервисами runit и runit-man
 
@@ -138,5 +138,4 @@ exec logger -i -t "runit-man" -p local1.info
 
 * [runit home page](http://smarden.org/runit/)
 * [runit-man home page](https://github.com/Undev/runit-man)
-
 

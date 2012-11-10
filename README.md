@@ -128,9 +128,9 @@ Contributions are welcome.
 Runit-man provides a useful Vagrant file.
 To have a complete development environment:
 
-* Grab [Vagrant](http://vagrantup.com/)
-* Checkout submodules: `git submodule update --init`
-* Setup Vagrant box: `vagrant up`
+* Grab [Vagrant](http://vagrantup.com/) and [Oracle VirtualBox](http://virtualbox.org/).
+* Checkout submodules: `git submodule update --init`.
+* Setup Vagrant box: `vagrant up`.
 
 Now you have an Ubuntu 12.04 system with runit and runit-man running inside
 your Vagrant box
