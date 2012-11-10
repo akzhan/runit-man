@@ -45,7 +45,7 @@ class ServiceInfo::Svlogd < ServiceInfo::Base
       r << {
         :name     => name,
         :path     => path,
-        :subdir   => "",
+        :subdir   => "_",
         :label    => label,
         :size     => stats.size,
         :created  => min_time,
