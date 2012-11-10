@@ -132,7 +132,7 @@ To have a complete development environment:
 * Checkout submodules: `git submodule update --init`
 * Setup Vagrant box: `vagrant up`
 
-Now you have an Ubuntu 10.04 system with runit and runit-man running inside
+Now you have an Ubuntu 12.04 system with runit and runit-man running inside
 your Vagrant box
 
 ## Links
