@@ -1,3 +1,5 @@
+include_recipe "build-essential"
+
 package "git-core"
 
 gem_package "bundler"

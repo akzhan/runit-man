@@ -5,4 +5,4 @@ description      "runit-man development VM"
 version          "0.1"
 
 depends "runit"
-
+depends "build-essential"
