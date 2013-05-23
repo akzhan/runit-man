@@ -4,58 +4,45 @@
     "use strict";
     var REFRESH_SERVICES_TIMEOUT = 5000;
 
-    $.ajaxSetup({
-        error: function(e, req, options, error)
-        {
-            $('#url').text(options.url);
-            $('#error').show();
-        }
+    $(document).ajaxError(function(e, req, options, error) {
+        $('#url').text(options.url);
+        $('#error').show();
     });
 
     var needRefreshServices, refreshServices;
-    refreshServices = function()
-    {
+    refreshServices = function() {
         refreshServices.timer = null;
         $.ajax({
             url: '/services',
             cache: false
-        }).fail(function()
-        {
+        }).fail(function() {
             $('#url').text('/services');
             $('#error').show();
-        }).done(function(html)
-        {
+        }).done(function(html) {
             $('#error').hide();
             $('#services').html(html);
-        }).always(function()
-        {
+        }).always(function() {
             needRefreshServices(false);
         });
     };
     refreshServices.timer = null;
 
-    needRefreshServices = function(now)
-    {
-        if (refreshServices.timer !== null)
-        {
+    needRefreshServices = function(now) {
+        if (refreshServices.timer !== null) {
             window.clearTimeout(refreshServices.timer);
             refreshServices.timer = null;
         }
-        if (now)
-        {
+        if (now) {
             refreshServices();
         }
-        else
-        {
+        else {
             refreshServices.timer = window.setTimeout(refreshServices, REFRESH_SERVICES_TIMEOUT);
         }
     };
 
-    $('#services').on('submit', 'form.service-action,form.service-signal', function(e)
-    {
+    $('#services').on('submit', 'form.service-action,form.service-signal', function(e) {
         e.preventDefault();
-        $.post($(this).attr('action')).always(function()
-        {
+        $.post($(this).attr('action')).always(function() {
             needRefreshServices(true);
         });
         return false;
@@ -65,3 +52,4 @@
 
     needRefreshServices(true);
 })(jQuery, window);
+
