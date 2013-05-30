@@ -241,13 +241,13 @@ protected
     return nil  if cmd.nil?
 
     args = cmd.split(/\s+/).select { |arg| arg !~ /^\-/ }
-    # если в cmdline есть slogd 
-    # то проверяем запускает ли он svlogd
-    unless args.grep(/slogd/).empty?
-      while not args.empty?
-        # сразу после svlogd должна идти директория
-        # иначе возращаем nil
-        break if args.shift.match /svlogd/
+    # When 'slogd' specified anywhere in cmdline 
+    # then extract svlogd directory if specified.
+    if args.detect { |arg| arg =~ /slogd/ }
+      while !args.empty?
+        # Directory should be specified immediately after 'svlogd' argument;
+        # otherwise nil
+        break if args.shift =~ /svlogd/
       end
       return args 
     end
