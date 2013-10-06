@@ -82,18 +82,20 @@ runit-man -p 14500 -r
 
 Поддерживаемые сигналы и их значения:
 
-* t: TERM
-* k: KILL
-* i: INT
-* 1: USR1
-* 2: USR2
-* a: ALARM
-* q: QUIT
-* x: EXIT
-* p: PAUSE
-* c: CONT
-* h: HUP
-* o: ONCE
+| Сигнал | Значение |
+| -------- | ------ |
+| t | TERM |
+| k | KILL |
+| i | INT |
+| 1 | USR1 |
+| 2 | USR2 |
+| a | ALARM |
+| q | QUIT |
+| x | EXIT |
+| p | PAUSE |
+| c | CONT |
+| h | HUP |
+| o | ONCE |
 
 ### Чтение логов
 
