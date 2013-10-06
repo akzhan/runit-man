@@ -83,18 +83,20 @@ You can also send any signal to service using
 
 Supported signals and their's meaning:
 
-* t: TERM
-* k: KILL
-* i: INT
-* 1: USR1
-* 2: USR2
-* a: ALARM
-* q: QUIT
-* x: EXIT
-* p: PAUSE
-* c: CONT
-* h: HUP
-* o: ONCE
+| Shortcut | Signal |
+| -------- | ------ |
+| t | TERM |
+| k | KILL |
+| i | INT |
+| 1 | USR1 |
+| 2 | USR2 |
+| a | ALARM |
+| q | QUIT |
+| x | EXIT |
+| p | PAUSE |
+| c | CONT |
+| h | HUP |
+| o | ONCE |
 
 ### Read logs
 
