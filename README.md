@@ -83,7 +83,7 @@ You can also send any signal to service using
 
 Supported signals and their's meaning:
 
-| Shortcut | Signal |
+| Signal | Meaning |
 | -------- | ------ |
 | t | TERM |
 | k | KILL |
