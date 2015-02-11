@@ -50,8 +50,8 @@ en:
           t: TERM
           k: KILL
           i: INT
-          1: USR1
-          2: USR2
+          '1': USR1
+          '2': USR2
           a: ALARM
           q: QUIT
           x: EXIT
