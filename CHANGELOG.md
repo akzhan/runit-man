@@ -1,5 +1,17 @@
 ## Changes
 
+### Version 2.4.14
+
+* Moved to akzhan/runit-man repository.
+* Locale updates.
+* Support for slogd
+
+### Version 2.4.12
+
+* Twitter Bootstrap updated to 2.3.2.
+* jQuery updated to 1.9.1.
+* Virtualbox support.
+
 ### Version 2.4.11
 
 * Twitter Bootstrap updated to 2.2.1.
