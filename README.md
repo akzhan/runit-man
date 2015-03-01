@@ -6,7 +6,7 @@ Server will run by **runit-man** script. Take a note that **runit-man** must hav
 
 ## Screenshot
 
-![Screenshot](https://github.com/Undev/runit-man/raw/master/runit-man-screenshot.gif "Screenshot")
+![Screenshot](https://github.com/akzhan/runit-man/raw/master/runit-man-screenshot.gif "Screenshot")
 
 ## Installation
 
@@ -105,7 +105,7 @@ Supported signals and their's meaning:
 You can read tail of service log using
 `GET /<service name>/log/<count of tailing lines>.txt`
 
-Note that to use this feature You must do logging using 
+Note that to use this feature You must do logging using
 
 ```bash
 exec svlogd <options> $LOG_DIRECTORY_LOCATION
@@ -140,5 +140,5 @@ your Vagrant box
 ## Links
 
 * [runit home page](http://smarden.org/runit/)
-* [runit-man home page](https://github.com/Undev/runit-man)
+* [runit-man home page](https://github.com/akzhan/runit-man)
 

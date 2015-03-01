@@ -6,7 +6,7 @@
 
 ## Скриншот
 
-![Скриншот](https://github.com/Undev/runit-man/raw/master/runit-man-screenshot.gif "Скриншот")
+![Скриншот](https://github.com/akzhan/runit-man/raw/master/runit-man-screenshot.gif "Скриншот")
 
 ## Инсталляция
 
@@ -139,5 +139,5 @@ exec logger -i -t "runit-man" -p local1.info
 ## Ссылки
 
 * [runit home page](http://smarden.org/runit/)
-* [runit-man home page](https://github.com/Undev/runit-man)
+* [runit-man home page](https://github.com/akzhan/runit-man)
 
