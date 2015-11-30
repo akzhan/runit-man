@@ -1,6 +1,6 @@
 ## Requirements
 
-You need ruby 1.8.6 or above and rubygems installed.
+You need ruby 1.9.3 or above and rubygems installed.
 
 ## Installation
 
